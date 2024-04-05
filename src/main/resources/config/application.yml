@@ -139,13 +139,13 @@ spring:
       enabled: true
   task:
     execution:
-      thread-name-prefix: tes-pat-task-
+      thread-name-prefix: tespat-task-
       pool:
         core-size: 2
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: tes-pat-scheduling-
+      thread-name-prefix: tespat-scheduling-
       pool:
         size: 2
   thymeleaf:
@@ -190,8 +190,8 @@ jhipster:
   api-docs:
     default-include-pattern: /api/**
     management-include-pattern: /management/**
-    title: TES Pat API
-    description: TES Pat API documentation
+    title: TESPat API
+    description: TESPat API documentation
     version: 0.0.1
     terms-of-service-url:
     contact-name:
