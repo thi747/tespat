@@ -30,13 +30,13 @@ spring:
     basename: i18n/messages
   task:
     execution:
-      thread-name-prefix: tes-pat-task-
+      thread-name-prefix: tespat-task-
       pool:
         core-size: 1
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: tes-pat-scheduling-
+      thread-name-prefix: tespat-scheduling-
       pool:
         size: 20
   thymeleaf:

@@ -3,7 +3,7 @@ package com.github.thi747.tespat.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Properties specific to TES Pat.
+ * Properties specific to TESPat.
  * <p>
  * Properties are configured in the {@code application.yml} file.
  * See {@link tech.jhipster.config.JHipsterProperties} for a good example.

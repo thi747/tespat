@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "tes-pat": {
+    "tespat": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -76,15 +76,15 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "buildTarget": "tes-pat:build:development",
+            "buildTarget": "tespat:build:development",
             "port": 4200
           },
           "configurations": {
             "production": {
-              "buildTarget": "tes-pat:build:production"
+              "buildTarget": "tespat:build:production"
             },
             "development": {
-              "buildTarget": "tes-pat:build:development"
+              "buildTarget": "tespat:build:development"
             }
           },
           "defaultConfiguration": "development"

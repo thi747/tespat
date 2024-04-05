@@ -30,7 +30,7 @@ module.exports = async (config, options, targetOptions) => {
         },
       }),
       new WebpackNotifierPlugin({
-        title: 'TES Pat',
+        title: 'TESPat',
         contentImage: path.join(__dirname, 'logo-jhipster.png'),
       }),
     );

@@ -1,8 +1,8 @@
 {
-  "name": "tes-pat",
+  "name": "tespat",
   "version": "0.0.1-SNAPSHOT",
   "private": true,
-  "description": "Description for TES Pat",
+  "description": "Description for TESPat",
   "license": "UNLICENSED",
   "scripts": {
     "app:start": "./mvnw",
