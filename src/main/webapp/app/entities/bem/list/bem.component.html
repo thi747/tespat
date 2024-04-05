@@ -1,0 +1,189 @@
+<div>
+  <h2 id="page-heading" data-cy="BemHeading">
+    <span jhiTranslate="tesPatApp.bem.home.title">Bems</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="tesPatApp.bem.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-bem"
+        [routerLink]="['/bem/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="tesPatApp.bem.home.createLabel">Create a new Bem</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (bems?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="tesPatApp.bem.home.notFound">No Bems found</span>
+    </div>
+  }
+
+  @if (bems && bems.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="patrimonio">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.patrimonio">Patrimonio</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nome">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.nome">Nome</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="descricao">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.descricao">Descricao</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="observacoes">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.observacoes">Observacoes</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="numeroDeSerie">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.numeroDeSerie">Numero De Serie</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dataAquisicao">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.dataAquisicao">Data Aquisicao</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="valorCompra">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.valorCompra">Valor Compra</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="valorAtual">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.valorAtual">Valor Atual</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="estado">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.estado">Estado</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="status">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.status">Status</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="categoria.id">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.categoria">Categoria</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="fornecedor.id">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.fornecedor">Fornecedor</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="local.nome">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.local">Local</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (bem of bems; track trackPatrimonio) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/bem', bem.patrimonio, 'view']">{{ bem.patrimonio }}</a>
+              </td>
+              <td>{{ bem.nome }}</td>
+              <td>{{ bem.descricao }}</td>
+              <td>{{ bem.observacoes }}</td>
+              <td>{{ bem.numeroDeSerie }}</td>
+              <td>{{ bem.dataAquisicao | formatMediumDate }}</td>
+              <td>{{ bem.valorCompra }}</td>
+              <td>{{ bem.valorAtual }}</td>
+              <td jhiTranslate="{{ 'tesPatApp.TipoConservacao.' + bem.estado }}">{{ bem.estado }}</td>
+              <td jhiTranslate="{{ 'tesPatApp.TipoStatus.' + bem.status }}">{{ bem.status }}</td>
+              <td>
+                @if (bem.categoria) {
+                  <div>
+                    <a [routerLink]="['/categoria', bem.categoria.id, 'view']">{{ bem.categoria.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (bem.fornecedor) {
+                  <div>
+                    <a [routerLink]="['/fornecedor', bem.fornecedor.id, 'view']">{{ bem.fornecedor.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (bem.local) {
+                  <div>
+                    <a [routerLink]="['/local', bem.local.nome, 'view']">{{ bem.local.nome }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/bem', bem.patrimonio, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/bem', bem.patrimonio, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(bem)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

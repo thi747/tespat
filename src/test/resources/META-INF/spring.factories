@@ -1,0 +1,2 @@
+org.springframework.test.context.ContextCustomizerFactory = com.github.thi747.\
+    tespat.config.SqlTestContainersSpringContextCustomizerFactory

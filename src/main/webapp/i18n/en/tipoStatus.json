@@ -1,0 +1,10 @@
+{
+  "tesPatApp": {
+    "TipoStatus": {
+      "null": "",
+      "USO": "USO",
+      "ESTOQUE": "ESTOQUE",
+      "MANUTENCAO": "MANUTENCAO"
+    }
+  }
+}

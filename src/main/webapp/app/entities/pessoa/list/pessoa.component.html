@@ -1,0 +1,134 @@
+<div>
+  <h2 id="page-heading" data-cy="PessoaHeading">
+    <span jhiTranslate="tesPatApp.pessoa.home.title">Pessoas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="tesPatApp.pessoa.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-pessoa"
+        [routerLink]="['/pessoa/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="tesPatApp.pessoa.home.createLabel">Create a new Pessoa</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (pessoas?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="tesPatApp.pessoa.home.notFound">No Pessoas found</span>
+    </div>
+  }
+
+  @if (pessoas && pessoas.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="usuario">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.pessoa.usuario">Usuario</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nome">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.pessoa.nome">Nome</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="cpf">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.pessoa.cpf">Cpf</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="email">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.pessoa.email">Email</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="ativo">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.pessoa.ativo">Ativo</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="endereco">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.pessoa.endereco">Endereco</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="cidade">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.pessoa.cidade">Cidade</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="estado">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.pessoa.estado">Estado</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (pessoa of pessoas; track trackUsuario) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/pessoa', pessoa.usuario, 'view']">{{ pessoa.usuario }}</a>
+              </td>
+              <td>{{ pessoa.nome }}</td>
+              <td>{{ pessoa.cpf }}</td>
+              <td>{{ pessoa.email }}</td>
+              <td>{{ pessoa.ativo }}</td>
+              <td>{{ pessoa.endereco }}</td>
+              <td>{{ pessoa.cidade }}</td>
+              <td>{{ pessoa.estado }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/pessoa', pessoa.usuario, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/pessoa', pessoa.usuario, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(pessoa)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

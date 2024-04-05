@@ -1,0 +1,32 @@
+{
+  "tesPatApp": {
+    "fornecedor": {
+      "home": {
+        "title": "Fornecedors",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Fornecedor",
+        "createOrEditLabel": "Create or edit a Fornecedor",
+        "notFound": "No Fornecedors found"
+      },
+      "created": "A new Fornecedor is created with identifier {{ param }}",
+      "updated": "A Fornecedor is updated with identifier {{ param }}",
+      "deleted": "A Fornecedor is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Fornecedor {{ id }}?"
+      },
+      "detail": {
+        "title": "Fornecedor"
+      },
+      "id": "Id",
+      "nome": "Nome",
+      "descricao": "Descricao",
+      "cpfOuCnpj": "Cpf Ou Cnpj",
+      "email": "Email",
+      "telefone": "Telefone",
+      "endereco": "Endereco",
+      "cidade": "Cidade",
+      "estado": "Estado",
+      "id": "Id"
+    }
+  }
+}

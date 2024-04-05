@@ -1,0 +1,142 @@
+<div>
+  <h2 id="page-heading" data-cy="FornecedorHeading">
+    <span jhiTranslate="tesPatApp.fornecedor.home.title">Fornecedors</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="tesPatApp.fornecedor.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-fornecedor"
+        [routerLink]="['/fornecedor/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="tesPatApp.fornecedor.home.createLabel">Create a new Fornecedor</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (fornecedors?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="tesPatApp.fornecedor.home.notFound">No Fornecedors found</span>
+    </div>
+  }
+
+  @if (fornecedors && fornecedors.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.fornecedor.id">Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nome">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.fornecedor.nome">Nome</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="descricao">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.fornecedor.descricao">Descricao</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="cpfOuCnpj">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.fornecedor.cpfOuCnpj">Cpf Ou Cnpj</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="email">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.fornecedor.email">Email</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="telefone">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.fornecedor.telefone">Telefone</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="endereco">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.fornecedor.endereco">Endereco</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="cidade">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.fornecedor.cidade">Cidade</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="estado">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.fornecedor.estado">Estado</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (fornecedor of fornecedors; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/fornecedor', fornecedor.id, 'view']">{{ fornecedor.id }}</a>
+              </td>
+              <td>{{ fornecedor.nome }}</td>
+              <td>{{ fornecedor.descricao }}</td>
+              <td>{{ fornecedor.cpfOuCnpj }}</td>
+              <td>{{ fornecedor.email }}</td>
+              <td>{{ fornecedor.telefone }}</td>
+              <td>{{ fornecedor.endereco }}</td>
+              <td>{{ fornecedor.cidade }}</td>
+              <td>{{ fornecedor.estado }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/fornecedor', fornecedor.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/fornecedor', fornecedor.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(fornecedor)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

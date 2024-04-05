@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (fornecedor) {
+      <div>
+        <h2 data-cy="fornecedorDetailsHeading"><span jhiTranslate="tesPatApp.fornecedor.detail.title">Fornecedor</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="tesPatApp.fornecedor.id">Id</span></dt>
+          <dd>
+            <span>{{ fornecedor.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.fornecedor.nome">Nome</span></dt>
+          <dd>
+            <span>{{ fornecedor.nome }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.fornecedor.descricao">Descricao</span></dt>
+          <dd>
+            <span>{{ fornecedor.descricao }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.fornecedor.cpfOuCnpj">Cpf Ou Cnpj</span></dt>
+          <dd>
+            <span>{{ fornecedor.cpfOuCnpj }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.fornecedor.email">Email</span></dt>
+          <dd>
+            <span>{{ fornecedor.email }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.fornecedor.telefone">Telefone</span></dt>
+          <dd>
+            <span>{{ fornecedor.telefone }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.fornecedor.endereco">Endereco</span></dt>
+          <dd>
+            <span>{{ fornecedor.endereco }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.fornecedor.cidade">Cidade</span></dt>
+          <dd>
+            <span>{{ fornecedor.cidade }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.fornecedor.estado">Estado</span></dt>
+          <dd>
+            <span>{{ fornecedor.estado }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/fornecedor', fornecedor.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

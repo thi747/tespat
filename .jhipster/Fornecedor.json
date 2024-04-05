@@ -1,0 +1,64 @@
+{
+  "annotations": {
+    "changelogDate": "20240405204926"
+  },
+  "applications": ["TESPat"],
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"],
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cpfOuCnpj",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "11"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telefone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "endereco",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cidade",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "2",
+      "fieldValidateRulesMinlength": "2"
+    }
+  ],
+  "name": "Fornecedor",
+  "relationships": [
+    {
+      "otherEntityName": "bem",
+      "relationshipName": "id",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

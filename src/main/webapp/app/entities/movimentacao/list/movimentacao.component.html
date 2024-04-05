@@ -1,0 +1,128 @@
+<div>
+  <h2 id="page-heading" data-cy="MovimentacaoHeading">
+    <span jhiTranslate="tesPatApp.movimentacao.home.title">Movimentacaos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="tesPatApp.movimentacao.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-movimentacao"
+        [routerLink]="['/movimentacao/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="tesPatApp.movimentacao.home.createLabel">Create a new Movimentacao</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (movimentacaos?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="tesPatApp.movimentacao.home.notFound">No Movimentacaos found</span>
+    </div>
+  }
+
+  @if (movimentacaos && movimentacaos.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.movimentacao.id">Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="descricao">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.movimentacao.descricao">Descricao</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="data">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.movimentacao.data">Data</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="tipo">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.movimentacao.tipo">Tipo</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="bem.patrimonio">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.movimentacao.bem">Bem</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="pessoa.usuario">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.movimentacao.pessoa">Pessoa</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (movimentacao of movimentacaos; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/movimentacao', movimentacao.id, 'view']">{{ movimentacao.id }}</a>
+              </td>
+              <td>{{ movimentacao.descricao }}</td>
+              <td>{{ movimentacao.data | formatMediumDate }}</td>
+              <td jhiTranslate="{{ 'tesPatApp.TipoMovimentacao.' + movimentacao.tipo }}">{{ movimentacao.tipo }}</td>
+              <td>
+                @if (movimentacao.bem) {
+                  <div>
+                    <a [routerLink]="['/bem', movimentacao.bem.patrimonio, 'view']">{{ movimentacao.bem.patrimonio }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (movimentacao.pessoa) {
+                  <div>
+                    <a [routerLink]="['/pessoa', movimentacao.pessoa.usuario, 'view']">{{ movimentacao.pessoa.usuario }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/movimentacao', movimentacao.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/movimentacao', movimentacao.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(movimentacao)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

@@ -1,0 +1,124 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-pessoa-heading" data-cy="PessoaCreateUpdateHeading" jhiTranslate="tesPatApp.pessoa.home.createOrEditLabel">
+        Create or edit a Pessoa
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.pessoa.usuario" for="field_usuario">Usuario</label>
+          <input
+            type="text"
+            class="form-control"
+            name="usuario"
+            id="field_usuario"
+            data-cy="usuario"
+            formControlName="usuario"
+            [readonly]="editForm.get('usuario')!.disabled"
+          />
+          @if (editForm.get('usuario')!.invalid && (editForm.get('usuario')!.dirty || editForm.get('usuario')!.touched)) {
+            <div>
+              @if (editForm.get('usuario')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.pessoa.nome" for="field_nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          @if (editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)) {
+            <div>
+              @if (editForm.get('nome')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.pessoa.cpf" for="field_cpf">Cpf</label>
+          <input type="text" class="form-control" name="cpf" id="field_cpf" data-cy="cpf" formControlName="cpf" />
+          @if (editForm.get('cpf')!.invalid && (editForm.get('cpf')!.dirty || editForm.get('cpf')!.touched)) {
+            <div>
+              @if (editForm.get('cpf')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('cpf')?.errors?.minlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 11 }"
+                  >This field is required to be at least 11 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.pessoa.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.pessoa.ativo" for="field_ativo">Ativo</label>
+          <input type="checkbox" class="form-check" name="ativo" id="field_ativo" data-cy="ativo" formControlName="ativo" />
+          @if (editForm.get('ativo')!.invalid && (editForm.get('ativo')!.dirty || editForm.get('ativo')!.touched)) {
+            <div>
+              @if (editForm.get('ativo')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.pessoa.endereco" for="field_endereco">Endereco</label>
+          <input type="text" class="form-control" name="endereco" id="field_endereco" data-cy="endereco" formControlName="endereco" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.pessoa.cidade" for="field_cidade">Cidade</label>
+          <input type="text" class="form-control" name="cidade" id="field_cidade" data-cy="cidade" formControlName="cidade" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.pessoa.estado" for="field_estado">Estado</label>
+          <input type="text" class="form-control" name="estado" id="field_estado" data-cy="estado" formControlName="estado" />
+          @if (editForm.get('estado')!.invalid && (editForm.get('estado')!.dirty || editForm.get('estado')!.touched)) {
+            <div>
+              @if (editForm.get('estado')?.errors?.minlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 2 }"
+                  >This field is required to be at least 2 characters.</small
+                >
+              }
+              @if (editForm.get('estado')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 2 }"
+                  >This field cannot be longer than 2 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

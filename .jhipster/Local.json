@@ -1,0 +1,35 @@
+{
+  "annotations": {
+    "changelogDate": "20240405205026"
+  },
+  "applications": ["TESPat"],
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"],
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sala",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Local",
+  "relationships": [
+    {
+      "otherEntityName": "bem",
+      "relationshipName": "nome",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no"
+}

@@ -1,0 +1,87 @@
+{
+  "annotations": {
+    "changelogDate": "20240405204726"
+  },
+  "applications": ["TESPat"],
+  "fields": [
+    {
+      "fieldName": "patrimonio",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"],
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "observacoes",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numeroDeSerie",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dataAquisicao",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "valorCompra",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "valorAtual",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "TipoConservacao",
+      "fieldValues": "NOVO,BOM,REGULAR,RUIM,INSERVIVEL"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "TipoStatus",
+      "fieldValues": "USO,ESTOQUE,MANUTENCAO"
+    }
+  ],
+  "name": "Bem",
+  "relationships": [
+    {
+      "otherEntityName": "categoria",
+      "otherEntityRelationshipName": "nome",
+      "relationshipName": "categoria",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "fornecedor",
+      "otherEntityRelationshipName": "id",
+      "relationshipName": "fornecedor",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "local",
+      "otherEntityRelationshipName": "nome",
+      "relationshipName": "local",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "movimentacao",
+      "relationshipName": "patrimonio",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no"
+}

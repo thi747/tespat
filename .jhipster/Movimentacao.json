@@ -1,0 +1,48 @@
+{
+  "annotations": {
+    "changelogDate": "20240405205126"
+  },
+  "applications": ["TESPat"],
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"],
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "data",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "tipo",
+      "fieldType": "TipoMovimentacao",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ENTRADA,SAIDA"
+    }
+  ],
+  "name": "Movimentacao",
+  "relationships": [
+    {
+      "otherEntityName": "bem",
+      "otherEntityRelationshipName": "patrimonio",
+      "relationshipName": "bem",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "pessoa",
+      "otherEntityRelationshipName": "usuario",
+      "relationshipName": "pessoa",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

@@ -1,0 +1,19 @@
+{
+  "generator-jhipster": {
+    "applicationIndex": 0,
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "TESPat",
+    "clientFramework": "angular",
+    "devServerPort": 4200,
+    "entities": ["Bem", "Categoria", "Fornecedor", "Local", "Movimentacao", "Pessoa"],
+    "jhipsterVersion": "8.2.1",
+    "jwtSecretKey": "M2I4YTI5NmVhZjA2YjY2NDU0NWM4MTQzMmFhOGQ3MzdmOTFlODZkZTc4ODE2MDRhNDc4ZWY4OWMyZThlYjRjNWQxMGRjMmZlN2IyMjM1NjRmN2QxODAwZjNhZWE3NzdkNjczYmFhN2JjOGMyYmJiODkyN2QzN2IxZjg2NzExOWY=",
+    "languages": ["en"],
+    "lastLiquibaseTimestamp": 1712350346000,
+    "nativeLanguage": "en",
+    "packageFolder": "com/github/thi747/tespat",
+    "packageName": "com.github.thi747.tespat",
+    "prodDatabaseType": "mysql"
+  }
+}

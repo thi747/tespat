@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (bem) {
+      <div>
+        <h2 data-cy="bemDetailsHeading"><span jhiTranslate="tesPatApp.bem.detail.title">Bem</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="tesPatApp.bem.patrimonio">Patrimonio</span></dt>
+          <dd>
+            <span>{{ bem.patrimonio }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.bem.nome">Nome</span></dt>
+          <dd>
+            <span>{{ bem.nome }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.bem.descricao">Descricao</span></dt>
+          <dd>
+            <span>{{ bem.descricao }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.bem.observacoes">Observacoes</span></dt>
+          <dd>
+            <span>{{ bem.observacoes }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.bem.numeroDeSerie">Numero De Serie</span></dt>
+          <dd>
+            <span>{{ bem.numeroDeSerie }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.bem.dataAquisicao">Data Aquisicao</span></dt>
+          <dd>
+            <span>{{ bem.dataAquisicao | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.bem.valorCompra">Valor Compra</span></dt>
+          <dd>
+            <span>{{ bem.valorCompra }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.bem.valorAtual">Valor Atual</span></dt>
+          <dd>
+            <span>{{ bem.valorAtual }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.bem.estado">Estado</span></dt>
+          <dd>
+            <span jhiTranslate="{{ 'tesPatApp.TipoConservacao.' + bem.estado }}">{{ bem.estado }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.bem.status">Status</span></dt>
+          <dd>
+            <span jhiTranslate="{{ 'tesPatApp.TipoStatus.' + bem.status }}">{{ bem.status }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.bem.categoria">Categoria</span></dt>
+          <dd>
+            @if (bem.categoria) {
+              <div>
+                <a [routerLink]="['/categoria', bem.categoria.id, 'view']">{{ bem.categoria.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.bem.fornecedor">Fornecedor</span></dt>
+          <dd>
+            @if (bem.fornecedor) {
+              <div>
+                <a [routerLink]="['/fornecedor', bem.fornecedor.id, 'view']">{{ bem.fornecedor.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.bem.local">Local</span></dt>
+          <dd>
+            @if (bem.local) {
+              <div>
+                <a [routerLink]="['/local', bem.local.nome, 'view']">{{ bem.local.nome }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/bem', bem.patrimonio, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

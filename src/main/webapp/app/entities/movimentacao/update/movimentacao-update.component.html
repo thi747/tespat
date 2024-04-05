@@ -1,0 +1,116 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-movimentacao-heading"
+        data-cy="MovimentacaoCreateUpdateHeading"
+        jhiTranslate="tesPatApp.movimentacao.home.createOrEditLabel"
+      >
+        Create or edit a Movimentacao
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="tesPatApp.movimentacao.id" for="field_id">Id</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+            @if (editForm.get('id')!.invalid && (editForm.get('id')!.dirty || editForm.get('id')!.touched)) {
+              <div>
+                @if (editForm.get('id')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+                }
+                <small class="form-text text-danger" [hidden]="!editForm.get('id')?.errors?.number" jhiTranslate="entity.validation.number"
+                  >This field should be a number.</small
+                >
+              </div>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.movimentacao.descricao" for="field_descricao">Descricao</label>
+          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.movimentacao.data" for="field_data">Data</label>
+          <div class="input-group">
+            <input
+              id="field_data"
+              data-cy="data"
+              type="text"
+              class="form-control"
+              name="data"
+              ngbDatepicker
+              #dataDp="ngbDatepicker"
+              formControlName="data"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dataDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.movimentacao.tipo" for="field_tipo">Tipo</label>
+          <select class="form-control" name="tipo" formControlName="tipo" id="field_tipo" data-cy="tipo">
+            <option [ngValue]="null">{{ 'tesPatApp.TipoMovimentacao.null' | translate }}</option>
+            @for (tipoMovimentacao of tipoMovimentacaoValues; track $index) {
+              <option [value]="tipoMovimentacao">{{ 'tesPatApp.TipoMovimentacao.' + tipoMovimentacao | translate }}</option>
+            }
+          </select>
+          @if (editForm.get('tipo')!.invalid && (editForm.get('tipo')!.dirty || editForm.get('tipo')!.touched)) {
+            <div>
+              @if (editForm.get('tipo')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.movimentacao.bem" for="field_bem">Bem</label>
+          <select class="form-control" id="field_bem" data-cy="bem" name="bem" formControlName="bem" [compareWith]="compareBem">
+            <option [ngValue]="null"></option>
+            @for (bemOption of bemsSharedCollection; track $index) {
+              <option [ngValue]="bemOption">{{ bemOption.patrimonio }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.movimentacao.pessoa" for="field_pessoa">Pessoa</label>
+          <select
+            class="form-control"
+            id="field_pessoa"
+            data-cy="pessoa"
+            name="pessoa"
+            formControlName="pessoa"
+            [compareWith]="comparePessoa"
+          >
+            <option [ngValue]="null"></option>
+            @for (pessoaOption of pessoasSharedCollection; track $index) {
+              <option [ngValue]="pessoaOption">{{ pessoaOption.usuario }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

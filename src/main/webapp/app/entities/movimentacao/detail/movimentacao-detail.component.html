@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (movimentacao) {
+      <div>
+        <h2 data-cy="movimentacaoDetailsHeading"><span jhiTranslate="tesPatApp.movimentacao.detail.title">Movimentacao</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="tesPatApp.movimentacao.id">Id</span></dt>
+          <dd>
+            <span>{{ movimentacao.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.movimentacao.descricao">Descricao</span></dt>
+          <dd>
+            <span>{{ movimentacao.descricao }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.movimentacao.data">Data</span></dt>
+          <dd>
+            <span>{{ movimentacao.data | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.movimentacao.tipo">Tipo</span></dt>
+          <dd>
+            <span jhiTranslate="{{ 'tesPatApp.TipoMovimentacao.' + movimentacao.tipo }}">{{ movimentacao.tipo }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.movimentacao.bem">Bem</span></dt>
+          <dd>
+            @if (movimentacao.bem) {
+              <div>
+                <a [routerLink]="['/bem', movimentacao.bem.patrimonio, 'view']">{{ movimentacao.bem.patrimonio }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.movimentacao.pessoa">Pessoa</span></dt>
+          <dd>
+            @if (movimentacao.pessoa) {
+              <div>
+                <a [routerLink]="['/pessoa', movimentacao.pessoa.usuario, 'view']">{{ movimentacao.pessoa.usuario }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/movimentacao', movimentacao.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

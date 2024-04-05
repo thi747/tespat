@@ -1,0 +1,36 @@
+{
+  "tesPatApp": {
+    "bem": {
+      "home": {
+        "title": "Bems",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Bem",
+        "createOrEditLabel": "Create or edit a Bem",
+        "notFound": "No Bems found"
+      },
+      "created": "A new Bem is created with identifier {{ param }}",
+      "updated": "A Bem is updated with identifier {{ param }}",
+      "deleted": "A Bem is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Bem {{ id }}?"
+      },
+      "detail": {
+        "title": "Bem"
+      },
+      "patrimonio": "Patrimonio",
+      "nome": "Nome",
+      "descricao": "Descricao",
+      "observacoes": "Observacoes",
+      "numeroDeSerie": "Numero De Serie",
+      "dataAquisicao": "Data Aquisicao",
+      "valorCompra": "Valor Compra",
+      "valorAtual": "Valor Atual",
+      "estado": "Estado",
+      "status": "Status",
+      "categoria": "Categoria",
+      "fornecedor": "Fornecedor",
+      "local": "Local",
+      "patrimonio": "Patrimonio"
+    }
+  }
+}

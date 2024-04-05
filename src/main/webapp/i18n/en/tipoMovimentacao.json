@@ -1,0 +1,9 @@
+{
+  "tesPatApp": {
+    "TipoMovimentacao": {
+      "null": "",
+      "ENTRADA": "ENTRADA",
+      "SAIDA": "SAIDA"
+    }
+  }
+}

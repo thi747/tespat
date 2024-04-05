@@ -1,0 +1,94 @@
+<div>
+  <h2 id="page-heading" data-cy="LocalHeading">
+    <span jhiTranslate="tesPatApp.local.home.title">Locals</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="tesPatApp.local.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-local"
+        [routerLink]="['/local/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="tesPatApp.local.home.createLabel">Create a new Local</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (locals?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="tesPatApp.local.home.notFound">No Locals found</span>
+    </div>
+  }
+
+  @if (locals && locals.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="nome">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.local.nome">Nome</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="descricao">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.local.descricao">Descricao</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="sala">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.local.sala">Sala</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (local of locals; track trackNome) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/local', local.nome, 'view']">{{ local.nome }}</a>
+              </td>
+              <td>{{ local.descricao }}</td>
+              <td>{{ local.sala }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/local', local.nome, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/local', local.nome, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(local)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

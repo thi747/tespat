@@ -1,0 +1,12 @@
+{
+  "tesPatApp": {
+    "TipoConservacao": {
+      "null": "",
+      "NOVO": "NOVO",
+      "BOM": "BOM",
+      "REGULAR": "REGULAR",
+      "RUIM": "RUIM",
+      "INSERVIVEL": "INSERVIVEL"
+    }
+  }
+}
