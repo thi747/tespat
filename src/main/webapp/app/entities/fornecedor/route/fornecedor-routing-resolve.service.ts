@@ -8,7 +8,7 @@ import { IFornecedor } from '../fornecedor.model';
 import { FornecedorService } from '../service/fornecedor.service';
 
 const fornecedorResolve = (route: ActivatedRouteSnapshot): Observable<null | IFornecedor> => {
-  const id = route.params['id'];
+  const id = route.params['nome'];
   if (id) {
     return inject(FornecedorService)
       .find(id)

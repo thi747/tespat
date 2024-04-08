@@ -9,14 +9,14 @@ export const sampleWithRequiredData: IMovimentacao = {
 
 export const sampleWithPartialData: IMovimentacao = {
   id: 896,
-  data: dayjs('2024-04-04'),
+  data: dayjs('2024-04-07'),
   tipo: 'SAIDA',
 };
 
 export const sampleWithFullData: IMovimentacao = {
   id: 30038,
   descricao: 'rough famously',
-  data: dayjs('2024-04-05'),
+  data: dayjs('2024-04-07'),
   tipo: 'ENTRADA',
 };
 

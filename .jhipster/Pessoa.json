@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240405205226"
+    "changelogDate": "20240408033209"
   },
   "applications": ["TESPat"],
   "fields": [
@@ -52,7 +52,8 @@
   "relationships": [
     {
       "otherEntityName": "movimentacao",
-      "relationshipName": "usuario",
+      "otherEntityRelationshipName": "pessoa",
+      "relationshipName": "movimentacao",
       "relationshipSide": "right",
       "relationshipType": "one-to-many"
     }

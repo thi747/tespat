@@ -29,7 +29,7 @@ describe('Fornecedor Service', () => {
       const returnedFromService = { ...requireRestSample };
       const expected = { ...sampleWithRequiredData };
 
-      service.find(123).subscribe(resp => (expectedResult = resp.body));
+      service.find('ABC').subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush(returnedFromService);
@@ -88,7 +88,7 @@ describe('Fornecedor Service', () => {
     it('should delete a Fornecedor', () => {
       const expected = true;
 
-      service.delete(123).subscribe(resp => (expectedResult = resp.ok));
+      service.delete('ABC').subscribe(resp => (expectedResult = resp.ok));
 
       const req = httpMock.expectOne({ method: 'DELETE' });
       req.flush({ status: 200 });
@@ -164,7 +164,7 @@ describe('Fornecedor Service', () => {
       });
 
       it('Should return false if one entity is null', () => {
-        const entity1 = { id: 123 };
+        const entity1 = { nome: 'ABC' };
         const entity2 = null;
 
         const compareResult1 = service.compareFornecedor(entity1, entity2);
@@ -175,8 +175,8 @@ describe('Fornecedor Service', () => {
       });
 
       it('Should return false if primaryKey differs', () => {
-        const entity1 = { id: 123 };
-        const entity2 = { id: 456 };
+        const entity1 = { nome: 'ABC' };
+        const entity2 = { nome: 'CBA' };
 
         const compareResult1 = service.compareFornecedor(entity1, entity2);
         const compareResult2 = service.compareFornecedor(entity2, entity1);
@@ -186,8 +186,8 @@ describe('Fornecedor Service', () => {
       });
 
       it('Should return false if primaryKey matches', () => {
-        const entity1 = { id: 123 };
-        const entity2 = { id: 123 };
+        const entity1 = { nome: 'ABC' };
+        const entity2 = { nome: 'ABC' };
 
         const compareResult1 = service.compareFornecedor(entity1, entity2);
         const compareResult2 = service.compareFornecedor(entity2, entity1);

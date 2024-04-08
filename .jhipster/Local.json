@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240405205026"
+    "changelogDate": "20240408033009"
   },
   "applications": ["TESPat"],
   "fields": [
@@ -25,10 +25,10 @@
   "relationships": [
     {
       "otherEntityName": "bem",
-      "relationshipName": "nome",
+      "otherEntityRelationshipName": "local",
+      "relationshipName": "bem",
       "relationshipSide": "right",
-      "relationshipType": "one-to-many",
-      "relationshipValidateRules": "required"
+      "relationshipType": "one-to-many"
     }
   ],
   "searchEngine": "no"

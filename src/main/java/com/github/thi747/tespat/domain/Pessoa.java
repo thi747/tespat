@@ -59,7 +59,7 @@ public class Pessoa implements Serializable, Persistable<String> {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "bem", "pessoa" }, allowSetters = true)
-    private Set<Movimentacao> usuarios = new HashSet<>();
+    private Set<Movimentacao> movimentacaos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -189,33 +189,33 @@ public class Pessoa implements Serializable, Persistable<String> {
         return this;
     }
 
-    public Set<Movimentacao> getUsuarios() {
-        return this.usuarios;
+    public Set<Movimentacao> getMovimentacaos() {
+        return this.movimentacaos;
     }
 
-    public void setUsuarios(Set<Movimentacao> movimentacaos) {
-        if (this.usuarios != null) {
-            this.usuarios.forEach(i -> i.setPessoa(null));
+    public void setMovimentacaos(Set<Movimentacao> movimentacaos) {
+        if (this.movimentacaos != null) {
+            this.movimentacaos.forEach(i -> i.setPessoa(null));
         }
         if (movimentacaos != null) {
             movimentacaos.forEach(i -> i.setPessoa(this));
         }
-        this.usuarios = movimentacaos;
+        this.movimentacaos = movimentacaos;
     }
 
-    public Pessoa usuarios(Set<Movimentacao> movimentacaos) {
-        this.setUsuarios(movimentacaos);
+    public Pessoa movimentacaos(Set<Movimentacao> movimentacaos) {
+        this.setMovimentacaos(movimentacaos);
         return this;
     }
 
-    public Pessoa addUsuario(Movimentacao movimentacao) {
-        this.usuarios.add(movimentacao);
+    public Pessoa addMovimentacao(Movimentacao movimentacao) {
+        this.movimentacaos.add(movimentacao);
         movimentacao.setPessoa(this);
         return this;
     }
 
-    public Pessoa removeUsuario(Movimentacao movimentacao) {
-        this.usuarios.remove(movimentacao);
+    public Pessoa removeMovimentacao(Movimentacao movimentacao) {
+        this.movimentacaos.remove(movimentacao);
         movimentacao.setPessoa(null);
         return this;
     }

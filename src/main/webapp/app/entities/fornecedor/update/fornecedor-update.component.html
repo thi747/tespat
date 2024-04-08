@@ -8,26 +8,17 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        @if (editForm.controls.id.value !== null) {
-          <div class="mb-3">
-            <label class="form-label" jhiTranslate="tesPatApp.fornecedor.id" for="field_id">Id</label>
-            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-            @if (editForm.get('id')!.invalid && (editForm.get('id')!.dirty || editForm.get('id')!.touched)) {
-              <div>
-                @if (editForm.get('id')?.errors?.required) {
-                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
-                }
-                <small class="form-text text-danger" [hidden]="!editForm.get('id')?.errors?.number" jhiTranslate="entity.validation.number"
-                  >This field should be a number.</small
-                >
-              </div>
-            }
-          </div>
-        }
-
         <div class="mb-3">
           <label class="form-label" jhiTranslate="tesPatApp.fornecedor.nome" for="field_nome">Nome</label>
-          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          <input
+            type="text"
+            class="form-control"
+            name="nome"
+            id="field_nome"
+            data-cy="nome"
+            formControlName="nome"
+            [readonly]="editForm.get('nome')!.disabled"
+          />
           @if (editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)) {
             <div>
               @if (editForm.get('nome')?.errors?.required) {

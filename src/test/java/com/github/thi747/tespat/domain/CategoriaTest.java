@@ -18,7 +18,7 @@ class CategoriaTest {
         Categoria categoria2 = new Categoria();
         assertThat(categoria1).isNotEqualTo(categoria2);
 
-        categoria2.setId(categoria1.getId());
+        categoria2.setNome(categoria1.getNome());
         assertThat(categoria1).isEqualTo(categoria2);
 
         categoria2 = getCategoriaSample2();
@@ -26,24 +26,34 @@ class CategoriaTest {
     }
 
     @Test
-    void nomeTest() throws Exception {
+    void hashCodeVerifier() throws Exception {
+        Categoria categoria = new Categoria();
+        assertThat(categoria.hashCode()).isZero();
+
+        Categoria categoria1 = getCategoriaSample1();
+        categoria.setNome(categoria1.getNome());
+        assertThat(categoria).hasSameHashCodeAs(categoria1);
+    }
+
+    @Test
+    void bemTest() throws Exception {
         Categoria categoria = getCategoriaRandomSampleGenerator();
         Bem bemBack = getBemRandomSampleGenerator();
 
-        categoria.addNome(bemBack);
-        assertThat(categoria.getNomes()).containsOnly(bemBack);
+        categoria.addBem(bemBack);
+        assertThat(categoria.getBems()).containsOnly(bemBack);
         assertThat(bemBack.getCategoria()).isEqualTo(categoria);
 
-        categoria.removeNome(bemBack);
-        assertThat(categoria.getNomes()).doesNotContain(bemBack);
+        categoria.removeBem(bemBack);
+        assertThat(categoria.getBems()).doesNotContain(bemBack);
         assertThat(bemBack.getCategoria()).isNull();
 
-        categoria.nomes(new HashSet<>(Set.of(bemBack)));
-        assertThat(categoria.getNomes()).containsOnly(bemBack);
+        categoria.bems(new HashSet<>(Set.of(bemBack)));
+        assertThat(categoria.getBems()).containsOnly(bemBack);
         assertThat(bemBack.getCategoria()).isEqualTo(categoria);
 
-        categoria.setNomes(new HashSet<>());
-        assertThat(categoria.getNomes()).doesNotContain(bemBack);
+        categoria.setBems(new HashSet<>());
+        assertThat(categoria.getBems()).doesNotContain(bemBack);
         assertThat(bemBack.getCategoria()).isNull();
     }
 }

@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.domain.Persistable;
 
 /**
  * A Categoria.
@@ -15,39 +17,26 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "categoria")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@JsonIgnoreProperties(value = { "new", "id" })
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Categoria implements Serializable {
+public class Categoria implements Serializable, Persistable<String> {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
     @NotNull
+    @Id
     @Column(name = "nome", nullable = false)
     private String nome;
 
+    @Transient
+    private boolean isPersisted;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "categoria", "fornecedor", "local", "patrimonios" }, allowSetters = true)
-    private Set<Bem> nomes = new HashSet<>();
+    @JsonIgnoreProperties(value = { "categoria", "fornecedor", "local", "movimentacaos" }, allowSetters = true)
+    private Set<Bem> bems = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public Categoria id(Long id) {
-        this.setId(id);
-        return this;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return this.nome;
@@ -62,33 +51,55 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
-    public Set<Bem> getNomes() {
-        return this.nomes;
+    @PostLoad
+    @PostPersist
+    public void updateEntityState() {
+        this.setIsPersisted();
     }
 
-    public void setNomes(Set<Bem> bems) {
-        if (this.nomes != null) {
-            this.nomes.forEach(i -> i.setCategoria(null));
+    @Override
+    public String getId() {
+        return this.nome;
+    }
+
+    @Transient
+    @Override
+    public boolean isNew() {
+        return !this.isPersisted;
+    }
+
+    public Categoria setIsPersisted() {
+        this.isPersisted = true;
+        return this;
+    }
+
+    public Set<Bem> getBems() {
+        return this.bems;
+    }
+
+    public void setBems(Set<Bem> bems) {
+        if (this.bems != null) {
+            this.bems.forEach(i -> i.setCategoria(null));
         }
         if (bems != null) {
             bems.forEach(i -> i.setCategoria(this));
         }
-        this.nomes = bems;
+        this.bems = bems;
     }
 
-    public Categoria nomes(Set<Bem> bems) {
-        this.setNomes(bems);
+    public Categoria bems(Set<Bem> bems) {
+        this.setBems(bems);
         return this;
     }
 
-    public Categoria addNome(Bem bem) {
-        this.nomes.add(bem);
+    public Categoria addBem(Bem bem) {
+        this.bems.add(bem);
         bem.setCategoria(this);
         return this;
     }
 
-    public Categoria removeNome(Bem bem) {
-        this.nomes.remove(bem);
+    public Categoria removeBem(Bem bem) {
+        this.bems.remove(bem);
         bem.setCategoria(null);
         return this;
     }
@@ -103,21 +114,19 @@ public class Categoria implements Serializable {
         if (!(o instanceof Categoria)) {
             return false;
         }
-        return getId() != null && getId().equals(((Categoria) o).getId());
+        return getNome() != null && getNome().equals(((Categoria) o).getNome());
     }
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-        return getClass().hashCode();
+        return Objects.hashCode(getNome());
     }
 
     // prettier-ignore
     @Override
     public String toString() {
         return "Categoria{" +
-            "id=" + getId() +
-            ", nome='" + getNome() + "'" +
+            "nome=" + getNome() +
             "}";
     }
 }

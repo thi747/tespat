@@ -55,7 +55,7 @@
           <dd>
             @if (bem.categoria) {
               <div>
-                <a [routerLink]="['/categoria', bem.categoria.id, 'view']">{{ bem.categoria.id }}</a>
+                <a [routerLink]="['/categoria', bem.categoria.nome, 'view']">{{ bem.categoria.nome }}</a>
               </div>
             }
           </dd>
@@ -63,7 +63,7 @@
           <dd>
             @if (bem.fornecedor) {
               <div>
-                <a [routerLink]="['/fornecedor', bem.fornecedor.id, 'view']">{{ bem.fornecedor.id }}</a>
+                <a [routerLink]="['/fornecedor', bem.fornecedor.nome, 'view']">{{ bem.fornecedor.nome }}</a>
               </div>
             }
           </dd>

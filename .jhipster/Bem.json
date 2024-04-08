@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240405204726"
+    "changelogDate": "20240408032709"
   },
   "applications": ["TESPat"],
   "fields": [
@@ -56,31 +56,31 @@
   "relationships": [
     {
       "otherEntityName": "categoria",
-      "otherEntityRelationshipName": "nome",
+      "otherEntityRelationshipName": "bem",
       "relationshipName": "categoria",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
       "otherEntityName": "fornecedor",
-      "otherEntityRelationshipName": "id",
+      "otherEntityRelationshipName": "bem",
       "relationshipName": "fornecedor",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
       "otherEntityName": "local",
-      "otherEntityRelationshipName": "nome",
+      "otherEntityRelationshipName": "bem",
       "relationshipName": "local",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
       "otherEntityName": "movimentacao",
-      "relationshipName": "patrimonio",
+      "otherEntityRelationshipName": "bem",
+      "relationshipName": "movimentacao",
       "relationshipSide": "right",
-      "relationshipType": "one-to-many",
-      "relationshipValidateRules": "required"
+      "relationshipType": "one-to-many"
     }
   ],
   "searchEngine": "no"

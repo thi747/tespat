@@ -65,24 +65,24 @@ class BemTest {
     }
 
     @Test
-    void patrimonioTest() throws Exception {
+    void movimentacaoTest() throws Exception {
         Bem bem = getBemRandomSampleGenerator();
         Movimentacao movimentacaoBack = getMovimentacaoRandomSampleGenerator();
 
-        bem.addPatrimonio(movimentacaoBack);
-        assertThat(bem.getPatrimonios()).containsOnly(movimentacaoBack);
+        bem.addMovimentacao(movimentacaoBack);
+        assertThat(bem.getMovimentacaos()).containsOnly(movimentacaoBack);
         assertThat(movimentacaoBack.getBem()).isEqualTo(bem);
 
-        bem.removePatrimonio(movimentacaoBack);
-        assertThat(bem.getPatrimonios()).doesNotContain(movimentacaoBack);
+        bem.removeMovimentacao(movimentacaoBack);
+        assertThat(bem.getMovimentacaos()).doesNotContain(movimentacaoBack);
         assertThat(movimentacaoBack.getBem()).isNull();
 
-        bem.patrimonios(new HashSet<>(Set.of(movimentacaoBack)));
-        assertThat(bem.getPatrimonios()).containsOnly(movimentacaoBack);
+        bem.movimentacaos(new HashSet<>(Set.of(movimentacaoBack)));
+        assertThat(bem.getMovimentacaos()).containsOnly(movimentacaoBack);
         assertThat(movimentacaoBack.getBem()).isEqualTo(bem);
 
-        bem.setPatrimonios(new HashSet<>());
-        assertThat(bem.getPatrimonios()).doesNotContain(movimentacaoBack);
+        bem.setMovimentacaos(new HashSet<>());
+        assertThat(bem.getMovimentacaos()).doesNotContain(movimentacaoBack);
         assertThat(movimentacaoBack.getBem()).isNull();
     }
 }

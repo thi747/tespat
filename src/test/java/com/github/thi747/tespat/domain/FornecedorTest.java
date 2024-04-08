@@ -18,7 +18,7 @@ class FornecedorTest {
         Fornecedor fornecedor2 = new Fornecedor();
         assertThat(fornecedor1).isNotEqualTo(fornecedor2);
 
-        fornecedor2.setId(fornecedor1.getId());
+        fornecedor2.setNome(fornecedor1.getNome());
         assertThat(fornecedor1).isEqualTo(fornecedor2);
 
         fornecedor2 = getFornecedorSample2();
@@ -26,24 +26,24 @@ class FornecedorTest {
     }
 
     @Test
-    void idTest() throws Exception {
+    void bemTest() throws Exception {
         Fornecedor fornecedor = getFornecedorRandomSampleGenerator();
         Bem bemBack = getBemRandomSampleGenerator();
 
-        fornecedor.addId(bemBack);
-        assertThat(fornecedor.getIds()).containsOnly(bemBack);
+        fornecedor.addBem(bemBack);
+        assertThat(fornecedor.getBems()).containsOnly(bemBack);
         assertThat(bemBack.getFornecedor()).isEqualTo(fornecedor);
 
-        fornecedor.removeId(bemBack);
-        assertThat(fornecedor.getIds()).doesNotContain(bemBack);
+        fornecedor.removeBem(bemBack);
+        assertThat(fornecedor.getBems()).doesNotContain(bemBack);
         assertThat(bemBack.getFornecedor()).isNull();
 
-        fornecedor.ids(new HashSet<>(Set.of(bemBack)));
-        assertThat(fornecedor.getIds()).containsOnly(bemBack);
+        fornecedor.bems(new HashSet<>(Set.of(bemBack)));
+        assertThat(fornecedor.getBems()).containsOnly(bemBack);
         assertThat(bemBack.getFornecedor()).isEqualTo(fornecedor);
 
-        fornecedor.setIds(new HashSet<>());
-        assertThat(fornecedor.getIds()).doesNotContain(bemBack);
+        fornecedor.setBems(new HashSet<>());
+        assertThat(fornecedor.getBems()).doesNotContain(bemBack);
         assertThat(bemBack.getFornecedor()).isNull();
     }
 }

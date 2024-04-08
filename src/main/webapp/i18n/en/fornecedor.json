@@ -17,7 +17,6 @@
       "detail": {
         "title": "Fornecedor"
       },
-      "id": "Id",
       "nome": "Nome",
       "descricao": "Descricao",
       "cpfOuCnpj": "Cpf Ou Cnpj",
@@ -26,7 +25,7 @@
       "endereco": "Endereco",
       "cidade": "Cidade",
       "estado": "Estado",
-      "id": "Id"
+      "bem": "Bem"
     }
   }
 }

@@ -51,16 +51,16 @@ public class CacheConfiguration {
             createCache(cm, com.github.thi747.tespat.domain.Authority.class.getName());
             createCache(cm, com.github.thi747.tespat.domain.User.class.getName() + ".authorities");
             createCache(cm, com.github.thi747.tespat.domain.Bem.class.getName());
-            createCache(cm, com.github.thi747.tespat.domain.Bem.class.getName() + ".patrimonios");
+            createCache(cm, com.github.thi747.tespat.domain.Bem.class.getName() + ".movimentacaos");
             createCache(cm, com.github.thi747.tespat.domain.Categoria.class.getName());
-            createCache(cm, com.github.thi747.tespat.domain.Categoria.class.getName() + ".nomes");
+            createCache(cm, com.github.thi747.tespat.domain.Categoria.class.getName() + ".bems");
             createCache(cm, com.github.thi747.tespat.domain.Fornecedor.class.getName());
-            createCache(cm, com.github.thi747.tespat.domain.Fornecedor.class.getName() + ".ids");
+            createCache(cm, com.github.thi747.tespat.domain.Fornecedor.class.getName() + ".bems");
             createCache(cm, com.github.thi747.tespat.domain.Local.class.getName());
-            createCache(cm, com.github.thi747.tespat.domain.Local.class.getName() + ".nomes");
+            createCache(cm, com.github.thi747.tespat.domain.Local.class.getName() + ".bems");
             createCache(cm, com.github.thi747.tespat.domain.Movimentacao.class.getName());
             createCache(cm, com.github.thi747.tespat.domain.Pessoa.class.getName());
-            createCache(cm, com.github.thi747.tespat.domain.Pessoa.class.getName() + ".usuarios");
+            createCache(cm, com.github.thi747.tespat.domain.Pessoa.class.getName() + ".movimentacaos");
             // jhipster-needle-ehcache-add-entry
         };
     }

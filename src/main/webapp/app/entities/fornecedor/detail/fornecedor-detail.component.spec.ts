@@ -18,7 +18,7 @@ describe('Fornecedor Management Detail Component', () => {
             {
               path: '**',
               component: FornecedorDetailComponent,
-              resolve: { fornecedor: () => of({ id: 123 }) },
+              resolve: { fornecedor: () => of({ nome: 'ABC' }) },
             },
           ],
           withComponentInputBinding(),
@@ -40,7 +40,7 @@ describe('Fornecedor Management Detail Component', () => {
       const instance = await harness.navigateByUrl('/', FornecedorDetailComponent);
 
       // THEN
-      expect(instance.fornecedor).toEqual(expect.objectContaining({ id: 123 }));
+      expect(instance.fornecedor).toEqual(expect.objectContaining({ nome: 'ABC' }));
     });
   });
 

@@ -7,8 +7,6 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { ICategoria, NewCategoria } from '../categoria.model';
 
-export type PartialUpdateCategoria = Partial<ICategoria> & Pick<ICategoria, 'id'>;
-
 export type EntityResponseType = HttpResponse<ICategoria>;
 export type EntityArrayResponseType = HttpResponse<ICategoria[]>;
 
@@ -23,15 +21,7 @@ export class CategoriaService {
     return this.http.post<ICategoria>(this.resourceUrl, categoria, { observe: 'response' });
   }
 
-  update(categoria: ICategoria): Observable<EntityResponseType> {
-    return this.http.put<ICategoria>(`${this.resourceUrl}/${this.getCategoriaIdentifier(categoria)}`, categoria, { observe: 'response' });
-  }
-
-  partialUpdate(categoria: PartialUpdateCategoria): Observable<EntityResponseType> {
-    return this.http.patch<ICategoria>(`${this.resourceUrl}/${this.getCategoriaIdentifier(categoria)}`, categoria, { observe: 'response' });
-  }
-
-  find(id: number): Observable<EntityResponseType> {
+  find(id: string): Observable<EntityResponseType> {
     return this.http.get<ICategoria>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
@@ -40,19 +30,19 @@ export class CategoriaService {
     return this.http.get<ICategoria[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
-  delete(id: number): Observable<HttpResponse<{}>> {
+  delete(id: string): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  getCategoriaIdentifier(categoria: Pick<ICategoria, 'id'>): number {
-    return categoria.id;
+  getCategoriaIdentifier(categoria: Pick<ICategoria, 'nome'>): string {
+    return categoria.nome;
   }
 
-  compareCategoria(o1: Pick<ICategoria, 'id'> | null, o2: Pick<ICategoria, 'id'> | null): boolean {
+  compareCategoria(o1: Pick<ICategoria, 'nome'> | null, o2: Pick<ICategoria, 'nome'> | null): boolean {
     return o1 && o2 ? this.getCategoriaIdentifier(o1) === this.getCategoriaIdentifier(o2) : o1 === o2;
   }
 
-  addCategoriaToCollectionIfMissing<Type extends Pick<ICategoria, 'id'>>(
+  addCategoriaToCollectionIfMissing<Type extends Pick<ICategoria, 'nome'>>(
     categoriaCollection: Type[],
     ...categoriasToCheck: (Type | null | undefined)[]
   ): Type[] {

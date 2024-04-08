@@ -26,24 +26,24 @@ class LocalTest {
     }
 
     @Test
-    void nomeTest() throws Exception {
+    void bemTest() throws Exception {
         Local local = getLocalRandomSampleGenerator();
         Bem bemBack = getBemRandomSampleGenerator();
 
-        local.addNome(bemBack);
-        assertThat(local.getNomes()).containsOnly(bemBack);
+        local.addBem(bemBack);
+        assertThat(local.getBems()).containsOnly(bemBack);
         assertThat(bemBack.getLocal()).isEqualTo(local);
 
-        local.removeNome(bemBack);
-        assertThat(local.getNomes()).doesNotContain(bemBack);
+        local.removeBem(bemBack);
+        assertThat(local.getBems()).doesNotContain(bemBack);
         assertThat(bemBack.getLocal()).isNull();
 
-        local.nomes(new HashSet<>(Set.of(bemBack)));
-        assertThat(local.getNomes()).containsOnly(bemBack);
+        local.bems(new HashSet<>(Set.of(bemBack)));
+        assertThat(local.getBems()).containsOnly(bemBack);
         assertThat(bemBack.getLocal()).isEqualTo(local);
 
-        local.setNomes(new HashSet<>());
-        assertThat(local.getNomes()).doesNotContain(bemBack);
+        local.setBems(new HashSet<>());
+        assertThat(local.getBems()).doesNotContain(bemBack);
         assertThat(bemBack.getLocal()).isNull();
     }
 }

@@ -58,10 +58,10 @@ describe('Bem Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Categoria query and add missing value', () => {
       const bem: IBem = { patrimonio: 456 };
-      const categoria: ICategoria = { id: 3928 };
+      const categoria: ICategoria = { nome: '115b157c-f54b-4ce3-9981-cced14f0c4ad' };
       bem.categoria = categoria;
 
-      const categoriaCollection: ICategoria[] = [{ id: 12236 }];
+      const categoriaCollection: ICategoria[] = [{ nome: '7b2c6a36-e597-4a23-a606-098d5e921a4f' }];
       jest.spyOn(categoriaService, 'query').mockReturnValue(of(new HttpResponse({ body: categoriaCollection })));
       const additionalCategorias = [categoria];
       const expectedCollection: ICategoria[] = [...additionalCategorias, ...categoriaCollection];
@@ -80,10 +80,10 @@ describe('Bem Management Update Component', () => {
 
     it('Should call Fornecedor query and add missing value', () => {
       const bem: IBem = { patrimonio: 456 };
-      const fornecedor: IFornecedor = { id: 9899 };
+      const fornecedor: IFornecedor = { nome: '4400fc67-4245-4a02-96a3-58827d254020' };
       bem.fornecedor = fornecedor;
 
-      const fornecedorCollection: IFornecedor[] = [{ id: 1545 }];
+      const fornecedorCollection: IFornecedor[] = [{ nome: '95a56ba7-09d0-4480-8c54-188c98fd88f3' }];
       jest.spyOn(fornecedorService, 'query').mockReturnValue(of(new HttpResponse({ body: fornecedorCollection })));
       const additionalFornecedors = [fornecedor];
       const expectedCollection: IFornecedor[] = [...additionalFornecedors, ...fornecedorCollection];
@@ -124,9 +124,9 @@ describe('Bem Management Update Component', () => {
 
     it('Should update editForm', () => {
       const bem: IBem = { patrimonio: 456 };
-      const categoria: ICategoria = { id: 23315 };
+      const categoria: ICategoria = { nome: '4e58b354-8af5-438b-a519-63adaaf334a4' };
       bem.categoria = categoria;
-      const fornecedor: IFornecedor = { id: 1815 };
+      const fornecedor: IFornecedor = { nome: 'fcc8b4e8-426b-43cf-be97-b98667924a64' };
       bem.fornecedor = fornecedor;
       const local: ILocal = { nome: '903c6776-aa27-4299-9332-df9f18b29b43' };
       bem.local = local;
@@ -212,8 +212,8 @@ describe('Bem Management Update Component', () => {
   describe('Compare relationships', () => {
     describe('compareCategoria', () => {
       it('Should forward to categoriaService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
+        const entity = { nome: 'ABC' };
+        const entity2 = { nome: 'CBA' };
         jest.spyOn(categoriaService, 'compareCategoria');
         comp.compareCategoria(entity, entity2);
         expect(categoriaService.compareCategoria).toHaveBeenCalledWith(entity, entity2);
@@ -222,8 +222,8 @@ describe('Bem Management Update Component', () => {
 
     describe('compareFornecedor', () => {
       it('Should forward to fornecedorService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
+        const entity = { nome: 'ABC' };
+        const entity2 = { nome: 'CBA' };
         jest.spyOn(fornecedorService, 'compareFornecedor');
         comp.compareFornecedor(entity, entity2);
         expect(fornecedorService.compareFornecedor).toHaveBeenCalledWith(entity, entity2);

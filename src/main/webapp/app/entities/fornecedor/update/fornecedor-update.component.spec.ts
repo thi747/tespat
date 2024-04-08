@@ -45,7 +45,7 @@ describe('Fornecedor Management Update Component', () => {
 
   describe('ngOnInit', () => {
     it('Should update editForm', () => {
-      const fornecedor: IFornecedor = { id: 456 };
+      const fornecedor: IFornecedor = { nome: 'CBA' };
 
       activatedRoute.data = of({ fornecedor });
       comp.ngOnInit();
@@ -58,7 +58,7 @@ describe('Fornecedor Management Update Component', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<IFornecedor>>();
-      const fornecedor = { id: 123 };
+      const fornecedor = { nome: 'ABC' };
       jest.spyOn(fornecedorFormService, 'getFornecedor').mockReturnValue(fornecedor);
       jest.spyOn(fornecedorService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
@@ -81,8 +81,8 @@ describe('Fornecedor Management Update Component', () => {
     it('Should call create service on save for new entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<IFornecedor>>();
-      const fornecedor = { id: 123 };
-      jest.spyOn(fornecedorFormService, 'getFornecedor').mockReturnValue({ id: null });
+      const fornecedor = { nome: 'ABC' };
+      jest.spyOn(fornecedorFormService, 'getFornecedor').mockReturnValue({ nome: null });
       jest.spyOn(fornecedorService, 'create').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ fornecedor: null });
@@ -104,7 +104,7 @@ describe('Fornecedor Management Update Component', () => {
     it('Should set isSaving to false on error', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<IFornecedor>>();
-      const fornecedor = { id: 123 };
+      const fornecedor = { nome: 'ABC' };
       jest.spyOn(fornecedorService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ fornecedor });

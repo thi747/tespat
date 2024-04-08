@@ -38,11 +38,11 @@ public class Movimentacao implements Serializable {
     private TipoMovimentacao tipo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "categoria", "fornecedor", "local", "patrimonios" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "categoria", "fornecedor", "local", "movimentacaos" }, allowSetters = true)
     private Bem bem;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "usuarios" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "movimentacaos" }, allowSetters = true)
     private Pessoa pessoa;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

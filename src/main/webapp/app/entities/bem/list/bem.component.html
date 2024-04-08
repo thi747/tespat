@@ -105,13 +105,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="categoria.id">
+            <th scope="col" jhiSortBy="categoria.nome">
               <div class="d-flex">
                 <span jhiTranslate="tesPatApp.bem.categoria">Categoria</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="fornecedor.id">
+            <th scope="col" jhiSortBy="fornecedor.nome">
               <div class="d-flex">
                 <span jhiTranslate="tesPatApp.bem.fornecedor">Fornecedor</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -144,14 +144,14 @@
               <td>
                 @if (bem.categoria) {
                   <div>
-                    <a [routerLink]="['/categoria', bem.categoria.id, 'view']">{{ bem.categoria.id }}</a>
+                    <a [routerLink]="['/categoria', bem.categoria.nome, 'view']">{{ bem.categoria.nome }}</a>
                   </div>
                 }
               </td>
               <td>
                 @if (bem.fornecedor) {
                   <div>
-                    <a [routerLink]="['/fornecedor', bem.fornecedor.id, 'view']">{{ bem.fornecedor.id }}</a>
+                    <a [routerLink]="['/fornecedor', bem.fornecedor.nome, 'view']">{{ bem.fornecedor.nome }}</a>
                   </div>
                 }
               </td>

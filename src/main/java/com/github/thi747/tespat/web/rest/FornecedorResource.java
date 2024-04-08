@@ -50,52 +50,53 @@ public class FornecedorResource {
     @PostMapping("")
     public ResponseEntity<Fornecedor> createFornecedor(@Valid @RequestBody Fornecedor fornecedor) throws URISyntaxException {
         log.debug("REST request to save Fornecedor : {}", fornecedor);
-        if (fornecedor.getId() != null) {
-            throw new BadRequestAlertException("A new fornecedor cannot already have an ID", ENTITY_NAME, "idexists");
+        if (fornecedorRepository.existsById(fornecedor.getNome())) {
+            throw new BadRequestAlertException("fornecedor already exists", ENTITY_NAME, "idexists");
         }
         fornecedor = fornecedorRepository.save(fornecedor);
-        return ResponseEntity.created(new URI("/api/fornecedors/" + fornecedor.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, fornecedor.getId().toString()))
+        return ResponseEntity.created(new URI("/api/fornecedors/" + fornecedor.getNome()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, fornecedor.getNome()))
             .body(fornecedor);
     }
 
     /**
-     * {@code PUT  /fornecedors/:id} : Updates an existing fornecedor.
+     * {@code PUT  /fornecedors/:nome} : Updates an existing fornecedor.
      *
-     * @param id the id of the fornecedor to save.
+     * @param nome the id of the fornecedor to save.
      * @param fornecedor the fornecedor to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated fornecedor,
      * or with status {@code 400 (Bad Request)} if the fornecedor is not valid,
      * or with status {@code 500 (Internal Server Error)} if the fornecedor couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/{id}")
+    @PutMapping("/{nome}")
     public ResponseEntity<Fornecedor> updateFornecedor(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "nome", required = false) final String nome,
         @Valid @RequestBody Fornecedor fornecedor
     ) throws URISyntaxException {
-        log.debug("REST request to update Fornecedor : {}, {}", id, fornecedor);
-        if (fornecedor.getId() == null) {
+        log.debug("REST request to update Fornecedor : {}, {}", nome, fornecedor);
+        if (fornecedor.getNome() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, fornecedor.getId())) {
+        if (!Objects.equals(nome, fornecedor.getNome())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!fornecedorRepository.existsById(id)) {
+        if (!fornecedorRepository.existsById(nome)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
+        fornecedor.setIsPersisted();
         fornecedor = fornecedorRepository.save(fornecedor);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, fornecedor.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, fornecedor.getNome()))
             .body(fornecedor);
     }
 
     /**
-     * {@code PATCH  /fornecedors/:id} : Partial updates given fields of an existing fornecedor, field will ignore if it is null
+     * {@code PATCH  /fornecedors/:nome} : Partial updates given fields of an existing fornecedor, field will ignore if it is null
      *
-     * @param id the id of the fornecedor to save.
+     * @param nome the id of the fornecedor to save.
      * @param fornecedor the fornecedor to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated fornecedor,
      * or with status {@code 400 (Bad Request)} if the fornecedor is not valid,
@@ -103,29 +104,26 @@ public class FornecedorResource {
      * or with status {@code 500 (Internal Server Error)} if the fornecedor couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/{nome}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Fornecedor> partialUpdateFornecedor(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "nome", required = false) final String nome,
         @NotNull @RequestBody Fornecedor fornecedor
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Fornecedor partially : {}, {}", id, fornecedor);
-        if (fornecedor.getId() == null) {
+        log.debug("REST request to partial update Fornecedor partially : {}, {}", nome, fornecedor);
+        if (fornecedor.getNome() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, fornecedor.getId())) {
+        if (!Objects.equals(nome, fornecedor.getNome())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!fornecedorRepository.existsById(id)) {
+        if (!fornecedorRepository.existsById(nome)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
         Optional<Fornecedor> result = fornecedorRepository
-            .findById(fornecedor.getId())
+            .findById(fornecedor.getNome())
             .map(existingFornecedor -> {
-                if (fornecedor.getNome() != null) {
-                    existingFornecedor.setNome(fornecedor.getNome());
-                }
                 if (fornecedor.getDescricao() != null) {
                     existingFornecedor.setDescricao(fornecedor.getDescricao());
                 }
@@ -154,7 +152,7 @@ public class FornecedorResource {
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, fornecedor.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, fornecedor.getNome())
         );
     }
 
@@ -176,7 +174,7 @@ public class FornecedorResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the fornecedor, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Fornecedor> getFornecedor(@PathVariable("id") Long id) {
+    public ResponseEntity<Fornecedor> getFornecedor(@PathVariable("id") String id) {
         log.debug("REST request to get Fornecedor : {}", id);
         Optional<Fornecedor> fornecedor = fornecedorRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(fornecedor);
@@ -189,11 +187,9 @@ public class FornecedorResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFornecedor(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteFornecedor(@PathVariable("id") String id) {
         log.debug("REST request to delete Fornecedor : {}", id);
         fornecedorRepository.deleteById(id);
-        return ResponseEntity.noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-            .build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

@@ -17,9 +17,8 @@
       "detail": {
         "title": "Categoria"
       },
-      "id": "ID",
       "nome": "Nome",
-      "nome": "Nome"
+      "bem": "Bem"
     }
   }
 }

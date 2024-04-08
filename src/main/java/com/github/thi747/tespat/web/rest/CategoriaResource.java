@@ -4,11 +4,9 @@ import com.github.thi747.tespat.domain.Categoria;
 import com.github.thi747.tespat.repository.CategoriaRepository;
 import com.github.thi747.tespat.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,91 +48,13 @@ public class CategoriaResource {
     @PostMapping("")
     public ResponseEntity<Categoria> createCategoria(@Valid @RequestBody Categoria categoria) throws URISyntaxException {
         log.debug("REST request to save Categoria : {}", categoria);
-        if (categoria.getId() != null) {
-            throw new BadRequestAlertException("A new categoria cannot already have an ID", ENTITY_NAME, "idexists");
+        if (categoriaRepository.existsById(categoria.getNome())) {
+            throw new BadRequestAlertException("categoria already exists", ENTITY_NAME, "idexists");
         }
         categoria = categoriaRepository.save(categoria);
-        return ResponseEntity.created(new URI("/api/categorias/" + categoria.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, categoria.getId().toString()))
+        return ResponseEntity.created(new URI("/api/categorias/" + categoria.getNome()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, categoria.getNome()))
             .body(categoria);
-    }
-
-    /**
-     * {@code PUT  /categorias/:id} : Updates an existing categoria.
-     *
-     * @param id the id of the categoria to save.
-     * @param categoria the categoria to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated categoria,
-     * or with status {@code 400 (Bad Request)} if the categoria is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the categoria couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PutMapping("/{id}")
-    public ResponseEntity<Categoria> updateCategoria(
-        @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody Categoria categoria
-    ) throws URISyntaxException {
-        log.debug("REST request to update Categoria : {}, {}", id, categoria);
-        if (categoria.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, categoria.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!categoriaRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        categoria = categoriaRepository.save(categoria);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, categoria.getId().toString()))
-            .body(categoria);
-    }
-
-    /**
-     * {@code PATCH  /categorias/:id} : Partial updates given fields of an existing categoria, field will ignore if it is null
-     *
-     * @param id the id of the categoria to save.
-     * @param categoria the categoria to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated categoria,
-     * or with status {@code 400 (Bad Request)} if the categoria is not valid,
-     * or with status {@code 404 (Not Found)} if the categoria is not found,
-     * or with status {@code 500 (Internal Server Error)} if the categoria couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Categoria> partialUpdateCategoria(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Categoria categoria
-    ) throws URISyntaxException {
-        log.debug("REST request to partial update Categoria partially : {}, {}", id, categoria);
-        if (categoria.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, categoria.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!categoriaRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<Categoria> result = categoriaRepository
-            .findById(categoria.getId())
-            .map(existingCategoria -> {
-                if (categoria.getNome() != null) {
-                    existingCategoria.setNome(categoria.getNome());
-                }
-
-                return existingCategoria;
-            })
-            .map(categoriaRepository::save);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, categoria.getId().toString())
-        );
     }
 
     /**
@@ -155,7 +75,7 @@ public class CategoriaResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the categoria, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> getCategoria(@PathVariable("id") Long id) {
+    public ResponseEntity<Categoria> getCategoria(@PathVariable("id") String id) {
         log.debug("REST request to get Categoria : {}", id);
         Optional<Categoria> categoria = categoriaRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(categoria);
@@ -168,11 +88,9 @@ public class CategoriaResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategoria(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteCategoria(@PathVariable("id") String id) {
         log.debug("REST request to delete Categoria : {}", id);
         categoriaRepository.deleteById(id);
-        return ResponseEntity.noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-            .build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 }

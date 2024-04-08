@@ -1,4 +1,3 @@
-
 application {
   config {
     baseName TESPat
@@ -18,18 +17,15 @@ enum TipoConservacao {
   RUIM
   INSERVIVEL
 }
-
 enum TipoMovimentacao {
   ENTRADA
   SAIDA
 }
-
 enum TipoStatus {
   USO
   ESTOQUE
   MANUTENCAO
 }
-
 entity Bem {
   @Id patrimonio Long required
   nome String required
@@ -42,11 +38,9 @@ entity Bem {
   estado TipoConservacao
   status TipoStatus
 }
-
 entity Categoria {
   @Id nome String required
 }
-
 entity Fornecedor {
   @Id nome String required
   descricao String
@@ -57,20 +51,17 @@ entity Fornecedor {
   cidade String
   estado String minlength(2) maxlength(2)
 }
-
 entity Local {
   @Id nome String required
   descricao String
   sala String
 }
-
 entity Movimentacao {
   @Id id Long required
   descricao String
   data LocalDate
   tipo TipoMovimentacao required
 }
-
 entity Pessoa {
   @Id usuario String required
   nome String required
@@ -81,11 +72,10 @@ entity Pessoa {
   cidade String
   estado String minlength(2) maxlength(2)
 }
-
-relationship OneToMany {
-  Categoria{nome} to Bem
-  Fornecedor{nome} to Bem
-  Local{nome required} to Bem
-  Bem{patrimonio required} to Movimentacao
-  Pessoa{usuario} to Movimentacao
+relationship ManyToOne {
+  Bem to Categoria
+  Bem to Fornecedor
+  Bem to Local
+  Movimentacao to Bem
+  Movimentacao to Pessoa
 }

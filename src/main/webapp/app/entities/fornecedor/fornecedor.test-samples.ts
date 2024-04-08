@@ -1,36 +1,32 @@
 import { IFornecedor, NewFornecedor } from './fornecedor.model';
 
 export const sampleWithRequiredData: IFornecedor = {
-  id: 31813,
-  nome: 'petal loop gently',
-  cpfOuCnpj: 'betweenXXXX',
+  nome: '4ea2a0ed-2b71-4ea4-9e00-d635bb1678b9',
+  cpfOuCnpj: 'finallyXXXX',
 };
 
 export const sampleWithPartialData: IFornecedor = {
-  id: 27550,
-  nome: 'breed',
-  descricao: 'naive scattering',
-  cpfOuCnpj: 'excepting jovial',
-  endereco: 'corny er compute',
-  cidade: 'alight ha euthanize',
-};
-
-export const sampleWithFullData: IFornecedor = {
-  id: 8316,
-  nome: 'tiptoe memorialise blah',
-  descricao: 'descriptive through silence',
+  nome: '785b52af-1ec6-4df6-b93a-5d273c42b3f0',
   cpfOuCnpj: 'hen voluntarily coolly',
   email: 'Gardner_Spinka@yahoo.com',
   telefone: 'energetically formal',
   endereco: 'putrefy commonly',
-  cidade: 'why factor',
-  estado: 'to',
+};
+
+export const sampleWithFullData: IFornecedor = {
+  nome: '6c91394f-8131-46f5-8469-7b57d612cbc1',
+  descricao: 'huge video circular',
+  cpfOuCnpj: 'gah recklessly willfully',
+  email: 'Dallas67@gmail.com',
+  telefone: 'surmise mmm and',
+  endereco: 'oh if playfully',
+  cidade: 'although finally address',
+  estado: 'un',
 };
 
 export const sampleWithNewData: NewFornecedor = {
-  nome: 'around unlined',
-  cpfOuCnpj: 'video circular',
-  id: null,
+  cpfOuCnpj: 'an follow successfully',
+  nome: null,
 };
 
 Object.freeze(sampleWithNewData);

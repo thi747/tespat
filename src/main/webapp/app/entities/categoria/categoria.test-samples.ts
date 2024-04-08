@@ -1,23 +1,19 @@
 import { ICategoria, NewCategoria } from './categoria.model';
 
 export const sampleWithRequiredData: ICategoria = {
-  id: 4070,
-  nome: 'whereas ouch',
+  nome: '14ceea3b-5810-472e-91b6-83b27592fc14',
 };
 
 export const sampleWithPartialData: ICategoria = {
-  id: 29549,
-  nome: 'onto aha leading',
+  nome: 'cd23a254-db0d-4cf1-a6ed-e655cefb3362',
 };
 
 export const sampleWithFullData: ICategoria = {
-  id: 20827,
-  nome: 'inside',
+  nome: 'a3666059-82ac-462a-98d6-b927d80452ab',
 };
 
 export const sampleWithNewData: NewCategoria = {
-  nome: 'enterprise sandy grounded',
-  id: null,
+  nome: null,
 };
 
 Object.freeze(sampleWithNewData);

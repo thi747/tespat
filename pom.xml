@@ -5,17 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.github.thi747.tespat</groupId>
-  <artifactId>tespat</artifactId>
+  <artifactId>tes-pat</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>TESPat</name>
-  <description>App TESPat para controle de patrimonio</description>
-  <developers>
-    <developer>
-      <name>Thiago Elias Santos</name>
-      <email>thi747@gmail.com</email>
-    </developer>
-  </developers>
+  <name>TES Pat</name>
+  <description>Description for TES Pat</description>
 
   <properties>
     <!--

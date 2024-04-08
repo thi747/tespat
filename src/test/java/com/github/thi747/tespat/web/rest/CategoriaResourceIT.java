@@ -1,7 +1,6 @@
 package com.github.thi747.tespat.web.rest;
 
 import static com.github.thi747.tespat.domain.CategoriaAsserts.*;
-import static com.github.thi747.tespat.web.rest.TestUtil.createUpdateProxyForBean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -12,8 +11,7 @@ import com.github.thi747.tespat.IntegrationTest;
 import com.github.thi747.tespat.domain.Categoria;
 import com.github.thi747.tespat.repository.CategoriaRepository;
 import jakarta.persistence.EntityManager;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class CategoriaResourceIT {
 
-    private static final String DEFAULT_NOME = "AAAAAAAAAA";
-    private static final String UPDATED_NOME = "BBBBBBBBBB";
-
     private static final String ENTITY_API_URL = "/api/categorias";
-    private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
-
-    private static Random random = new Random();
-    private static AtomicLong longCount = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+    private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{nome}";
 
     @Autowired
     private ObjectMapper om;
@@ -61,7 +53,7 @@ class CategoriaResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Categoria createEntity(EntityManager em) {
-        Categoria categoria = new Categoria().nome(DEFAULT_NOME);
+        Categoria categoria = new Categoria().nome(UUID.randomUUID().toString());
         return categoria;
     }
 
@@ -72,7 +64,7 @@ class CategoriaResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Categoria createUpdatedEntity(EntityManager em) {
-        Categoria categoria = new Categoria().nome(UPDATED_NOME);
+        Categoria categoria = new Categoria().nome(UUID.randomUUID().toString());
         return categoria;
     }
 
@@ -105,7 +97,7 @@ class CategoriaResourceIT {
     @Transactional
     void createCategoriaWithExistingId() throws Exception {
         // Create the Categoria with an existing ID
-        categoria.setId(1L);
+        categoriaRepository.saveAndFlush(categoria);
 
         long databaseSizeBeforeCreate = getRepositoryCount();
 
@@ -120,48 +112,32 @@ class CategoriaResourceIT {
 
     @Test
     @Transactional
-    void checkNomeIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        categoria.setNome(null);
-
-        // Create the Categoria, which fails.
-
-        restCategoriaMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(categoria)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllCategorias() throws Exception {
         // Initialize the database
+        categoria.setNome(UUID.randomUUID().toString());
         categoriaRepository.saveAndFlush(categoria);
 
         // Get all the categoriaList
         restCategoriaMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+            .perform(get(ENTITY_API_URL + "?sort=nome,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(categoria.getId().intValue())))
-            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)));
+            .andExpect(jsonPath("$.[*].nome").value(hasItem(categoria.getNome())));
     }
 
     @Test
     @Transactional
     void getCategoria() throws Exception {
         // Initialize the database
+        categoria.setNome(UUID.randomUUID().toString());
         categoriaRepository.saveAndFlush(categoria);
 
         // Get the categoria
         restCategoriaMockMvc
-            .perform(get(ENTITY_API_URL_ID, categoria.getId()))
+            .perform(get(ENTITY_API_URL_ID, categoria.getNome()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(categoria.getId().intValue()))
-            .andExpect(jsonPath("$.nome").value(DEFAULT_NOME));
+            .andExpect(jsonPath("$.nome").value(categoria.getNome()));
     }
 
     @Test
@@ -173,205 +149,16 @@ class CategoriaResourceIT {
 
     @Test
     @Transactional
-    void putExistingCategoria() throws Exception {
-        // Initialize the database
-        categoriaRepository.saveAndFlush(categoria);
-
-        long databaseSizeBeforeUpdate = getRepositoryCount();
-
-        // Update the categoria
-        Categoria updatedCategoria = categoriaRepository.findById(categoria.getId()).orElseThrow();
-        // Disconnect from session so that the updates on updatedCategoria are not directly saved in db
-        em.detach(updatedCategoria);
-        updatedCategoria.nome(UPDATED_NOME);
-
-        restCategoriaMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, updatedCategoria.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(updatedCategoria))
-            )
-            .andExpect(status().isOk());
-
-        // Validate the Categoria in the database
-        assertSameRepositoryCount(databaseSizeBeforeUpdate);
-        assertPersistedCategoriaToMatchAllProperties(updatedCategoria);
-    }
-
-    @Test
-    @Transactional
-    void putNonExistingCategoria() throws Exception {
-        long databaseSizeBeforeUpdate = getRepositoryCount();
-        categoria.setId(longCount.incrementAndGet());
-
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restCategoriaMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, categoria.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(categoria))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the Categoria in the database
-        assertSameRepositoryCount(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void putWithIdMismatchCategoria() throws Exception {
-        long databaseSizeBeforeUpdate = getRepositoryCount();
-        categoria.setId(longCount.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restCategoriaMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, longCount.incrementAndGet())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(categoria))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the Categoria in the database
-        assertSameRepositoryCount(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void putWithMissingIdPathParamCategoria() throws Exception {
-        long databaseSizeBeforeUpdate = getRepositoryCount();
-        categoria.setId(longCount.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restCategoriaMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(categoria)))
-            .andExpect(status().isMethodNotAllowed());
-
-        // Validate the Categoria in the database
-        assertSameRepositoryCount(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void partialUpdateCategoriaWithPatch() throws Exception {
-        // Initialize the database
-        categoriaRepository.saveAndFlush(categoria);
-
-        long databaseSizeBeforeUpdate = getRepositoryCount();
-
-        // Update the categoria using partial update
-        Categoria partialUpdatedCategoria = new Categoria();
-        partialUpdatedCategoria.setId(categoria.getId());
-
-        partialUpdatedCategoria.nome(UPDATED_NOME);
-
-        restCategoriaMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedCategoria.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(partialUpdatedCategoria))
-            )
-            .andExpect(status().isOk());
-
-        // Validate the Categoria in the database
-
-        assertSameRepositoryCount(databaseSizeBeforeUpdate);
-        assertCategoriaUpdatableFieldsEquals(
-            createUpdateProxyForBean(partialUpdatedCategoria, categoria),
-            getPersistedCategoria(categoria)
-        );
-    }
-
-    @Test
-    @Transactional
-    void fullUpdateCategoriaWithPatch() throws Exception {
-        // Initialize the database
-        categoriaRepository.saveAndFlush(categoria);
-
-        long databaseSizeBeforeUpdate = getRepositoryCount();
-
-        // Update the categoria using partial update
-        Categoria partialUpdatedCategoria = new Categoria();
-        partialUpdatedCategoria.setId(categoria.getId());
-
-        partialUpdatedCategoria.nome(UPDATED_NOME);
-
-        restCategoriaMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedCategoria.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(partialUpdatedCategoria))
-            )
-            .andExpect(status().isOk());
-
-        // Validate the Categoria in the database
-
-        assertSameRepositoryCount(databaseSizeBeforeUpdate);
-        assertCategoriaUpdatableFieldsEquals(partialUpdatedCategoria, getPersistedCategoria(partialUpdatedCategoria));
-    }
-
-    @Test
-    @Transactional
-    void patchNonExistingCategoria() throws Exception {
-        long databaseSizeBeforeUpdate = getRepositoryCount();
-        categoria.setId(longCount.incrementAndGet());
-
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restCategoriaMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, categoria.getId())
-                    .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(categoria))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the Categoria in the database
-        assertSameRepositoryCount(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void patchWithIdMismatchCategoria() throws Exception {
-        long databaseSizeBeforeUpdate = getRepositoryCount();
-        categoria.setId(longCount.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restCategoriaMockMvc
-            .perform(
-                patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
-                    .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(categoria))
-            )
-            .andExpect(status().isBadRequest());
-
-        // Validate the Categoria in the database
-        assertSameRepositoryCount(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
-    void patchWithMissingIdPathParamCategoria() throws Exception {
-        long databaseSizeBeforeUpdate = getRepositoryCount();
-        categoria.setId(longCount.incrementAndGet());
-
-        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-        restCategoriaMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(categoria)))
-            .andExpect(status().isMethodNotAllowed());
-
-        // Validate the Categoria in the database
-        assertSameRepositoryCount(databaseSizeBeforeUpdate);
-    }
-
-    @Test
-    @Transactional
     void deleteCategoria() throws Exception {
         // Initialize the database
+        categoria.setNome(UUID.randomUUID().toString());
         categoriaRepository.saveAndFlush(categoria);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 
         // Delete the categoria
         restCategoriaMockMvc
-            .perform(delete(ENTITY_API_URL_ID, categoria.getId()).accept(MediaType.APPLICATION_JSON))
+            .perform(delete(ENTITY_API_URL_ID, categoria.getNome()).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -395,7 +182,7 @@ class CategoriaResourceIT {
     }
 
     protected Categoria getPersistedCategoria(Categoria categoria) {
-        return categoriaRepository.findById(categoria.getId()).orElseThrow();
+        return categoriaRepository.findById(categoria.getNome()).orElseThrow();
     }
 
     protected void assertPersistedCategoriaToMatchAllProperties(Categoria expectedCategoria) {

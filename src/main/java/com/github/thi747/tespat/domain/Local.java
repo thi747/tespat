@@ -38,8 +38,8 @@ public class Local implements Serializable, Persistable<String> {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "local")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "categoria", "fornecedor", "local", "patrimonios" }, allowSetters = true)
-    private Set<Bem> nomes = new HashSet<>();
+    @JsonIgnoreProperties(value = { "categoria", "fornecedor", "local", "movimentacaos" }, allowSetters = true)
+    private Set<Bem> bems = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -104,33 +104,33 @@ public class Local implements Serializable, Persistable<String> {
         return this;
     }
 
-    public Set<Bem> getNomes() {
-        return this.nomes;
+    public Set<Bem> getBems() {
+        return this.bems;
     }
 
-    public void setNomes(Set<Bem> bems) {
-        if (this.nomes != null) {
-            this.nomes.forEach(i -> i.setLocal(null));
+    public void setBems(Set<Bem> bems) {
+        if (this.bems != null) {
+            this.bems.forEach(i -> i.setLocal(null));
         }
         if (bems != null) {
             bems.forEach(i -> i.setLocal(this));
         }
-        this.nomes = bems;
+        this.bems = bems;
     }
 
-    public Local nomes(Set<Bem> bems) {
-        this.setNomes(bems);
+    public Local bems(Set<Bem> bems) {
+        this.setBems(bems);
         return this;
     }
 
-    public Local addNome(Bem bem) {
-        this.nomes.add(bem);
+    public Local addBem(Bem bem) {
+        this.bems.add(bem);
         bem.setLocal(this);
         return this;
     }
 
-    public Local removeNome(Bem bem) {
-        this.nomes.remove(bem);
+    public Local removeBem(Bem bem) {
+        this.bems.remove(bem);
         bem.setLocal(null);
         return this;
     }

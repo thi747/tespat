@@ -1,6 +1,5 @@
 export interface IFornecedor {
-  id: number;
-  nome?: string | null;
+  nome: string;
   descricao?: string | null;
   cpfOuCnpj?: string | null;
   email?: string | null;
@@ -10,4 +9,4 @@ export interface IFornecedor {
   estado?: string | null;
 }
 
-export type NewFornecedor = Omit<IFornecedor, 'id'> & { id: null };
+export type NewFornecedor = Omit<IFornecedor, 'nome'> & { nome: null };

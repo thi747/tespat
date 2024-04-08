@@ -1,17 +1,11 @@
 package com.github.thi747.tespat.domain;
 
-import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class FornecedorTestSamples {
 
-    private static final Random random = new Random();
-    private static final AtomicLong longCount = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
-
     public static Fornecedor getFornecedorSample1() {
         return new Fornecedor()
-            .id(1L)
             .nome("nome1")
             .descricao("descricao1")
             .cpfOuCnpj("cpfOuCnpj1")
@@ -24,7 +18,6 @@ public class FornecedorTestSamples {
 
     public static Fornecedor getFornecedorSample2() {
         return new Fornecedor()
-            .id(2L)
             .nome("nome2")
             .descricao("descricao2")
             .cpfOuCnpj("cpfOuCnpj2")
@@ -37,7 +30,6 @@ public class FornecedorTestSamples {
 
     public static Fornecedor getFornecedorRandomSampleGenerator() {
         return new Fornecedor()
-            .id(longCount.incrementAndGet())
             .nome(UUID.randomUUID().toString())
             .descricao(UUID.randomUUID().toString())
             .cpfOuCnpj(UUID.randomUUID().toString())

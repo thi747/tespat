@@ -152,7 +152,7 @@
           >
             <option [ngValue]="null"></option>
             @for (categoriaOption of categoriasSharedCollection; track $index) {
-              <option [ngValue]="categoriaOption">{{ categoriaOption.id }}</option>
+              <option [ngValue]="categoriaOption">{{ categoriaOption.nome }}</option>
             }
           </select>
         </div>
@@ -169,7 +169,7 @@
           >
             <option [ngValue]="null"></option>
             @for (fornecedorOption of fornecedorsSharedCollection; track $index) {
-              <option [ngValue]="fornecedorOption">{{ fornecedorOption.id }}</option>
+              <option [ngValue]="fornecedorOption">{{ fornecedorOption.nome }}</option>
             }
           </select>
         </div>

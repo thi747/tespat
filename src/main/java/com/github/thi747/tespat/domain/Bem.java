@@ -60,21 +60,21 @@ public class Bem implements Serializable {
     private TipoStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "nomes" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "bems" }, allowSetters = true)
     private Categoria categoria;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "ids" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "bems" }, allowSetters = true)
     private Fornecedor fornecedor;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "nomes" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "bems" }, allowSetters = true)
     private Local local;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bem")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "bem", "pessoa" }, allowSetters = true)
-    private Set<Movimentacao> patrimonios = new HashSet<>();
+    private Set<Movimentacao> movimentacaos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -247,33 +247,33 @@ public class Bem implements Serializable {
         return this;
     }
 
-    public Set<Movimentacao> getPatrimonios() {
-        return this.patrimonios;
+    public Set<Movimentacao> getMovimentacaos() {
+        return this.movimentacaos;
     }
 
-    public void setPatrimonios(Set<Movimentacao> movimentacaos) {
-        if (this.patrimonios != null) {
-            this.patrimonios.forEach(i -> i.setBem(null));
+    public void setMovimentacaos(Set<Movimentacao> movimentacaos) {
+        if (this.movimentacaos != null) {
+            this.movimentacaos.forEach(i -> i.setBem(null));
         }
         if (movimentacaos != null) {
             movimentacaos.forEach(i -> i.setBem(this));
         }
-        this.patrimonios = movimentacaos;
+        this.movimentacaos = movimentacaos;
     }
 
-    public Bem patrimonios(Set<Movimentacao> movimentacaos) {
-        this.setPatrimonios(movimentacaos);
+    public Bem movimentacaos(Set<Movimentacao> movimentacaos) {
+        this.setMovimentacaos(movimentacaos);
         return this;
     }
 
-    public Bem addPatrimonio(Movimentacao movimentacao) {
-        this.patrimonios.add(movimentacao);
+    public Bem addMovimentacao(Movimentacao movimentacao) {
+        this.movimentacaos.add(movimentacao);
         movimentacao.setBem(this);
         return this;
     }
 
-    public Bem removePatrimonio(Movimentacao movimentacao) {
-        this.patrimonios.remove(movimentacao);
+    public Bem removeMovimentacao(Movimentacao movimentacao) {
+        this.movimentacaos.remove(movimentacao);
         movimentacao.setBem(null);
         return this;
     }

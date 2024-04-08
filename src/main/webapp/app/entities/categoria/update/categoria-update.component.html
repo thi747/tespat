@@ -8,16 +8,17 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        @if (editForm.controls.id.value !== null) {
-          <div class="mb-3">
-            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-          </div>
-        }
-
         <div class="mb-3">
           <label class="form-label" jhiTranslate="tesPatApp.categoria.nome" for="field_nome">Nome</label>
-          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          <input
+            type="text"
+            class="form-control"
+            name="nome"
+            id="field_nome"
+            data-cy="nome"
+            formControlName="nome"
+            [readonly]="editForm.get('nome')!.disabled"
+          />
           @if (editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)) {
             <div>
               @if (editForm.get('nome')?.errors?.required) {

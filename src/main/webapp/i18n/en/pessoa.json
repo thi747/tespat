@@ -25,7 +25,7 @@
       "endereco": "Endereco",
       "cidade": "Cidade",
       "estado": "Estado",
-      "usuario": "Usuario"
+      "movimentacao": "Movimentacao"
     }
   }
 }

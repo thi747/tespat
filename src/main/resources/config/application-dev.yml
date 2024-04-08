@@ -43,13 +43,6 @@ spring:
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    database: H2
-    show-sql: true
-    hibernate:
-      ddl-auto: none
-      use-new-id-generator-mappings: true
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
@@ -92,7 +85,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: M2I4YTI5NmVhZjA2YjY2NDU0NWM4MTQzMmFhOGQ3MzdmOTFlODZkZTc4ODE2MDRhNDc4ZWY4OWMyZThlYjRjNWQxMGRjMmZlN2IyMjM1NjRmN2QxODAwZjNhZWE3NzdkNjczYmFhN2JjOGMyYmJiODkyN2QzN2IxZjg2NzExOWY=
+        base64-secret: NTc1ODJkN2E1NjU0ZWE1NjAwYWNkNWEwZTExODFiMDMwNTljOWI1YjQ3N2IxNWQ1N2IwMzI2NmExMjMzYThjMzllMGNkOGYyNDRkOWM4NWEwMmM2MWEwZTBmZjA5NmE2NTA5ZDIxM2ZiYTkzYmIyNWE0MjlkZGMxNGNiNzZhNmY=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

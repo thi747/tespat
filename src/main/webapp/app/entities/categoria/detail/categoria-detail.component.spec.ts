@@ -18,7 +18,7 @@ describe('Categoria Management Detail Component', () => {
             {
               path: '**',
               component: CategoriaDetailComponent,
-              resolve: { categoria: () => of({ id: 123 }) },
+              resolve: { categoria: () => of({ nome: 'ABC' }) },
             },
           ],
           withComponentInputBinding(),
@@ -40,7 +40,7 @@ describe('Categoria Management Detail Component', () => {
       const instance = await harness.navigateByUrl('/', CategoriaDetailComponent);
 
       // THEN
-      expect(instance.categoria).toEqual(expect.objectContaining({ id: 123 }));
+      expect(instance.categoria).toEqual(expect.objectContaining({ nome: 'ABC' }));
     });
   });
 

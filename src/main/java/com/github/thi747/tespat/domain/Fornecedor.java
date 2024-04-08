@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.domain.Persistable;
 
 /**
  * A Fornecedor.
@@ -15,18 +16,14 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "fornecedor")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@JsonIgnoreProperties(value = { "new", "id" })
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Fornecedor implements Serializable {
+public class Fornecedor implements Serializable, Persistable<String> {
 
     private static final long serialVersionUID = 1L;
 
     @NotNull
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
-
-    @NotNull
     @Column(name = "nome", nullable = false)
     private String nome;
 
@@ -54,25 +51,15 @@ public class Fornecedor implements Serializable {
     @Column(name = "estado", length = 2)
     private String estado;
 
+    @Transient
+    private boolean isPersisted;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "fornecedor")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "categoria", "fornecedor", "local", "patrimonios" }, allowSetters = true)
-    private Set<Bem> ids = new HashSet<>();
+    @JsonIgnoreProperties(value = { "categoria", "fornecedor", "local", "movimentacaos" }, allowSetters = true)
+    private Set<Bem> bems = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public Fornecedor id(Long id) {
-        this.setId(id);
-        return this;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return this.nome;
@@ -178,33 +165,55 @@ public class Fornecedor implements Serializable {
         this.estado = estado;
     }
 
-    public Set<Bem> getIds() {
-        return this.ids;
+    @PostLoad
+    @PostPersist
+    public void updateEntityState() {
+        this.setIsPersisted();
     }
 
-    public void setIds(Set<Bem> bems) {
-        if (this.ids != null) {
-            this.ids.forEach(i -> i.setFornecedor(null));
+    @Override
+    public String getId() {
+        return this.nome;
+    }
+
+    @Transient
+    @Override
+    public boolean isNew() {
+        return !this.isPersisted;
+    }
+
+    public Fornecedor setIsPersisted() {
+        this.isPersisted = true;
+        return this;
+    }
+
+    public Set<Bem> getBems() {
+        return this.bems;
+    }
+
+    public void setBems(Set<Bem> bems) {
+        if (this.bems != null) {
+            this.bems.forEach(i -> i.setFornecedor(null));
         }
         if (bems != null) {
             bems.forEach(i -> i.setFornecedor(this));
         }
-        this.ids = bems;
+        this.bems = bems;
     }
 
-    public Fornecedor ids(Set<Bem> bems) {
-        this.setIds(bems);
+    public Fornecedor bems(Set<Bem> bems) {
+        this.setBems(bems);
         return this;
     }
 
-    public Fornecedor addId(Bem bem) {
-        this.ids.add(bem);
+    public Fornecedor addBem(Bem bem) {
+        this.bems.add(bem);
         bem.setFornecedor(this);
         return this;
     }
 
-    public Fornecedor removeId(Bem bem) {
-        this.ids.remove(bem);
+    public Fornecedor removeBem(Bem bem) {
+        this.bems.remove(bem);
         bem.setFornecedor(null);
         return this;
     }
@@ -219,7 +228,7 @@ public class Fornecedor implements Serializable {
         if (!(o instanceof Fornecedor)) {
             return false;
         }
-        return getId() != null && getId().equals(((Fornecedor) o).getId());
+        return getNome() != null && getNome().equals(((Fornecedor) o).getNome());
     }
 
     @Override
@@ -232,8 +241,7 @@ public class Fornecedor implements Serializable {
     @Override
     public String toString() {
         return "Fornecedor{" +
-            "id=" + getId() +
-            ", nome='" + getNome() + "'" +
+            "nome=" + getNome() +
             ", descricao='" + getDescricao() + "'" +
             ", cpfOuCnpj='" + getCpfOuCnpj() + "'" +
             ", email='" + getEmail() + "'" +

@@ -8,7 +8,7 @@
     <!--
         Added the constraints for entity Movimentacao.
     -->
-    <changeSet id="20240405205126-2" author="jhipster">
+    <changeSet id="20240408033109-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="bem_patrimonio"
                                  baseTableName="movimentacao"

@@ -1,6 +1,5 @@
 export interface ICategoria {
-  id: number;
-  nome?: string | null;
+  nome: string;
 }
 
-export type NewCategoria = Omit<ICategoria, 'id'> & { id: null };
+export type NewCategoria = Omit<ICategoria, 'nome'> & { nome: null };

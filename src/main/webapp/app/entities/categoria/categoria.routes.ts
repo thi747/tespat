@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
-import { ASC } from 'app/config/navigation.constants';
 import { CategoriaComponent } from './list/categoria.component';
 import { CategoriaDetailComponent } from './detail/categoria-detail.component';
 import { CategoriaUpdateComponent } from './update/categoria-update.component';
@@ -11,13 +10,11 @@ const categoriaRoute: Routes = [
   {
     path: '',
     component: CategoriaComponent,
-    data: {
-      defaultSort: 'id,' + ASC,
-    },
+    data: {},
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':id/view',
+    path: ':nome/view',
     component: CategoriaDetailComponent,
     resolve: {
       categoria: CategoriaResolve,
@@ -26,14 +23,6 @@ const categoriaRoute: Routes = [
   },
   {
     path: 'new',
-    component: CategoriaUpdateComponent,
-    resolve: {
-      categoria: CategoriaResolve,
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/edit',
     component: CategoriaUpdateComponent,
     resolve: {
       categoria: CategoriaResolve,

@@ -45,7 +45,7 @@ describe('Categoria Management Update Component', () => {
 
   describe('ngOnInit', () => {
     it('Should update editForm', () => {
-      const categoria: ICategoria = { id: 456 };
+      const categoria: ICategoria = { nome: 'CBA' };
 
       activatedRoute.data = of({ categoria });
       comp.ngOnInit();
@@ -55,34 +55,11 @@ describe('Categoria Management Update Component', () => {
   });
 
   describe('save', () => {
-    it('Should call update service on save for existing entity', () => {
-      // GIVEN
-      const saveSubject = new Subject<HttpResponse<ICategoria>>();
-      const categoria = { id: 123 };
-      jest.spyOn(categoriaFormService, 'getCategoria').mockReturnValue(categoria);
-      jest.spyOn(categoriaService, 'update').mockReturnValue(saveSubject);
-      jest.spyOn(comp, 'previousState');
-      activatedRoute.data = of({ categoria });
-      comp.ngOnInit();
-
-      // WHEN
-      comp.save();
-      expect(comp.isSaving).toEqual(true);
-      saveSubject.next(new HttpResponse({ body: categoria }));
-      saveSubject.complete();
-
-      // THEN
-      expect(categoriaFormService.getCategoria).toHaveBeenCalled();
-      expect(comp.previousState).toHaveBeenCalled();
-      expect(categoriaService.update).toHaveBeenCalledWith(expect.objectContaining(categoria));
-      expect(comp.isSaving).toEqual(false);
-    });
-
     it('Should call create service on save for new entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<ICategoria>>();
-      const categoria = { id: 123 };
-      jest.spyOn(categoriaFormService, 'getCategoria').mockReturnValue({ id: null });
+      const categoria = { nome: 'ABC' };
+      jest.spyOn(categoriaFormService, 'getCategoria').mockReturnValue({ nome: null });
       jest.spyOn(categoriaService, 'create').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ categoria: null });
@@ -99,26 +76,6 @@ describe('Categoria Management Update Component', () => {
       expect(categoriaService.create).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).toHaveBeenCalled();
-    });
-
-    it('Should set isSaving to false on error', () => {
-      // GIVEN
-      const saveSubject = new Subject<HttpResponse<ICategoria>>();
-      const categoria = { id: 123 };
-      jest.spyOn(categoriaService, 'update').mockReturnValue(saveSubject);
-      jest.spyOn(comp, 'previousState');
-      activatedRoute.data = of({ categoria });
-      comp.ngOnInit();
-
-      // WHEN
-      comp.save();
-      expect(comp.isSaving).toEqual(true);
-      saveSubject.error('This is an error!');
-
-      // THEN
-      expect(categoriaService.update).toHaveBeenCalled();
-      expect(comp.isSaving).toEqual(false);
-      expect(comp.previousState).not.toHaveBeenCalled();
     });
   });
 });

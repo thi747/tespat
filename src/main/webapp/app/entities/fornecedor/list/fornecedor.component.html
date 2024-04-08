@@ -35,13 +35,6 @@
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
           <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-            <th scope="col" jhiSortBy="id">
-              <div class="d-flex">
-                <span jhiTranslate="tesPatApp.fornecedor.id">Id</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
             <th scope="col" jhiSortBy="nome">
               <div class="d-flex">
                 <span jhiTranslate="tesPatApp.fornecedor.nome">Nome</span>
@@ -102,12 +95,11 @@
           </tr>
         </thead>
         <tbody>
-          @for (fornecedor of fornecedors; track trackId) {
+          @for (fornecedor of fornecedors; track trackNome) {
             <tr data-cy="entityTable">
               <td>
-                <a [routerLink]="['/fornecedor', fornecedor.id, 'view']">{{ fornecedor.id }}</a>
+                <a [routerLink]="['/fornecedor', fornecedor.nome, 'view']">{{ fornecedor.nome }}</a>
               </td>
-              <td>{{ fornecedor.nome }}</td>
               <td>{{ fornecedor.descricao }}</td>
               <td>{{ fornecedor.cpfOuCnpj }}</td>
               <td>{{ fornecedor.email }}</td>
@@ -117,12 +109,12 @@
               <td>{{ fornecedor.estado }}</td>
               <td class="text-end">
                 <div class="btn-group">
-                  <a [routerLink]="['/fornecedor', fornecedor.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                  <a [routerLink]="['/fornecedor', fornecedor.nome, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                     <fa-icon icon="eye"></fa-icon>
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                   </a>
 
-                  <a [routerLink]="['/fornecedor', fornecedor.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                  <a [routerLink]="['/fornecedor', fornecedor.nome, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                     <fa-icon icon="pencil-alt"></fa-icon>
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                   </a>

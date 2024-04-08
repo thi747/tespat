@@ -26,24 +26,24 @@ class PessoaTest {
     }
 
     @Test
-    void usuarioTest() throws Exception {
+    void movimentacaoTest() throws Exception {
         Pessoa pessoa = getPessoaRandomSampleGenerator();
         Movimentacao movimentacaoBack = getMovimentacaoRandomSampleGenerator();
 
-        pessoa.addUsuario(movimentacaoBack);
-        assertThat(pessoa.getUsuarios()).containsOnly(movimentacaoBack);
+        pessoa.addMovimentacao(movimentacaoBack);
+        assertThat(pessoa.getMovimentacaos()).containsOnly(movimentacaoBack);
         assertThat(movimentacaoBack.getPessoa()).isEqualTo(pessoa);
 
-        pessoa.removeUsuario(movimentacaoBack);
-        assertThat(pessoa.getUsuarios()).doesNotContain(movimentacaoBack);
+        pessoa.removeMovimentacao(movimentacaoBack);
+        assertThat(pessoa.getMovimentacaos()).doesNotContain(movimentacaoBack);
         assertThat(movimentacaoBack.getPessoa()).isNull();
 
-        pessoa.usuarios(new HashSet<>(Set.of(movimentacaoBack)));
-        assertThat(pessoa.getUsuarios()).containsOnly(movimentacaoBack);
+        pessoa.movimentacaos(new HashSet<>(Set.of(movimentacaoBack)));
+        assertThat(pessoa.getMovimentacaos()).containsOnly(movimentacaoBack);
         assertThat(movimentacaoBack.getPessoa()).isEqualTo(pessoa);
 
-        pessoa.setUsuarios(new HashSet<>());
-        assertThat(pessoa.getUsuarios()).doesNotContain(movimentacaoBack);
+        pessoa.setMovimentacaos(new HashSet<>());
+        assertThat(pessoa.getMovimentacaos()).doesNotContain(movimentacaoBack);
         assertThat(movimentacaoBack.getPessoa()).isNull();
     }
 }

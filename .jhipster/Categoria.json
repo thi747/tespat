@@ -1,23 +1,26 @@
 {
   "annotations": {
-    "changelogDate": "20240405204826"
+    "changelogDate": "20240408032809"
   },
   "applications": ["TESPat"],
   "fields": [
     {
       "fieldName": "nome",
       "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": ["required"],
+      "options": {
+        "id": true
+      }
     }
   ],
   "name": "Categoria",
   "relationships": [
     {
       "otherEntityName": "bem",
-      "relationshipName": "nome",
+      "otherEntityRelationshipName": "categoria",
+      "relationshipName": "bem",
       "relationshipSide": "right",
-      "relationshipType": "one-to-many",
-      "relationshipValidateRules": "required"
+      "relationshipType": "one-to-many"
     }
   ],
   "searchEngine": "no"
