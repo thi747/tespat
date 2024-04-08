@@ -31,62 +31,61 @@ enum TipoStatus {
 }
 
 entity Bem {
-	@Id patrimonio Long required
-    nome String required
-    descricao String
-    observacoes String
-    numeroDeSerie String
-    dataAquisicao LocalDate
-    valorCompra Double
-    valorAtual Double
-    estado TipoConservacao
-    status TipoStatus
+  @Id patrimonio Long required
+  nome String required
+  descricao String
+  observacoes String
+  numeroDeSerie String
+  dataAquisicao LocalDate
+  valorCompra Double
+  valorAtual Double
+  estado TipoConservacao
+  status TipoStatus
 }
 
 entity Categoria {
-    nome String required
+  @Id nome String required
 }
 
 entity Fornecedor {
-	@Id id Long required
-    nome String required
-    descricao String
-    cpfOuCnpj String required minlength(11)
-    email String
-	telefone String
-    endereco String
-    cidade String
-    estado String minlength(2) maxlength(2)
+  @Id nome String required
+  descricao String
+  cpfOuCnpj String required minlength(11)
+  email String
+  telefone String
+  endereco String
+  cidade String
+  estado String minlength(2) maxlength(2)
 }
 
 entity Local {
-    @Id nome String required
-    descricao String
-    sala String
+  @Id nome String required
+  descricao String
+  sala String
 }
 
 entity Movimentacao {
-	@Id id Long required
-    descricao String
-    data LocalDate
-  	tipo TipoMovimentacao required
+  @Id id Long required
+  descricao String
+  data LocalDate
+  tipo TipoMovimentacao required
 }
 
 entity Pessoa {
-	@Id usuario String required
-    nome String required
-    cpf String required minlength(11)
-    email String
-    ativo Boolean required
-    endereco String
-    cidade String
-    estado String minlength(2) maxlength(2)
+  @Id usuario String required
+  nome String required
+  cpf String required minlength(11)
+  email String
+  ativo Boolean required
+  endereco String
+  cidade String
+  estado String minlength(2) maxlength(2)
 }
 
-relationship ManyToOne {
-	Bem to Categoria{nome required}
-	Bem to Fornecedor{id}
-    Bem to Local{nome required}
-    Movimentacao to Bem{patrimonio required}
-    Movimentacao to Pessoa{usuario}
+relationship OneToMany {
+  Categoria{nome} to Bem
+  Fornecedor{nome} to Bem
+  Local{nome required} to Bem
+  Bem{patrimonio required} to Movimentacao
+  Pessoa{usuario} to Movimentacao
 }
