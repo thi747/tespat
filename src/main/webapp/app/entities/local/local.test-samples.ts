@@ -1,22 +1,27 @@
 import { ILocal, NewLocal } from './local.model';
 
 export const sampleWithRequiredData: ILocal = {
-  nome: 'd5915ad6-914d-4564-a15e-2d4dac7dfe2f',
+  id: 5368,
+  nome: 'cheerfully',
 };
 
 export const sampleWithPartialData: ILocal = {
-  nome: '16b0b61f-c580-4f4e-9c18-adbb6a9e3208',
-  descricao: 'until',
+  id: 26397,
+  nome: 'enormously',
+  descricao: 'seemingly till mushy',
+  sala: 'recognition humiliate',
 };
 
 export const sampleWithFullData: ILocal = {
-  nome: '2e60216a-fb49-46bd-be2c-704d1afcf8e0',
-  descricao: 'plump dazzling',
-  sala: 'soap ugh duh',
+  id: 3908,
+  nome: 'lest than',
+  descricao: 'big',
+  sala: 'miserably gosh',
 };
 
 export const sampleWithNewData: NewLocal = {
-  nome: null,
+  nome: 'ensconce ultimately',
+  id: null,
 };
 
 Object.freeze(sampleWithNewData);

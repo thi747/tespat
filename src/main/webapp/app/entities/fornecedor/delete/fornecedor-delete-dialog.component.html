@@ -1,5 +1,5 @@
 @if (fornecedor) {
-  <form name="deleteForm" (ngSubmit)="confirmDelete(fornecedor.nome!)">
+  <form name="deleteForm" (ngSubmit)="confirmDelete(fornecedor.id!)">
     <div class="modal-header">
       <h4 class="modal-title" data-cy="fornecedorDeleteDialogHeading" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
 
@@ -8,8 +8,8 @@
 
     <div class="modal-body">
       <jhi-alert-error></jhi-alert-error>
-      <p id="jhi-delete-fornecedor-heading" jhiTranslate="tesPatApp.fornecedor.delete.question" [translateValues]="{ id: fornecedor.nome }">
-        Are you sure you want to delete Fornecedor {{ fornecedor.nome }}?
+      <p id="jhi-delete-fornecedor-heading" jhiTranslate="tesPatApp.fornecedor.delete.question" [translateValues]="{ id: fornecedor.id }">
+        Are you sure you want to delete Fornecedor {{ fornecedor.id }}?
       </p>
     </div>
 

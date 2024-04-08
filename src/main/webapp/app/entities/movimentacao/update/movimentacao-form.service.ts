@@ -18,8 +18,8 @@ type MovimentacaoFormDefaults = Pick<NewMovimentacao, 'id'>;
 
 type MovimentacaoFormGroupContent = {
   id: FormControl<IMovimentacao['id'] | NewMovimentacao['id']>;
-  descricao: FormControl<IMovimentacao['descricao']>;
   data: FormControl<IMovimentacao['data']>;
+  descricao: FormControl<IMovimentacao['descricao']>;
   tipo: FormControl<IMovimentacao['tipo']>;
   bem: FormControl<IMovimentacao['bem']>;
   pessoa: FormControl<IMovimentacao['pessoa']>;
@@ -42,13 +42,17 @@ export class MovimentacaoFormService {
           validators: [Validators.required],
         },
       ),
-      descricao: new FormControl(movimentacaoRawValue.descricao),
       data: new FormControl(movimentacaoRawValue.data),
+      descricao: new FormControl(movimentacaoRawValue.descricao),
       tipo: new FormControl(movimentacaoRawValue.tipo, {
         validators: [Validators.required],
       }),
-      bem: new FormControl(movimentacaoRawValue.bem),
-      pessoa: new FormControl(movimentacaoRawValue.pessoa),
+      bem: new FormControl(movimentacaoRawValue.bem, {
+        validators: [Validators.required],
+      }),
+      pessoa: new FormControl(movimentacaoRawValue.pessoa, {
+        validators: [Validators.required],
+      }),
     });
   }
 

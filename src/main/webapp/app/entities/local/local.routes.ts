@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
+import { ASC } from 'app/config/navigation.constants';
 import { LocalComponent } from './list/local.component';
 import { LocalDetailComponent } from './detail/local-detail.component';
 import { LocalUpdateComponent } from './update/local-update.component';
@@ -10,11 +11,13 @@ const localRoute: Routes = [
   {
     path: '',
     component: LocalComponent,
-    data: {},
+    data: {
+      defaultSort: 'id,' + ASC,
+    },
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':nome/view',
+    path: ':id/view',
     component: LocalDetailComponent,
     resolve: {
       local: LocalResolve,
@@ -30,7 +33,7 @@ const localRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':nome/edit',
+    path: ':id/edit',
     component: LocalUpdateComponent,
     resolve: {
       local: LocalResolve,

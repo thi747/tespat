@@ -19,16 +19,17 @@ describe('Bem Form Service', () => {
 
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
+            id: expect.any(Object),
             patrimonio: expect.any(Object),
             nome: expect.any(Object),
             descricao: expect.any(Object),
-            observacoes: expect.any(Object),
             numeroDeSerie: expect.any(Object),
             dataAquisicao: expect.any(Object),
             valorCompra: expect.any(Object),
             valorAtual: expect.any(Object),
             estado: expect.any(Object),
             status: expect.any(Object),
+            observacoes: expect.any(Object),
             categoria: expect.any(Object),
             fornecedor: expect.any(Object),
             local: expect.any(Object),
@@ -41,16 +42,17 @@ describe('Bem Form Service', () => {
 
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
+            id: expect.any(Object),
             patrimonio: expect.any(Object),
             nome: expect.any(Object),
             descricao: expect.any(Object),
-            observacoes: expect.any(Object),
             numeroDeSerie: expect.any(Object),
             dataAquisicao: expect.any(Object),
             valorCompra: expect.any(Object),
             valorAtual: expect.any(Object),
             estado: expect.any(Object),
             status: expect.any(Object),
+            observacoes: expect.any(Object),
             categoria: expect.any(Object),
             fornecedor: expect.any(Object),
             local: expect.any(Object),
@@ -86,22 +88,22 @@ describe('Bem Form Service', () => {
     });
 
     describe('resetForm', () => {
-      it('passing IBem should not enable patrimonio FormControl', () => {
+      it('passing IBem should not enable id FormControl', () => {
         const formGroup = service.createBemFormGroup();
-        expect(formGroup.controls.patrimonio.disabled).toBe(true);
+        expect(formGroup.controls.id.disabled).toBe(true);
 
         service.resetForm(formGroup, sampleWithRequiredData);
 
-        expect(formGroup.controls.patrimonio.disabled).toBe(true);
+        expect(formGroup.controls.id.disabled).toBe(true);
       });
 
-      it('passing NewBem should disable patrimonio FormControl', () => {
+      it('passing NewBem should disable id FormControl', () => {
         const formGroup = service.createBemFormGroup(sampleWithRequiredData);
-        expect(formGroup.controls.patrimonio.disabled).toBe(true);
+        expect(formGroup.controls.id.disabled).toBe(true);
 
-        service.resetForm(formGroup, { patrimonio: null });
+        service.resetForm(formGroup, { id: null });
 
-        expect(formGroup.controls.patrimonio.disabled).toBe(true);
+        expect(formGroup.controls.id.disabled).toBe(true);
       });
     });
   });

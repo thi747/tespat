@@ -4,23 +4,35 @@ import static com.github.thi747.tespat.domain.MovimentacaoAsserts.*;
 import static com.github.thi747.tespat.web.rest.TestUtil.createUpdateProxyForBean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.thi747.tespat.IntegrationTest;
+import com.github.thi747.tespat.domain.Bem;
 import com.github.thi747.tespat.domain.Movimentacao;
+import com.github.thi747.tespat.domain.Pessoa;
 import com.github.thi747.tespat.domain.enumeration.TipoMovimentacao;
 import com.github.thi747.tespat.repository.MovimentacaoRepository;
+import com.github.thi747.tespat.service.MovimentacaoService;
+import com.github.thi747.tespat.service.dto.MovimentacaoDTO;
+import com.github.thi747.tespat.service.mapper.MovimentacaoMapper;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,15 +42,16 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link MovimentacaoResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class MovimentacaoResourceIT {
 
-    private static final String DEFAULT_DESCRICAO = "AAAAAAAAAA";
-    private static final String UPDATED_DESCRICAO = "BBBBBBBBBB";
-
     private static final LocalDate DEFAULT_DATA = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATA = LocalDate.now(ZoneId.systemDefault());
+
+    private static final String DEFAULT_DESCRICAO = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRICAO = "BBBBBBBBBB";
 
     private static final TipoMovimentacao DEFAULT_TIPO = TipoMovimentacao.ENTRADA;
     private static final TipoMovimentacao UPDATED_TIPO = TipoMovimentacao.SAIDA;
@@ -55,6 +68,15 @@ class MovimentacaoResourceIT {
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
 
+    @Mock
+    private MovimentacaoRepository movimentacaoRepositoryMock;
+
+    @Autowired
+    private MovimentacaoMapper movimentacaoMapper;
+
+    @Mock
+    private MovimentacaoService movimentacaoServiceMock;
+
     @Autowired
     private EntityManager em;
 
@@ -70,7 +92,27 @@ class MovimentacaoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Movimentacao createEntity(EntityManager em) {
-        Movimentacao movimentacao = new Movimentacao().descricao(DEFAULT_DESCRICAO).data(DEFAULT_DATA).tipo(DEFAULT_TIPO);
+        Movimentacao movimentacao = new Movimentacao().data(DEFAULT_DATA).descricao(DEFAULT_DESCRICAO).tipo(DEFAULT_TIPO);
+        // Add required entity
+        Bem bem;
+        if (TestUtil.findAll(em, Bem.class).isEmpty()) {
+            bem = BemResourceIT.createEntity(em);
+            em.persist(bem);
+            em.flush();
+        } else {
+            bem = TestUtil.findAll(em, Bem.class).get(0);
+        }
+        movimentacao.setBem(bem);
+        // Add required entity
+        Pessoa pessoa;
+        if (TestUtil.findAll(em, Pessoa.class).isEmpty()) {
+            pessoa = PessoaResourceIT.createEntity(em);
+            em.persist(pessoa);
+            em.flush();
+        } else {
+            pessoa = TestUtil.findAll(em, Pessoa.class).get(0);
+        }
+        movimentacao.setPessoa(pessoa);
         return movimentacao;
     }
 
@@ -81,7 +123,27 @@ class MovimentacaoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Movimentacao createUpdatedEntity(EntityManager em) {
-        Movimentacao movimentacao = new Movimentacao().descricao(UPDATED_DESCRICAO).data(UPDATED_DATA).tipo(UPDATED_TIPO);
+        Movimentacao movimentacao = new Movimentacao().data(UPDATED_DATA).descricao(UPDATED_DESCRICAO).tipo(UPDATED_TIPO);
+        // Add required entity
+        Bem bem;
+        if (TestUtil.findAll(em, Bem.class).isEmpty()) {
+            bem = BemResourceIT.createUpdatedEntity(em);
+            em.persist(bem);
+            em.flush();
+        } else {
+            bem = TestUtil.findAll(em, Bem.class).get(0);
+        }
+        movimentacao.setBem(bem);
+        // Add required entity
+        Pessoa pessoa;
+        if (TestUtil.findAll(em, Pessoa.class).isEmpty()) {
+            pessoa = PessoaResourceIT.createUpdatedEntity(em);
+            em.persist(pessoa);
+            em.flush();
+        } else {
+            pessoa = TestUtil.findAll(em, Pessoa.class).get(0);
+        }
+        movimentacao.setPessoa(pessoa);
         return movimentacao;
     }
 
@@ -95,18 +157,20 @@ class MovimentacaoResourceIT {
     void createMovimentacao() throws Exception {
         long databaseSizeBeforeCreate = getRepositoryCount();
         // Create the Movimentacao
-        var returnedMovimentacao = om.readValue(
+        MovimentacaoDTO movimentacaoDTO = movimentacaoMapper.toDto(movimentacao);
+        var returnedMovimentacaoDTO = om.readValue(
             restMovimentacaoMockMvc
-                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(movimentacao)))
+                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(movimentacaoDTO)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse()
                 .getContentAsString(),
-            Movimentacao.class
+            MovimentacaoDTO.class
         );
 
         // Validate the Movimentacao in the database
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
+        var returnedMovimentacao = movimentacaoMapper.toEntity(returnedMovimentacaoDTO);
         assertMovimentacaoUpdatableFieldsEquals(returnedMovimentacao, getPersistedMovimentacao(returnedMovimentacao));
     }
 
@@ -115,12 +179,13 @@ class MovimentacaoResourceIT {
     void createMovimentacaoWithExistingId() throws Exception {
         // Create the Movimentacao with an existing ID
         movimentacao.setId(1L);
+        MovimentacaoDTO movimentacaoDTO = movimentacaoMapper.toDto(movimentacao);
 
         long databaseSizeBeforeCreate = getRepositoryCount();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restMovimentacaoMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(movimentacao)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(movimentacaoDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Movimentacao in the database
@@ -135,9 +200,10 @@ class MovimentacaoResourceIT {
         movimentacao.setTipo(null);
 
         // Create the Movimentacao, which fails.
+        MovimentacaoDTO movimentacaoDTO = movimentacaoMapper.toDto(movimentacao);
 
         restMovimentacaoMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(movimentacao)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(movimentacaoDTO)))
             .andExpect(status().isBadRequest());
 
         assertSameRepositoryCount(databaseSizeBeforeTest);
@@ -155,9 +221,26 @@ class MovimentacaoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(movimentacao.getId().intValue())))
-            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)))
             .andExpect(jsonPath("$.[*].data").value(hasItem(DEFAULT_DATA.toString())))
+            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)))
             .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllMovimentacaosWithEagerRelationshipsIsEnabled() throws Exception {
+        when(movimentacaoServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restMovimentacaoMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(movimentacaoServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllMovimentacaosWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(movimentacaoServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restMovimentacaoMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(movimentacaoRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -172,8 +255,8 @@ class MovimentacaoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(movimentacao.getId().intValue()))
-            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO))
             .andExpect(jsonPath("$.data").value(DEFAULT_DATA.toString()))
+            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO))
             .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO.toString()));
     }
 
@@ -196,13 +279,14 @@ class MovimentacaoResourceIT {
         Movimentacao updatedMovimentacao = movimentacaoRepository.findById(movimentacao.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedMovimentacao are not directly saved in db
         em.detach(updatedMovimentacao);
-        updatedMovimentacao.descricao(UPDATED_DESCRICAO).data(UPDATED_DATA).tipo(UPDATED_TIPO);
+        updatedMovimentacao.data(UPDATED_DATA).descricao(UPDATED_DESCRICAO).tipo(UPDATED_TIPO);
+        MovimentacaoDTO movimentacaoDTO = movimentacaoMapper.toDto(updatedMovimentacao);
 
         restMovimentacaoMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedMovimentacao.getId())
+                put(ENTITY_API_URL_ID, movimentacaoDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(updatedMovimentacao))
+                    .content(om.writeValueAsBytes(movimentacaoDTO))
             )
             .andExpect(status().isOk());
 
@@ -217,12 +301,15 @@ class MovimentacaoResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         movimentacao.setId(longCount.incrementAndGet());
 
+        // Create the Movimentacao
+        MovimentacaoDTO movimentacaoDTO = movimentacaoMapper.toDto(movimentacao);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restMovimentacaoMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, movimentacao.getId())
+                put(ENTITY_API_URL_ID, movimentacaoDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(movimentacao))
+                    .content(om.writeValueAsBytes(movimentacaoDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -236,12 +323,15 @@ class MovimentacaoResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         movimentacao.setId(longCount.incrementAndGet());
 
+        // Create the Movimentacao
+        MovimentacaoDTO movimentacaoDTO = movimentacaoMapper.toDto(movimentacao);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restMovimentacaoMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(movimentacao))
+                    .content(om.writeValueAsBytes(movimentacaoDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -255,9 +345,12 @@ class MovimentacaoResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         movimentacao.setId(longCount.incrementAndGet());
 
+        // Create the Movimentacao
+        MovimentacaoDTO movimentacaoDTO = movimentacaoMapper.toDto(movimentacao);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restMovimentacaoMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(movimentacao)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(movimentacaoDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Movimentacao in the database
@@ -276,7 +369,7 @@ class MovimentacaoResourceIT {
         Movimentacao partialUpdatedMovimentacao = new Movimentacao();
         partialUpdatedMovimentacao.setId(movimentacao.getId());
 
-        partialUpdatedMovimentacao.descricao(UPDATED_DESCRICAO).data(UPDATED_DATA).tipo(UPDATED_TIPO);
+        partialUpdatedMovimentacao.data(UPDATED_DATA).descricao(UPDATED_DESCRICAO).tipo(UPDATED_TIPO);
 
         restMovimentacaoMockMvc
             .perform(
@@ -307,7 +400,7 @@ class MovimentacaoResourceIT {
         Movimentacao partialUpdatedMovimentacao = new Movimentacao();
         partialUpdatedMovimentacao.setId(movimentacao.getId());
 
-        partialUpdatedMovimentacao.descricao(UPDATED_DESCRICAO).data(UPDATED_DATA).tipo(UPDATED_TIPO);
+        partialUpdatedMovimentacao.data(UPDATED_DATA).descricao(UPDATED_DESCRICAO).tipo(UPDATED_TIPO);
 
         restMovimentacaoMockMvc
             .perform(
@@ -329,12 +422,15 @@ class MovimentacaoResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         movimentacao.setId(longCount.incrementAndGet());
 
+        // Create the Movimentacao
+        MovimentacaoDTO movimentacaoDTO = movimentacaoMapper.toDto(movimentacao);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restMovimentacaoMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, movimentacao.getId())
+                patch(ENTITY_API_URL_ID, movimentacaoDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(movimentacao))
+                    .content(om.writeValueAsBytes(movimentacaoDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -348,12 +444,15 @@ class MovimentacaoResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         movimentacao.setId(longCount.incrementAndGet());
 
+        // Create the Movimentacao
+        MovimentacaoDTO movimentacaoDTO = movimentacaoMapper.toDto(movimentacao);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restMovimentacaoMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(movimentacao))
+                    .content(om.writeValueAsBytes(movimentacaoDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -367,9 +466,12 @@ class MovimentacaoResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         movimentacao.setId(longCount.incrementAndGet());
 
+        // Create the Movimentacao
+        MovimentacaoDTO movimentacaoDTO = movimentacaoMapper.toDto(movimentacao);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restMovimentacaoMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(movimentacao)))
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(movimentacaoDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Movimentacao in the database

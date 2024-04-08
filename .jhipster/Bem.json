@@ -1,16 +1,22 @@
 {
   "annotations": {
-    "changelogDate": "20240408032709"
+    "changelogDate": "20240408181644"
   },
   "applications": ["TESPat"],
+  "dto": "mapstruct",
   "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "options": {
+        "generatedValue": true,
+        "id": true
+      }
+    },
     {
       "fieldName": "patrimonio",
       "fieldType": "Long",
-      "fieldValidateRules": ["required"],
-      "options": {
-        "id": true
-      }
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "nome",
@@ -19,10 +25,6 @@
     },
     {
       "fieldName": "descricao",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "observacoes",
       "fieldType": "String"
     },
     {
@@ -50,38 +52,36 @@
       "fieldName": "status",
       "fieldType": "TipoStatus",
       "fieldValues": "USO,ESTOQUE,MANUTENCAO"
+    },
+    {
+      "fieldName": "observacoes",
+      "fieldType": "String"
     }
   ],
   "name": "Bem",
   "relationships": [
     {
+      "otherEntityField": "nome",
       "otherEntityName": "categoria",
-      "otherEntityRelationshipName": "bem",
       "relationshipName": "categoria",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityField": "nome",
       "otherEntityName": "fornecedor",
-      "otherEntityRelationshipName": "bem",
       "relationshipName": "fornecedor",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityField": "nome",
       "otherEntityName": "local",
-      "otherEntityRelationshipName": "bem",
       "relationshipName": "local",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "movimentacao",
-      "otherEntityRelationshipName": "bem",
-      "relationshipName": "movimentacao",
-      "relationshipSide": "right",
-      "relationshipType": "one-to-many"
     }
   ],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceClass"
 }

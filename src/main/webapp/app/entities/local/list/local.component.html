@@ -35,6 +35,13 @@
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
           <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.local.id">Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="nome">
               <div class="d-flex">
                 <span jhiTranslate="tesPatApp.local.nome">Nome</span>
@@ -60,21 +67,22 @@
           </tr>
         </thead>
         <tbody>
-          @for (local of locals; track trackNome) {
+          @for (local of locals; track trackId) {
             <tr data-cy="entityTable">
               <td>
-                <a [routerLink]="['/local', local.nome, 'view']">{{ local.nome }}</a>
+                <a [routerLink]="['/local', local.id, 'view']">{{ local.id }}</a>
               </td>
+              <td>{{ local.nome }}</td>
               <td>{{ local.descricao }}</td>
               <td>{{ local.sala }}</td>
               <td class="text-end">
                 <div class="btn-group">
-                  <a [routerLink]="['/local', local.nome, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                  <a [routerLink]="['/local', local.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                     <fa-icon icon="eye"></fa-icon>
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                   </a>
 
-                  <a [routerLink]="['/local', local.nome, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                  <a [routerLink]="['/local', local.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                     <fa-icon icon="pencil-alt"></fa-icon>
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                   </a>

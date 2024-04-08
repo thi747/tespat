@@ -1,5 +1,6 @@
 export interface IPessoa {
-  usuario: string;
+  id: number;
+  usuario?: string | null;
   nome?: string | null;
   cpf?: string | null;
   email?: string | null;
@@ -9,4 +10,4 @@ export interface IPessoa {
   estado?: string | null;
 }
 
-export type NewPessoa = Omit<IPessoa, 'usuario'> & { usuario: null };
+export type NewPessoa = Omit<IPessoa, 'id'> & { id: null };

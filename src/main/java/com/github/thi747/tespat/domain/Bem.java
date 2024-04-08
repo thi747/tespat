@@ -1,14 +1,11 @@
 package com.github.thi747.tespat.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.thi747.tespat.domain.enumeration.TipoConservacao;
 import com.github.thi747.tespat.domain.enumeration.TipoStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,10 +20,13 @@ public class Bem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "patrimonio", nullable = false)
+    @Column(name = "id")
+    private Long id;
+
+    @NotNull
+    @Column(name = "patrimonio", nullable = false, unique = true)
     private Long patrimonio;
 
     @NotNull
@@ -35,9 +35,6 @@ public class Bem implements Serializable {
 
     @Column(name = "descricao")
     private String descricao;
-
-    @Column(name = "observacoes")
-    private String observacoes;
 
     @Column(name = "numero_de_serie")
     private String numeroDeSerie;
@@ -59,24 +56,32 @@ public class Bem implements Serializable {
     @Column(name = "status")
     private TipoStatus status;
 
+    @Column(name = "observacoes")
+    private String observacoes;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "bems" }, allowSetters = true)
     private Categoria categoria;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "bems" }, allowSetters = true)
     private Fornecedor fornecedor;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "bems" }, allowSetters = true)
     private Local local;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bem")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "bem", "pessoa" }, allowSetters = true)
-    private Set<Movimentacao> movimentacaos = new HashSet<>();
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public Bem id(Long id) {
+        this.setId(id);
+        return this;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getPatrimonio() {
         return this.patrimonio;
@@ -115,19 +120,6 @@ public class Bem implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public String getObservacoes() {
-        return this.observacoes;
-    }
-
-    public Bem observacoes(String observacoes) {
-        this.setObservacoes(observacoes);
-        return this;
-    }
-
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
     }
 
     public String getNumeroDeSerie() {
@@ -208,6 +200,19 @@ public class Bem implements Serializable {
         this.status = status;
     }
 
+    public String getObservacoes() {
+        return this.observacoes;
+    }
+
+    public Bem observacoes(String observacoes) {
+        this.setObservacoes(observacoes);
+        return this;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
     public Categoria getCategoria() {
         return this.categoria;
     }
@@ -247,37 +252,6 @@ public class Bem implements Serializable {
         return this;
     }
 
-    public Set<Movimentacao> getMovimentacaos() {
-        return this.movimentacaos;
-    }
-
-    public void setMovimentacaos(Set<Movimentacao> movimentacaos) {
-        if (this.movimentacaos != null) {
-            this.movimentacaos.forEach(i -> i.setBem(null));
-        }
-        if (movimentacaos != null) {
-            movimentacaos.forEach(i -> i.setBem(this));
-        }
-        this.movimentacaos = movimentacaos;
-    }
-
-    public Bem movimentacaos(Set<Movimentacao> movimentacaos) {
-        this.setMovimentacaos(movimentacaos);
-        return this;
-    }
-
-    public Bem addMovimentacao(Movimentacao movimentacao) {
-        this.movimentacaos.add(movimentacao);
-        movimentacao.setBem(this);
-        return this;
-    }
-
-    public Bem removeMovimentacao(Movimentacao movimentacao) {
-        this.movimentacaos.remove(movimentacao);
-        movimentacao.setBem(null);
-        return this;
-    }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -288,7 +262,7 @@ public class Bem implements Serializable {
         if (!(o instanceof Bem)) {
             return false;
         }
-        return getPatrimonio() != null && getPatrimonio().equals(((Bem) o).getPatrimonio());
+        return getId() != null && getId().equals(((Bem) o).getId());
     }
 
     @Override
@@ -301,16 +275,17 @@ public class Bem implements Serializable {
     @Override
     public String toString() {
         return "Bem{" +
-            "patrimonio=" + getPatrimonio() +
+            "id=" + getId() +
+            ", patrimonio=" + getPatrimonio() +
             ", nome='" + getNome() + "'" +
             ", descricao='" + getDescricao() + "'" +
-            ", observacoes='" + getObservacoes() + "'" +
             ", numeroDeSerie='" + getNumeroDeSerie() + "'" +
             ", dataAquisicao='" + getDataAquisicao() + "'" +
             ", valorCompra=" + getValorCompra() +
             ", valorAtual=" + getValorAtual() +
             ", estado='" + getEstado() + "'" +
             ", status='" + getStatus() + "'" +
+            ", observacoes='" + getObservacoes() + "'" +
             "}";
     }
 }

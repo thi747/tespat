@@ -4,12 +4,9 @@ import static com.github.thi747.tespat.domain.BemTestSamples.*;
 import static com.github.thi747.tespat.domain.CategoriaTestSamples.*;
 import static com.github.thi747.tespat.domain.FornecedorTestSamples.*;
 import static com.github.thi747.tespat.domain.LocalTestSamples.*;
-import static com.github.thi747.tespat.domain.MovimentacaoTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.thi747.tespat.web.rest.TestUtil;
-import java.util.HashSet;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class BemTest {
@@ -21,7 +18,7 @@ class BemTest {
         Bem bem2 = new Bem();
         assertThat(bem1).isNotEqualTo(bem2);
 
-        bem2.setPatrimonio(bem1.getPatrimonio());
+        bem2.setId(bem1.getId());
         assertThat(bem1).isEqualTo(bem2);
 
         bem2 = getBemSample2();
@@ -62,27 +59,5 @@ class BemTest {
 
         bem.local(null);
         assertThat(bem.getLocal()).isNull();
-    }
-
-    @Test
-    void movimentacaoTest() throws Exception {
-        Bem bem = getBemRandomSampleGenerator();
-        Movimentacao movimentacaoBack = getMovimentacaoRandomSampleGenerator();
-
-        bem.addMovimentacao(movimentacaoBack);
-        assertThat(bem.getMovimentacaos()).containsOnly(movimentacaoBack);
-        assertThat(movimentacaoBack.getBem()).isEqualTo(bem);
-
-        bem.removeMovimentacao(movimentacaoBack);
-        assertThat(bem.getMovimentacaos()).doesNotContain(movimentacaoBack);
-        assertThat(movimentacaoBack.getBem()).isNull();
-
-        bem.movimentacaos(new HashSet<>(Set.of(movimentacaoBack)));
-        assertThat(bem.getMovimentacaos()).containsOnly(movimentacaoBack);
-        assertThat(movimentacaoBack.getBem()).isEqualTo(bem);
-
-        bem.setMovimentacaos(new HashSet<>());
-        assertThat(bem.getMovimentacaos()).doesNotContain(movimentacaoBack);
-        assertThat(movimentacaoBack.getBem()).isNull();
     }
 }

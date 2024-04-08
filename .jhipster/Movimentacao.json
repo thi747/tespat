@@ -1,24 +1,25 @@
 {
   "annotations": {
-    "changelogDate": "20240408033109"
+    "changelogDate": "20240408182044"
   },
   "applications": ["TESPat"],
+  "dto": "mapstruct",
   "fields": [
     {
       "fieldName": "id",
       "fieldType": "Long",
-      "fieldValidateRules": ["required"],
       "options": {
+        "generatedValue": true,
         "id": true
       }
     },
     {
-      "fieldName": "descricao",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "data",
       "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String"
     },
     {
       "fieldName": "tipo",
@@ -30,19 +31,22 @@
   "name": "Movimentacao",
   "relationships": [
     {
+      "otherEntityField": "patrimonio",
       "otherEntityName": "bem",
-      "otherEntityRelationshipName": "movimentacao",
       "relationshipName": "bem",
       "relationshipSide": "left",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     },
     {
+      "otherEntityField": "usuario",
       "otherEntityName": "pessoa",
-      "otherEntityRelationshipName": "movimentacao",
       "relationshipName": "pessoa",
       "relationshipSide": "left",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceClass"
 }

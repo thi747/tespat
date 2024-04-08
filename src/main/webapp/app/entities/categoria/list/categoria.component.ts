@@ -41,7 +41,7 @@ export class CategoriaComponent implements OnInit {
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
 
-  trackNome = (_index: number, item: ICategoria): string => this.categoriaService.getCategoriaIdentifier(item);
+  trackId = (_index: number, item: ICategoria): number => this.categoriaService.getCategoriaIdentifier(item);
 
   ngOnInit(): void {
     this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])

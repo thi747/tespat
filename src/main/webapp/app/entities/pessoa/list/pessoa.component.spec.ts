@@ -26,13 +26,13 @@ describe('Pessoa Management Component', () => {
           provide: ActivatedRoute,
           useValue: {
             data: of({
-              defaultSort: 'usuario,asc',
+              defaultSort: 'id,asc',
             }),
             queryParamMap: of(
               jest.requireActual('@angular/router').convertToParamMap({
                 page: '1',
                 size: '1',
-                sort: 'usuario,desc',
+                sort: 'id,desc',
               }),
             ),
             snapshot: {
@@ -40,7 +40,7 @@ describe('Pessoa Management Component', () => {
               queryParamMap: jest.requireActual('@angular/router').convertToParamMap({
                 page: '1',
                 size: '1',
-                sort: 'usuario,desc',
+                sort: 'id,desc',
               }),
             },
           },
@@ -60,7 +60,7 @@ describe('Pessoa Management Component', () => {
       .mockReturnValueOnce(
         of(
           new HttpResponse({
-            body: [{ usuario: 'ABC' }],
+            body: [{ id: 123 }],
             headers: new HttpHeaders({
               link: '<http://localhost/api/foo?page=1&size=20>; rel="next"',
             }),
@@ -70,7 +70,7 @@ describe('Pessoa Management Component', () => {
       .mockReturnValueOnce(
         of(
           new HttpResponse({
-            body: [{ usuario: 'CBA' }],
+            body: [{ id: 456 }],
             headers: new HttpHeaders({
               link: '<http://localhost/api/foo?page=0&size=20>; rel="prev",<http://localhost/api/foo?page=2&size=20>; rel="next"',
             }),
@@ -85,16 +85,16 @@ describe('Pessoa Management Component', () => {
 
     // THEN
     expect(service.query).toHaveBeenCalled();
-    expect(comp.pessoas?.[0]).toEqual(expect.objectContaining({ usuario: 'ABC' }));
+    expect(comp.pessoas?.[0]).toEqual(expect.objectContaining({ id: 123 }));
   });
 
-  describe('trackUsuario', () => {
+  describe('trackId', () => {
     it('Should forward to pessoaService', () => {
-      const entity = { usuario: 'ABC' };
+      const entity = { id: 123 };
       jest.spyOn(service, 'getPessoaIdentifier');
-      const usuario = comp.trackUsuario(0, entity);
+      const id = comp.trackId(0, entity);
       expect(service.getPessoaIdentifier).toHaveBeenCalledWith(entity);
-      expect(usuario).toBe(entity.usuario);
+      expect(id).toBe(entity.id);
     });
   });
 
@@ -118,7 +118,7 @@ describe('Pessoa Management Component', () => {
     comp.ngOnInit();
 
     // THEN
-    expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ sort: ['usuario,desc'] }));
+    expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ sort: ['id,desc'] }));
   });
 
   describe('delete', () => {

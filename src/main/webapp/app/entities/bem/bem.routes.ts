@@ -12,12 +12,12 @@ const bemRoute: Routes = [
     path: '',
     component: BemComponent,
     data: {
-      defaultSort: 'patrimonio,' + ASC,
+      defaultSort: 'id,' + ASC,
     },
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':patrimonio/view',
+    path: ':id/view',
     component: BemDetailComponent,
     resolve: {
       bem: BemResolve,
@@ -33,7 +33,7 @@ const bemRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':patrimonio/edit',
+    path: ':id/edit',
     component: BemUpdateComponent,
     resolve: {
       bem: BemResolve,

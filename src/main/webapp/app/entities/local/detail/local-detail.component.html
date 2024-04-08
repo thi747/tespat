@@ -11,6 +11,10 @@
         <jhi-alert></jhi-alert>
 
         <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="tesPatApp.local.id">Id</span></dt>
+          <dd>
+            <span>{{ local.id }}</span>
+          </dd>
           <dt><span jhiTranslate="tesPatApp.local.nome">Nome</span></dt>
           <dd>
             <span>{{ local.nome }}</span>
@@ -29,7 +33,7 @@
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
         </button>
 
-        <button type="button" [routerLink]="['/local', local.nome, 'edit']" class="btn btn-primary">
+        <button type="button" [routerLink]="['/local', local.id, 'edit']" class="btn btn-primary">
           <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
         </button>
       </div>

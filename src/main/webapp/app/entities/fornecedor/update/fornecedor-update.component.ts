@@ -44,7 +44,7 @@ export class FornecedorUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const fornecedor = this.fornecedorFormService.getFornecedor(this.editForm);
-    if (fornecedor.nome !== null) {
+    if (fornecedor.id !== null) {
       this.subscribeToSaveResponse(this.fornecedorService.update(fornecedor));
     } else {
       this.subscribeToSaveResponse(this.fornecedorService.create(fornecedor));

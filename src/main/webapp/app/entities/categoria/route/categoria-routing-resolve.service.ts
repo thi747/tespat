@@ -8,7 +8,7 @@ import { ICategoria } from '../categoria.model';
 import { CategoriaService } from '../service/categoria.service';
 
 const categoriaResolve = (route: ActivatedRouteSnapshot): Observable<null | ICategoria> => {
-  const id = route.params['nome'];
+  const id = route.params['id'];
   if (id) {
     return inject(CategoriaService)
       .find(id)

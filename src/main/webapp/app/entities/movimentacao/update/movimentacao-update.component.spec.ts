@@ -54,10 +54,10 @@ describe('Movimentacao Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Bem query and add missing value', () => {
       const movimentacao: IMovimentacao = { id: 456 };
-      const bem: IBem = { patrimonio: 32110 };
+      const bem: IBem = { id: 9281 };
       movimentacao.bem = bem;
 
-      const bemCollection: IBem[] = [{ patrimonio: 4535 }];
+      const bemCollection: IBem[] = [{ id: 28864 }];
       jest.spyOn(bemService, 'query').mockReturnValue(of(new HttpResponse({ body: bemCollection })));
       const additionalBems = [bem];
       const expectedCollection: IBem[] = [...additionalBems, ...bemCollection];
@@ -73,10 +73,10 @@ describe('Movimentacao Management Update Component', () => {
 
     it('Should call Pessoa query and add missing value', () => {
       const movimentacao: IMovimentacao = { id: 456 };
-      const pessoa: IPessoa = { usuario: '9cf41d98-5f9b-4873-a0cc-81ee6cdc70a6' };
+      const pessoa: IPessoa = { id: 25768 };
       movimentacao.pessoa = pessoa;
 
-      const pessoaCollection: IPessoa[] = [{ usuario: '8b637a0c-755c-4a3f-8251-d93d3cbce97a' }];
+      const pessoaCollection: IPessoa[] = [{ id: 32470 }];
       jest.spyOn(pessoaService, 'query').mockReturnValue(of(new HttpResponse({ body: pessoaCollection })));
       const additionalPessoas = [pessoa];
       const expectedCollection: IPessoa[] = [...additionalPessoas, ...pessoaCollection];
@@ -95,9 +95,9 @@ describe('Movimentacao Management Update Component', () => {
 
     it('Should update editForm', () => {
       const movimentacao: IMovimentacao = { id: 456 };
-      const bem: IBem = { patrimonio: 6810 };
+      const bem: IBem = { id: 15555 };
       movimentacao.bem = bem;
-      const pessoa: IPessoa = { usuario: '65cfbd3b-e220-49e7-8d4a-d831b2807662' };
+      const pessoa: IPessoa = { id: 8344 };
       movimentacao.pessoa = pessoa;
 
       activatedRoute.data = of({ movimentacao });
@@ -180,8 +180,8 @@ describe('Movimentacao Management Update Component', () => {
   describe('Compare relationships', () => {
     describe('compareBem', () => {
       it('Should forward to bemService', () => {
-        const entity = { patrimonio: 123 };
-        const entity2 = { patrimonio: 456 };
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
         jest.spyOn(bemService, 'compareBem');
         comp.compareBem(entity, entity2);
         expect(bemService.compareBem).toHaveBeenCalledWith(entity, entity2);
@@ -190,8 +190,8 @@ describe('Movimentacao Management Update Component', () => {
 
     describe('comparePessoa', () => {
       it('Should forward to pessoaService', () => {
-        const entity = { usuario: 'ABC' };
-        const entity2 = { usuario: 'CBA' };
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
         jest.spyOn(pessoaService, 'comparePessoa');
         comp.comparePessoa(entity, entity2);
         expect(pessoaService.comparePessoa).toHaveBeenCalledWith(entity, entity2);

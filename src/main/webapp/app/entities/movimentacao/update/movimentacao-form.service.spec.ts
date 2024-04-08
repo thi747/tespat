@@ -20,8 +20,8 @@ describe('Movimentacao Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            descricao: expect.any(Object),
             data: expect.any(Object),
+            descricao: expect.any(Object),
             tipo: expect.any(Object),
             bem: expect.any(Object),
             pessoa: expect.any(Object),
@@ -35,8 +35,8 @@ describe('Movimentacao Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            descricao: expect.any(Object),
             data: expect.any(Object),
+            descricao: expect.any(Object),
             tipo: expect.any(Object),
             bem: expect.any(Object),
             pessoa: expect.any(Object),

@@ -1,14 +1,10 @@
 package com.github.thi747.tespat.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.domain.Persistable;
 
 /**
  * A Pessoa.
@@ -16,15 +12,18 @@ import org.springframework.data.domain.Persistable;
 @Entity
 @Table(name = "pessoa")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@JsonIgnoreProperties(value = { "new", "id" })
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Pessoa implements Serializable, Persistable<String> {
+public class Pessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
     @Id
-    @Column(name = "usuario", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @NotNull
+    @Column(name = "usuario", nullable = false, unique = true)
     private String usuario;
 
     @NotNull
@@ -33,7 +32,7 @@ public class Pessoa implements Serializable, Persistable<String> {
 
     @NotNull
     @Size(min = 11)
-    @Column(name = "cpf", nullable = false)
+    @Column(name = "cpf", nullable = false, unique = true)
     private String cpf;
 
     @Column(name = "email")
@@ -53,15 +52,20 @@ public class Pessoa implements Serializable, Persistable<String> {
     @Column(name = "estado", length = 2)
     private String estado;
 
-    @Transient
-    private boolean isPersisted;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "bem", "pessoa" }, allowSetters = true)
-    private Set<Movimentacao> movimentacaos = new HashSet<>();
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public Pessoa id(Long id) {
+        this.setId(id);
+        return this;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUsuario() {
         return this.usuario;
@@ -167,59 +171,6 @@ public class Pessoa implements Serializable, Persistable<String> {
         this.estado = estado;
     }
 
-    @PostLoad
-    @PostPersist
-    public void updateEntityState() {
-        this.setIsPersisted();
-    }
-
-    @Override
-    public String getId() {
-        return this.usuario;
-    }
-
-    @Transient
-    @Override
-    public boolean isNew() {
-        return !this.isPersisted;
-    }
-
-    public Pessoa setIsPersisted() {
-        this.isPersisted = true;
-        return this;
-    }
-
-    public Set<Movimentacao> getMovimentacaos() {
-        return this.movimentacaos;
-    }
-
-    public void setMovimentacaos(Set<Movimentacao> movimentacaos) {
-        if (this.movimentacaos != null) {
-            this.movimentacaos.forEach(i -> i.setPessoa(null));
-        }
-        if (movimentacaos != null) {
-            movimentacaos.forEach(i -> i.setPessoa(this));
-        }
-        this.movimentacaos = movimentacaos;
-    }
-
-    public Pessoa movimentacaos(Set<Movimentacao> movimentacaos) {
-        this.setMovimentacaos(movimentacaos);
-        return this;
-    }
-
-    public Pessoa addMovimentacao(Movimentacao movimentacao) {
-        this.movimentacaos.add(movimentacao);
-        movimentacao.setPessoa(this);
-        return this;
-    }
-
-    public Pessoa removeMovimentacao(Movimentacao movimentacao) {
-        this.movimentacaos.remove(movimentacao);
-        movimentacao.setPessoa(null);
-        return this;
-    }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -230,7 +181,7 @@ public class Pessoa implements Serializable, Persistable<String> {
         if (!(o instanceof Pessoa)) {
             return false;
         }
-        return getUsuario() != null && getUsuario().equals(((Pessoa) o).getUsuario());
+        return getId() != null && getId().equals(((Pessoa) o).getId());
     }
 
     @Override
@@ -243,7 +194,8 @@ public class Pessoa implements Serializable, Persistable<String> {
     @Override
     public String toString() {
         return "Pessoa{" +
-            "usuario=" + getUsuario() +
+            "id=" + getId() +
+            ", usuario='" + getUsuario() + "'" +
             ", nome='" + getNome() + "'" +
             ", cpf='" + getCpf() + "'" +
             ", email='" + getEmail() + "'" +

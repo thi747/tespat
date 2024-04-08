@@ -20,29 +20,29 @@ public class Movimentacao implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
-
-    @Column(name = "descricao")
-    private String descricao;
 
     @Column(name = "data")
     private LocalDate data;
+
+    @Column(name = "descricao")
+    private String descricao;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", nullable = false)
     private TipoMovimentacao tipo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "categoria", "fornecedor", "local", "movimentacaos" }, allowSetters = true)
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = { "categoria", "fornecedor", "local" }, allowSetters = true)
     private Bem bem;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "movimentacaos" }, allowSetters = true)
+    @ManyToOne(optional = false)
+    @NotNull
     private Pessoa pessoa;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -60,19 +60,6 @@ public class Movimentacao implements Serializable {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return this.descricao;
-    }
-
-    public Movimentacao descricao(String descricao) {
-        this.setDescricao(descricao);
-        return this;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public LocalDate getData() {
         return this.data;
     }
@@ -84,6 +71,19 @@ public class Movimentacao implements Serializable {
 
     public void setData(LocalDate data) {
         this.data = data;
+    }
+
+    public String getDescricao() {
+        return this.descricao;
+    }
+
+    public Movimentacao descricao(String descricao) {
+        this.setDescricao(descricao);
+        return this;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public TipoMovimentacao getTipo() {
@@ -149,8 +149,8 @@ public class Movimentacao implements Serializable {
     public String toString() {
         return "Movimentacao{" +
             "id=" + getId() +
-            ", descricao='" + getDescricao() + "'" +
             ", data='" + getData() + "'" +
+            ", descricao='" + getDescricao() + "'" +
             ", tipo='" + getTipo() + "'" +
             "}";
     }

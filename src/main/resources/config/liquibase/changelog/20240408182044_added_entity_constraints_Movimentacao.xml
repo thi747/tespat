@@ -8,19 +8,19 @@
     <!--
         Added the constraints for entity Movimentacao.
     -->
-    <changeSet id="20240408033109-2" author="jhipster">
+    <changeSet id="20240408182044-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="bem_patrimonio"
+        <addForeignKeyConstraint baseColumnNames="bem_id"
                                  baseTableName="movimentacao"
                                  constraintName="fk_movimentacao__bem_id"
-                                 referencedColumnNames="patrimonio"
+                                 referencedColumnNames="id"
                                  referencedTableName="bem"
                                  />
 
-        <addForeignKeyConstraint baseColumnNames="pessoa_usuario"
+        <addForeignKeyConstraint baseColumnNames="pessoa_id"
                                  baseTableName="movimentacao"
                                  constraintName="fk_movimentacao__pessoa_id"
-                                 referencedColumnNames="usuario"
+                                 referencedColumnNames="id"
                                  referencedTableName="pessoa"
                                  />
     </changeSet>

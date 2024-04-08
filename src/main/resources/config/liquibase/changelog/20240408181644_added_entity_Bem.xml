@@ -7,32 +7,50 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!--
-        Added the entity Fornecedor.
+        Added the entity Bem.
     -->
-    <changeSet id="20240408032909-1" author="jhipster">
-        <createTable tableName="fornecedor">
-            <column name="nome" type="varchar(255)">
+    <changeSet id="20240408181644-1" author="jhipster">
+        <createTable tableName="bem">
+            <column name="id" type="bigint" autoIncrement="true" startWith="1500">
                 <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="patrimonio" type="bigint">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_bem__patrimonio" />
+            </column>
+            <column name="nome" type="varchar(255)">
+                <constraints nullable="false" />
             </column>
             <column name="descricao" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="cpf_ou_cnpj" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="email" type="varchar(255)">
+            <column name="numero_de_serie" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="telefone" type="varchar(255)">
+            <column name="data_aquisicao" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="endereco" type="varchar(255)">
+            <column name="valor_compra" type="double">
                 <constraints nullable="true" />
             </column>
-            <column name="cidade" type="varchar(255)">
+            <column name="valor_atual" type="double">
                 <constraints nullable="true" />
             </column>
-            <column name="estado" type="varchar(2)">
+            <column name="estado" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="status" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="observacoes" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="categoria_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="fornecedor_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="local_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -49,20 +67,23 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20240408032909-1-data" author="jhipster" context="faker">
+    <changeSet id="20240408181644-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/fornecedor.csv"
+                  file="config/liquibase/fake-data/bem.csv"
                   separator=";"
-                  tableName="fornecedor"
+                  tableName="bem"
                   usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="patrimonio" type="numeric"/>
             <column name="nome" type="string"/>
             <column name="descricao" type="string"/>
-            <column name="cpf_ou_cnpj" type="string"/>
-            <column name="email" type="string"/>
-            <column name="telefone" type="string"/>
-            <column name="endereco" type="string"/>
-            <column name="cidade" type="string"/>
+            <column name="numero_de_serie" type="string"/>
+            <column name="data_aquisicao" type="date"/>
+            <column name="valor_compra" type="numeric"/>
+            <column name="valor_atual" type="numeric"/>
             <column name="estado" type="string"/>
+            <column name="status" type="string"/>
+            <column name="observacoes" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

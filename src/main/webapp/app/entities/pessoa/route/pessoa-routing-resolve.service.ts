@@ -8,7 +8,7 @@ import { IPessoa } from '../pessoa.model';
 import { PessoaService } from '../service/pessoa.service';
 
 const pessoaResolve = (route: ActivatedRouteSnapshot): Observable<null | IPessoa> => {
-  const id = route.params['usuario'];
+  const id = route.params['id'];
   if (id) {
     return inject(PessoaService)
       .find(id)

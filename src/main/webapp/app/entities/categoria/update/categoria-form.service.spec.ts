@@ -19,6 +19,7 @@ describe('Categoria Form Service', () => {
 
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
+            id: expect.any(Object),
             nome: expect.any(Object),
           }),
         );
@@ -29,6 +30,7 @@ describe('Categoria Form Service', () => {
 
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
+            id: expect.any(Object),
             nome: expect.any(Object),
           }),
         );
@@ -58,6 +60,26 @@ describe('Categoria Form Service', () => {
         const categoria = service.getCategoria(formGroup) as any;
 
         expect(categoria).toMatchObject(sampleWithRequiredData);
+      });
+    });
+
+    describe('resetForm', () => {
+      it('passing ICategoria should not enable id FormControl', () => {
+        const formGroup = service.createCategoriaFormGroup();
+        expect(formGroup.controls.id.disabled).toBe(true);
+
+        service.resetForm(formGroup, sampleWithRequiredData);
+
+        expect(formGroup.controls.id.disabled).toBe(true);
+      });
+
+      it('passing NewCategoria should disable id FormControl', () => {
+        const formGroup = service.createCategoriaFormGroup(sampleWithRequiredData);
+        expect(formGroup.controls.id.disabled).toBe(true);
+
+        service.resetForm(formGroup, { id: null });
+
+        expect(formGroup.controls.id.disabled).toBe(true);
       });
     });
   });

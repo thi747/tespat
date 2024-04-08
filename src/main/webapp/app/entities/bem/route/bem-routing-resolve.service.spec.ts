@@ -40,8 +40,8 @@ describe('Bem routing resolve service', () => {
   describe('resolve', () => {
     it('should return IBem returned by find', () => {
       // GIVEN
-      service.find = jest.fn(patrimonio => of(new HttpResponse({ body: { patrimonio } })));
-      mockActivatedRouteSnapshot.params = { patrimonio: 123 };
+      service.find = jest.fn(id => of(new HttpResponse({ body: { id } })));
+      mockActivatedRouteSnapshot.params = { id: 123 };
 
       // WHEN
       TestBed.runInInjectionContext(() => {
@@ -54,7 +54,7 @@ describe('Bem routing resolve service', () => {
 
       // THEN
       expect(service.find).toBeCalledWith(123);
-      expect(resultBem).toEqual({ patrimonio: 123 });
+      expect(resultBem).toEqual({ id: 123 });
     });
 
     it('should return null if id is not provided', () => {
@@ -79,7 +79,7 @@ describe('Bem routing resolve service', () => {
     it('should route to 404 page if data not found in server', () => {
       // GIVEN
       jest.spyOn(service, 'find').mockReturnValue(of(new HttpResponse<IBem>({ body: null })));
-      mockActivatedRouteSnapshot.params = { patrimonio: 123 };
+      mockActivatedRouteSnapshot.params = { id: 123 };
 
       // WHEN
       TestBed.runInInjectionContext(() => {

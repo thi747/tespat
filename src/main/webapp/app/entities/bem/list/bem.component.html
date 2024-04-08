@@ -35,6 +35,13 @@
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
           <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.id">Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="patrimonio">
               <div class="d-flex">
                 <span jhiTranslate="tesPatApp.bem.patrimonio">Patrimonio</span>
@@ -52,13 +59,6 @@
             <th scope="col" jhiSortBy="descricao">
               <div class="d-flex">
                 <span jhiTranslate="tesPatApp.bem.descricao">Descricao</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="observacoes">
-              <div class="d-flex">
-                <span jhiTranslate="tesPatApp.bem.observacoes">Observacoes</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -105,6 +105,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="observacoes">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.observacoes">Observacoes</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="categoria.nome">
               <div class="d-flex">
                 <span jhiTranslate="tesPatApp.bem.categoria">Categoria</span>
@@ -127,49 +134,50 @@
           </tr>
         </thead>
         <tbody>
-          @for (bem of bems; track trackPatrimonio) {
+          @for (bem of bems; track trackId) {
             <tr data-cy="entityTable">
               <td>
-                <a [routerLink]="['/bem', bem.patrimonio, 'view']">{{ bem.patrimonio }}</a>
+                <a [routerLink]="['/bem', bem.id, 'view']">{{ bem.id }}</a>
               </td>
+              <td>{{ bem.patrimonio }}</td>
               <td>{{ bem.nome }}</td>
               <td>{{ bem.descricao }}</td>
-              <td>{{ bem.observacoes }}</td>
               <td>{{ bem.numeroDeSerie }}</td>
               <td>{{ bem.dataAquisicao | formatMediumDate }}</td>
               <td>{{ bem.valorCompra }}</td>
               <td>{{ bem.valorAtual }}</td>
               <td jhiTranslate="{{ 'tesPatApp.TipoConservacao.' + bem.estado }}">{{ bem.estado }}</td>
               <td jhiTranslate="{{ 'tesPatApp.TipoStatus.' + bem.status }}">{{ bem.status }}</td>
+              <td>{{ bem.observacoes }}</td>
               <td>
                 @if (bem.categoria) {
                   <div>
-                    <a [routerLink]="['/categoria', bem.categoria.nome, 'view']">{{ bem.categoria.nome }}</a>
+                    <a [routerLink]="['/categoria', bem.categoria.id, 'view']">{{ bem.categoria.nome }}</a>
                   </div>
                 }
               </td>
               <td>
                 @if (bem.fornecedor) {
                   <div>
-                    <a [routerLink]="['/fornecedor', bem.fornecedor.nome, 'view']">{{ bem.fornecedor.nome }}</a>
+                    <a [routerLink]="['/fornecedor', bem.fornecedor.id, 'view']">{{ bem.fornecedor.nome }}</a>
                   </div>
                 }
               </td>
               <td>
                 @if (bem.local) {
                   <div>
-                    <a [routerLink]="['/local', bem.local.nome, 'view']">{{ bem.local.nome }}</a>
+                    <a [routerLink]="['/local', bem.local.id, 'view']">{{ bem.local.nome }}</a>
                   </div>
                 }
               </td>
               <td class="text-end">
                 <div class="btn-group">
-                  <a [routerLink]="['/bem', bem.patrimonio, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                  <a [routerLink]="['/bem', bem.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                     <fa-icon icon="eye"></fa-icon>
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                   </a>
 
-                  <a [routerLink]="['/bem', bem.patrimonio, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                  <a [routerLink]="['/bem', bem.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                     <fa-icon icon="pencil-alt"></fa-icon>
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                   </a>

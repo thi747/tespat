@@ -7,7 +7,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { ILocal, NewLocal } from '../local.model';
 
-export type PartialUpdateLocal = Partial<ILocal> & Pick<ILocal, 'nome'>;
+export type PartialUpdateLocal = Partial<ILocal> & Pick<ILocal, 'id'>;
 
 export type EntityResponseType = HttpResponse<ILocal>;
 export type EntityArrayResponseType = HttpResponse<ILocal[]>;
@@ -31,7 +31,7 @@ export class LocalService {
     return this.http.patch<ILocal>(`${this.resourceUrl}/${this.getLocalIdentifier(local)}`, local, { observe: 'response' });
   }
 
-  find(id: string): Observable<EntityResponseType> {
+  find(id: number): Observable<EntityResponseType> {
     return this.http.get<ILocal>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
@@ -40,19 +40,19 @@ export class LocalService {
     return this.http.get<ILocal[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
-  delete(id: string): Observable<HttpResponse<{}>> {
+  delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  getLocalIdentifier(local: Pick<ILocal, 'nome'>): string {
-    return local.nome;
+  getLocalIdentifier(local: Pick<ILocal, 'id'>): number {
+    return local.id;
   }
 
-  compareLocal(o1: Pick<ILocal, 'nome'> | null, o2: Pick<ILocal, 'nome'> | null): boolean {
+  compareLocal(o1: Pick<ILocal, 'id'> | null, o2: Pick<ILocal, 'id'> | null): boolean {
     return o1 && o2 ? this.getLocalIdentifier(o1) === this.getLocalIdentifier(o2) : o1 === o2;
   }
 
-  addLocalToCollectionIfMissing<Type extends Pick<ILocal, 'nome'>>(
+  addLocalToCollectionIfMissing<Type extends Pick<ILocal, 'id'>>(
     localCollection: Type[],
     ...localsToCheck: (Type | null | undefined)[]
   ): Type[] {

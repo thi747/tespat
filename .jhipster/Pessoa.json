@@ -1,16 +1,22 @@
 {
   "annotations": {
-    "changelogDate": "20240408033209"
+    "changelogDate": "20240408182144"
   },
   "applications": ["TESPat"],
+  "dto": "mapstruct",
   "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "options": {
+        "generatedValue": true,
+        "id": true
+      }
+    },
     {
       "fieldName": "usuario",
       "fieldType": "String",
-      "fieldValidateRules": ["required"],
-      "options": {
-        "id": true
-      }
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "nome",
@@ -20,7 +26,7 @@
     {
       "fieldName": "cpf",
       "fieldType": "String",
-      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRules": ["required", "unique", "minlength"],
       "fieldValidateRulesMinlength": "11"
     },
     {
@@ -49,14 +55,7 @@
     }
   ],
   "name": "Pessoa",
-  "relationships": [
-    {
-      "otherEntityName": "movimentacao",
-      "otherEntityRelationshipName": "pessoa",
-      "relationshipName": "movimentacao",
-      "relationshipSide": "right",
-      "relationshipType": "one-to-many"
-    }
-  ],
-  "searchEngine": "no"
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
 }

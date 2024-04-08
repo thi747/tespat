@@ -45,7 +45,7 @@ describe('Pessoa Management Update Component', () => {
 
   describe('ngOnInit', () => {
     it('Should update editForm', () => {
-      const pessoa: IPessoa = { usuario: 'CBA' };
+      const pessoa: IPessoa = { id: 456 };
 
       activatedRoute.data = of({ pessoa });
       comp.ngOnInit();
@@ -58,7 +58,7 @@ describe('Pessoa Management Update Component', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<IPessoa>>();
-      const pessoa = { usuario: 'ABC' };
+      const pessoa = { id: 123 };
       jest.spyOn(pessoaFormService, 'getPessoa').mockReturnValue(pessoa);
       jest.spyOn(pessoaService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
@@ -81,8 +81,8 @@ describe('Pessoa Management Update Component', () => {
     it('Should call create service on save for new entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<IPessoa>>();
-      const pessoa = { usuario: 'ABC' };
-      jest.spyOn(pessoaFormService, 'getPessoa').mockReturnValue({ usuario: null });
+      const pessoa = { id: 123 };
+      jest.spyOn(pessoaFormService, 'getPessoa').mockReturnValue({ id: null });
       jest.spyOn(pessoaService, 'create').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ pessoa: null });
@@ -104,7 +104,7 @@ describe('Pessoa Management Update Component', () => {
     it('Should set isSaving to false on error', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<IPessoa>>();
-      const pessoa = { usuario: 'ABC' };
+      const pessoa = { id: 123 };
       jest.spyOn(pessoaService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ pessoa });

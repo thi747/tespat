@@ -8,26 +8,26 @@
     <!--
         Added the constraints for entity Bem.
     -->
-    <changeSet id="20240408032709-2" author="jhipster">
+    <changeSet id="20240408181644-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="categoria_nome"
+        <addForeignKeyConstraint baseColumnNames="categoria_id"
                                  baseTableName="bem"
                                  constraintName="fk_bem__categoria_id"
-                                 referencedColumnNames="nome"
+                                 referencedColumnNames="id"
                                  referencedTableName="categoria"
                                  />
 
-        <addForeignKeyConstraint baseColumnNames="fornecedor_nome"
+        <addForeignKeyConstraint baseColumnNames="fornecedor_id"
                                  baseTableName="bem"
                                  constraintName="fk_bem__fornecedor_id"
-                                 referencedColumnNames="nome"
+                                 referencedColumnNames="id"
                                  referencedTableName="fornecedor"
                                  />
 
-        <addForeignKeyConstraint baseColumnNames="local_nome"
+        <addForeignKeyConstraint baseColumnNames="local_id"
                                  baseTableName="bem"
                                  constraintName="fk_bem__local_id"
-                                 referencedColumnNames="nome"
+                                 referencedColumnNames="id"
                                  referencedTableName="local"
                                  />
     </changeSet>

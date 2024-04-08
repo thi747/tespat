@@ -17,6 +17,7 @@
       "detail": {
         "title": "Pessoa"
       },
+      "id": "Id",
       "usuario": "Usuario",
       "nome": "Nome",
       "cpf": "Cpf",
@@ -24,8 +25,7 @@
       "ativo": "Ativo",
       "endereco": "Endereco",
       "cidade": "Cidade",
-      "estado": "Estado",
-      "movimentacao": "Movimentacao"
+      "estado": "Estado"
     }
   }
 }

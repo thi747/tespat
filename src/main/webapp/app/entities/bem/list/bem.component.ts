@@ -41,7 +41,7 @@ export class BemComponent implements OnInit {
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
 
-  trackPatrimonio = (_index: number, item: IBem): number => this.bemService.getBemIdentifier(item);
+  trackId = (_index: number, item: IBem): number => this.bemService.getBemIdentifier(item);
 
   ngOnInit(): void {
     this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
@@ -101,6 +101,7 @@ export class BemComponent implements OnInit {
   protected queryBackend(): Observable<EntityArrayResponseType> {
     this.isLoading = true;
     const queryObject: any = {
+      eagerload: true,
       sort: this.sortService.buildSortParam(this.sortState()),
     };
     return this.bemService.query(queryObject).pipe(tap(() => (this.isLoading = false)));

@@ -42,16 +42,16 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="descricao">
+            <th scope="col" jhiSortBy="data">
               <div class="d-flex">
-                <span jhiTranslate="tesPatApp.movimentacao.descricao">Descricao</span>
+                <span jhiTranslate="tesPatApp.movimentacao.data">Data</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="data">
+            <th scope="col" jhiSortBy="descricao">
               <div class="d-flex">
-                <span jhiTranslate="tesPatApp.movimentacao.data">Data</span>
+                <span jhiTranslate="tesPatApp.movimentacao.descricao">Descricao</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -84,20 +84,20 @@
               <td>
                 <a [routerLink]="['/movimentacao', movimentacao.id, 'view']">{{ movimentacao.id }}</a>
               </td>
-              <td>{{ movimentacao.descricao }}</td>
               <td>{{ movimentacao.data | formatMediumDate }}</td>
+              <td>{{ movimentacao.descricao }}</td>
               <td jhiTranslate="{{ 'tesPatApp.TipoMovimentacao.' + movimentacao.tipo }}">{{ movimentacao.tipo }}</td>
               <td>
                 @if (movimentacao.bem) {
                   <div>
-                    <a [routerLink]="['/bem', movimentacao.bem.patrimonio, 'view']">{{ movimentacao.bem.patrimonio }}</a>
+                    <a [routerLink]="['/bem', movimentacao.bem.id, 'view']">{{ movimentacao.bem.patrimonio }}</a>
                   </div>
                 }
               </td>
               <td>
                 @if (movimentacao.pessoa) {
                   <div>
-                    <a [routerLink]="['/pessoa', movimentacao.pessoa.usuario, 'view']">{{ movimentacao.pessoa.usuario }}</a>
+                    <a [routerLink]="['/pessoa', movimentacao.pessoa.id, 'view']">{{ movimentacao.pessoa.usuario }}</a>
                   </div>
                 }
               </td>

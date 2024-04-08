@@ -10,7 +10,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { IBem, NewBem } from '../bem.model';
 
-export type PartialUpdateBem = Partial<IBem> & Pick<IBem, 'patrimonio'>;
+export type PartialUpdateBem = Partial<IBem> & Pick<IBem, 'id'>;
 
 type RestOf<T extends IBem | NewBem> = Omit<T, 'dataAquisicao'> & {
   dataAquisicao?: string | null;
@@ -68,18 +68,15 @@ export class BemService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  getBemIdentifier(bem: Pick<IBem, 'patrimonio'>): number {
-    return bem.patrimonio;
+  getBemIdentifier(bem: Pick<IBem, 'id'>): number {
+    return bem.id;
   }
 
-  compareBem(o1: Pick<IBem, 'patrimonio'> | null, o2: Pick<IBem, 'patrimonio'> | null): boolean {
+  compareBem(o1: Pick<IBem, 'id'> | null, o2: Pick<IBem, 'id'> | null): boolean {
     return o1 && o2 ? this.getBemIdentifier(o1) === this.getBemIdentifier(o2) : o1 === o2;
   }
 
-  addBemToCollectionIfMissing<Type extends Pick<IBem, 'patrimonio'>>(
-    bemCollection: Type[],
-    ...bemsToCheck: (Type | null | undefined)[]
-  ): Type[] {
+  addBemToCollectionIfMissing<Type extends Pick<IBem, 'id'>>(bemCollection: Type[], ...bemsToCheck: (Type | null | undefined)[]): Type[] {
     const bems: Type[] = bemsToCheck.filter(isPresent);
     if (bems.length > 0) {
       const bemCollectionIdentifiers = bemCollection.map(bemItem => this.getBemIdentifier(bemItem));

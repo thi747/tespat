@@ -7,7 +7,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { IPessoa, NewPessoa } from '../pessoa.model';
 
-export type PartialUpdatePessoa = Partial<IPessoa> & Pick<IPessoa, 'usuario'>;
+export type PartialUpdatePessoa = Partial<IPessoa> & Pick<IPessoa, 'id'>;
 
 export type EntityResponseType = HttpResponse<IPessoa>;
 export type EntityArrayResponseType = HttpResponse<IPessoa[]>;
@@ -31,7 +31,7 @@ export class PessoaService {
     return this.http.patch<IPessoa>(`${this.resourceUrl}/${this.getPessoaIdentifier(pessoa)}`, pessoa, { observe: 'response' });
   }
 
-  find(id: string): Observable<EntityResponseType> {
+  find(id: number): Observable<EntityResponseType> {
     return this.http.get<IPessoa>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
@@ -40,19 +40,19 @@ export class PessoaService {
     return this.http.get<IPessoa[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
-  delete(id: string): Observable<HttpResponse<{}>> {
+  delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  getPessoaIdentifier(pessoa: Pick<IPessoa, 'usuario'>): string {
-    return pessoa.usuario;
+  getPessoaIdentifier(pessoa: Pick<IPessoa, 'id'>): number {
+    return pessoa.id;
   }
 
-  comparePessoa(o1: Pick<IPessoa, 'usuario'> | null, o2: Pick<IPessoa, 'usuario'> | null): boolean {
+  comparePessoa(o1: Pick<IPessoa, 'id'> | null, o2: Pick<IPessoa, 'id'> | null): boolean {
     return o1 && o2 ? this.getPessoaIdentifier(o1) === this.getPessoaIdentifier(o2) : o1 === o2;
   }
 
-  addPessoaToCollectionIfMissing<Type extends Pick<IPessoa, 'usuario'>>(
+  addPessoaToCollectionIfMissing<Type extends Pick<IPessoa, 'id'>>(
     pessoaCollection: Type[],
     ...pessoasToCheck: (Type | null | undefined)[]
   ): Type[] {

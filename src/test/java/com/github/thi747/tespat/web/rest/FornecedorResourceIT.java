@@ -11,8 +11,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.thi747.tespat.IntegrationTest;
 import com.github.thi747.tespat.domain.Fornecedor;
 import com.github.thi747.tespat.repository.FornecedorRepository;
+import com.github.thi747.tespat.service.dto.FornecedorDTO;
+import com.github.thi747.tespat.service.mapper.FornecedorMapper;
 import jakarta.persistence.EntityManager;
-import java.util.UUID;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +33,17 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class FornecedorResourceIT {
 
-    private static final String DEFAULT_DESCRICAO = "AAAAAAAAAA";
-    private static final String UPDATED_DESCRICAO = "BBBBBBBBBB";
+    private static final String DEFAULT_NOME = "AAAAAAAAAA";
+    private static final String UPDATED_NOME = "BBBBBBBBBB";
 
     private static final String DEFAULT_CPF_OU_CNPJ = "AAAAAAAAAAA";
     private static final String UPDATED_CPF_OU_CNPJ = "BBBBBBBBBBB";
 
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DESCRICAO = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRICAO = "BBBBBBBBBB";
 
     private static final String DEFAULT_TELEFONE = "AAAAAAAAAA";
     private static final String UPDATED_TELEFONE = "BBBBBBBBBB";
@@ -52,13 +58,19 @@ class FornecedorResourceIT {
     private static final String UPDATED_ESTADO = "BB";
 
     private static final String ENTITY_API_URL = "/api/fornecedors";
-    private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{nome}";
+    private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
+
+    private static Random random = new Random();
+    private static AtomicLong longCount = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
     @Autowired
     private ObjectMapper om;
 
     @Autowired
     private FornecedorRepository fornecedorRepository;
+
+    @Autowired
+    private FornecedorMapper fornecedorMapper;
 
     @Autowired
     private EntityManager em;
@@ -76,10 +88,10 @@ class FornecedorResourceIT {
      */
     public static Fornecedor createEntity(EntityManager em) {
         Fornecedor fornecedor = new Fornecedor()
-            .nome(UUID.randomUUID().toString())
-            .descricao(DEFAULT_DESCRICAO)
+            .nome(DEFAULT_NOME)
             .cpfOuCnpj(DEFAULT_CPF_OU_CNPJ)
             .email(DEFAULT_EMAIL)
+            .descricao(DEFAULT_DESCRICAO)
             .telefone(DEFAULT_TELEFONE)
             .endereco(DEFAULT_ENDERECO)
             .cidade(DEFAULT_CIDADE)
@@ -95,10 +107,10 @@ class FornecedorResourceIT {
      */
     public static Fornecedor createUpdatedEntity(EntityManager em) {
         Fornecedor fornecedor = new Fornecedor()
-            .nome(UUID.randomUUID().toString())
-            .descricao(UPDATED_DESCRICAO)
+            .nome(UPDATED_NOME)
             .cpfOuCnpj(UPDATED_CPF_OU_CNPJ)
             .email(UPDATED_EMAIL)
+            .descricao(UPDATED_DESCRICAO)
             .telefone(UPDATED_TELEFONE)
             .endereco(UPDATED_ENDERECO)
             .cidade(UPDATED_CIDADE)
@@ -116,18 +128,20 @@ class FornecedorResourceIT {
     void createFornecedor() throws Exception {
         long databaseSizeBeforeCreate = getRepositoryCount();
         // Create the Fornecedor
-        var returnedFornecedor = om.readValue(
+        FornecedorDTO fornecedorDTO = fornecedorMapper.toDto(fornecedor);
+        var returnedFornecedorDTO = om.readValue(
             restFornecedorMockMvc
-                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(fornecedor)))
+                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(fornecedorDTO)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse()
                 .getContentAsString(),
-            Fornecedor.class
+            FornecedorDTO.class
         );
 
         // Validate the Fornecedor in the database
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
+        var returnedFornecedor = fornecedorMapper.toEntity(returnedFornecedorDTO);
         assertFornecedorUpdatableFieldsEquals(returnedFornecedor, getPersistedFornecedor(returnedFornecedor));
     }
 
@@ -135,17 +149,35 @@ class FornecedorResourceIT {
     @Transactional
     void createFornecedorWithExistingId() throws Exception {
         // Create the Fornecedor with an existing ID
-        fornecedorRepository.saveAndFlush(fornecedor);
+        fornecedor.setId(1L);
+        FornecedorDTO fornecedorDTO = fornecedorMapper.toDto(fornecedor);
 
         long databaseSizeBeforeCreate = getRepositoryCount();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restFornecedorMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(fornecedor)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(fornecedorDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Fornecedor in the database
         assertSameRepositoryCount(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    void checkNomeIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        fornecedor.setNome(null);
+
+        // Create the Fornecedor, which fails.
+        FornecedorDTO fornecedorDTO = fornecedorMapper.toDto(fornecedor);
+
+        restFornecedorMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(fornecedorDTO)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
     }
 
     @Test
@@ -156,9 +188,10 @@ class FornecedorResourceIT {
         fornecedor.setCpfOuCnpj(null);
 
         // Create the Fornecedor, which fails.
+        FornecedorDTO fornecedorDTO = fornecedorMapper.toDto(fornecedor);
 
         restFornecedorMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(fornecedor)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(fornecedorDTO)))
             .andExpect(status().isBadRequest());
 
         assertSameRepositoryCount(databaseSizeBeforeTest);
@@ -168,18 +201,18 @@ class FornecedorResourceIT {
     @Transactional
     void getAllFornecedors() throws Exception {
         // Initialize the database
-        fornecedor.setNome(UUID.randomUUID().toString());
         fornecedorRepository.saveAndFlush(fornecedor);
 
         // Get all the fornecedorList
         restFornecedorMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=nome,desc"))
+            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].nome").value(hasItem(fornecedor.getNome())))
-            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(fornecedor.getId().intValue())))
+            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)))
             .andExpect(jsonPath("$.[*].cpfOuCnpj").value(hasItem(DEFAULT_CPF_OU_CNPJ)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
+            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)))
             .andExpect(jsonPath("$.[*].telefone").value(hasItem(DEFAULT_TELEFONE)))
             .andExpect(jsonPath("$.[*].endereco").value(hasItem(DEFAULT_ENDERECO)))
             .andExpect(jsonPath("$.[*].cidade").value(hasItem(DEFAULT_CIDADE)))
@@ -190,18 +223,18 @@ class FornecedorResourceIT {
     @Transactional
     void getFornecedor() throws Exception {
         // Initialize the database
-        fornecedor.setNome(UUID.randomUUID().toString());
         fornecedorRepository.saveAndFlush(fornecedor);
 
         // Get the fornecedor
         restFornecedorMockMvc
-            .perform(get(ENTITY_API_URL_ID, fornecedor.getNome()))
+            .perform(get(ENTITY_API_URL_ID, fornecedor.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.nome").value(fornecedor.getNome()))
-            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO))
+            .andExpect(jsonPath("$.id").value(fornecedor.getId().intValue()))
+            .andExpect(jsonPath("$.nome").value(DEFAULT_NOME))
             .andExpect(jsonPath("$.cpfOuCnpj").value(DEFAULT_CPF_OU_CNPJ))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
+            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO))
             .andExpect(jsonPath("$.telefone").value(DEFAULT_TELEFONE))
             .andExpect(jsonPath("$.endereco").value(DEFAULT_ENDERECO))
             .andExpect(jsonPath("$.cidade").value(DEFAULT_CIDADE))
@@ -219,29 +252,30 @@ class FornecedorResourceIT {
     @Transactional
     void putExistingFornecedor() throws Exception {
         // Initialize the database
-        fornecedor.setNome(UUID.randomUUID().toString());
         fornecedorRepository.saveAndFlush(fornecedor);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
         // Update the fornecedor
-        Fornecedor updatedFornecedor = fornecedorRepository.findById(fornecedor.getNome()).orElseThrow();
+        Fornecedor updatedFornecedor = fornecedorRepository.findById(fornecedor.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedFornecedor are not directly saved in db
         em.detach(updatedFornecedor);
         updatedFornecedor
-            .descricao(UPDATED_DESCRICAO)
+            .nome(UPDATED_NOME)
             .cpfOuCnpj(UPDATED_CPF_OU_CNPJ)
             .email(UPDATED_EMAIL)
+            .descricao(UPDATED_DESCRICAO)
             .telefone(UPDATED_TELEFONE)
             .endereco(UPDATED_ENDERECO)
             .cidade(UPDATED_CIDADE)
             .estado(UPDATED_ESTADO);
+        FornecedorDTO fornecedorDTO = fornecedorMapper.toDto(updatedFornecedor);
 
         restFornecedorMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedFornecedor.getNome())
+                put(ENTITY_API_URL_ID, fornecedorDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(updatedFornecedor))
+                    .content(om.writeValueAsBytes(fornecedorDTO))
             )
             .andExpect(status().isOk());
 
@@ -254,14 +288,17 @@ class FornecedorResourceIT {
     @Transactional
     void putNonExistingFornecedor() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        fornecedor.setNome(UUID.randomUUID().toString());
+        fornecedor.setId(longCount.incrementAndGet());
+
+        // Create the Fornecedor
+        FornecedorDTO fornecedorDTO = fornecedorMapper.toDto(fornecedor);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restFornecedorMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, fornecedor.getNome())
+                put(ENTITY_API_URL_ID, fornecedorDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(fornecedor))
+                    .content(om.writeValueAsBytes(fornecedorDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -273,14 +310,17 @@ class FornecedorResourceIT {
     @Transactional
     void putWithIdMismatchFornecedor() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        fornecedor.setNome(UUID.randomUUID().toString());
+        fornecedor.setId(longCount.incrementAndGet());
+
+        // Create the Fornecedor
+        FornecedorDTO fornecedorDTO = fornecedorMapper.toDto(fornecedor);
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restFornecedorMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, UUID.randomUUID().toString())
+                put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(fornecedor))
+                    .content(om.writeValueAsBytes(fornecedorDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -292,11 +332,14 @@ class FornecedorResourceIT {
     @Transactional
     void putWithMissingIdPathParamFornecedor() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        fornecedor.setNome(UUID.randomUUID().toString());
+        fornecedor.setId(longCount.incrementAndGet());
+
+        // Create the Fornecedor
+        FornecedorDTO fornecedorDTO = fornecedorMapper.toDto(fornecedor);
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restFornecedorMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(fornecedor)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(fornecedorDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Fornecedor in the database
@@ -307,20 +350,24 @@ class FornecedorResourceIT {
     @Transactional
     void partialUpdateFornecedorWithPatch() throws Exception {
         // Initialize the database
-        fornecedor.setNome(UUID.randomUUID().toString());
         fornecedorRepository.saveAndFlush(fornecedor);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
         // Update the fornecedor using partial update
         Fornecedor partialUpdatedFornecedor = new Fornecedor();
-        partialUpdatedFornecedor.setNome(fornecedor.getNome());
+        partialUpdatedFornecedor.setId(fornecedor.getId());
 
-        partialUpdatedFornecedor.telefone(UPDATED_TELEFONE).endereco(UPDATED_ENDERECO).cidade(UPDATED_CIDADE).estado(UPDATED_ESTADO);
+        partialUpdatedFornecedor
+            .descricao(UPDATED_DESCRICAO)
+            .telefone(UPDATED_TELEFONE)
+            .endereco(UPDATED_ENDERECO)
+            .cidade(UPDATED_CIDADE)
+            .estado(UPDATED_ESTADO);
 
         restFornecedorMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedFornecedor.getNome())
+                patch(ENTITY_API_URL_ID, partialUpdatedFornecedor.getId())
                     .contentType("application/merge-patch+json")
                     .content(om.writeValueAsBytes(partialUpdatedFornecedor))
             )
@@ -339,19 +386,19 @@ class FornecedorResourceIT {
     @Transactional
     void fullUpdateFornecedorWithPatch() throws Exception {
         // Initialize the database
-        fornecedor.setNome(UUID.randomUUID().toString());
         fornecedorRepository.saveAndFlush(fornecedor);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
         // Update the fornecedor using partial update
         Fornecedor partialUpdatedFornecedor = new Fornecedor();
-        partialUpdatedFornecedor.setNome(fornecedor.getNome());
+        partialUpdatedFornecedor.setId(fornecedor.getId());
 
         partialUpdatedFornecedor
-            .descricao(UPDATED_DESCRICAO)
+            .nome(UPDATED_NOME)
             .cpfOuCnpj(UPDATED_CPF_OU_CNPJ)
             .email(UPDATED_EMAIL)
+            .descricao(UPDATED_DESCRICAO)
             .telefone(UPDATED_TELEFONE)
             .endereco(UPDATED_ENDERECO)
             .cidade(UPDATED_CIDADE)
@@ -359,7 +406,7 @@ class FornecedorResourceIT {
 
         restFornecedorMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedFornecedor.getNome())
+                patch(ENTITY_API_URL_ID, partialUpdatedFornecedor.getId())
                     .contentType("application/merge-patch+json")
                     .content(om.writeValueAsBytes(partialUpdatedFornecedor))
             )
@@ -375,14 +422,17 @@ class FornecedorResourceIT {
     @Transactional
     void patchNonExistingFornecedor() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        fornecedor.setNome(UUID.randomUUID().toString());
+        fornecedor.setId(longCount.incrementAndGet());
+
+        // Create the Fornecedor
+        FornecedorDTO fornecedorDTO = fornecedorMapper.toDto(fornecedor);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restFornecedorMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, fornecedor.getNome())
+                patch(ENTITY_API_URL_ID, fornecedorDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(fornecedor))
+                    .content(om.writeValueAsBytes(fornecedorDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -394,14 +444,17 @@ class FornecedorResourceIT {
     @Transactional
     void patchWithIdMismatchFornecedor() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        fornecedor.setNome(UUID.randomUUID().toString());
+        fornecedor.setId(longCount.incrementAndGet());
+
+        // Create the Fornecedor
+        FornecedorDTO fornecedorDTO = fornecedorMapper.toDto(fornecedor);
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restFornecedorMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, UUID.randomUUID().toString())
+                patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(fornecedor))
+                    .content(om.writeValueAsBytes(fornecedorDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -413,11 +466,14 @@ class FornecedorResourceIT {
     @Transactional
     void patchWithMissingIdPathParamFornecedor() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        fornecedor.setNome(UUID.randomUUID().toString());
+        fornecedor.setId(longCount.incrementAndGet());
+
+        // Create the Fornecedor
+        FornecedorDTO fornecedorDTO = fornecedorMapper.toDto(fornecedor);
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restFornecedorMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(fornecedor)))
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(fornecedorDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Fornecedor in the database
@@ -428,14 +484,13 @@ class FornecedorResourceIT {
     @Transactional
     void deleteFornecedor() throws Exception {
         // Initialize the database
-        fornecedor.setNome(UUID.randomUUID().toString());
         fornecedorRepository.saveAndFlush(fornecedor);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 
         // Delete the fornecedor
         restFornecedorMockMvc
-            .perform(delete(ENTITY_API_URL_ID, fornecedor.getNome()).accept(MediaType.APPLICATION_JSON))
+            .perform(delete(ENTITY_API_URL_ID, fornecedor.getId()).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -459,7 +514,7 @@ class FornecedorResourceIT {
     }
 
     protected Fornecedor getPersistedFornecedor(Fornecedor fornecedor) {
-        return fornecedorRepository.findById(fornecedor.getNome()).orElseThrow();
+        return fornecedorRepository.findById(fornecedor.getId()).orElseThrow();
     }
 
     protected void assertPersistedFornecedorToMatchAllProperties(Fornecedor expectedFornecedor) {

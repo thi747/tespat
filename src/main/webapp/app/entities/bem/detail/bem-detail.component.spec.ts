@@ -18,7 +18,7 @@ describe('Bem Management Detail Component', () => {
             {
               path: '**',
               component: BemDetailComponent,
-              resolve: { bem: () => of({ patrimonio: 123 }) },
+              resolve: { bem: () => of({ id: 123 }) },
             },
           ],
           withComponentInputBinding(),
@@ -40,7 +40,7 @@ describe('Bem Management Detail Component', () => {
       const instance = await harness.navigateByUrl('/', BemDetailComponent);
 
       // THEN
-      expect(instance.bem).toEqual(expect.objectContaining({ patrimonio: 123 }));
+      expect(instance.bem).toEqual(expect.objectContaining({ id: 123 }));
     });
   });
 

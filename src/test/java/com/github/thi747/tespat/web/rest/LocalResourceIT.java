@@ -11,8 +11,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.thi747.tespat.IntegrationTest;
 import com.github.thi747.tespat.domain.Local;
 import com.github.thi747.tespat.repository.LocalRepository;
+import com.github.thi747.tespat.service.dto.LocalDTO;
+import com.github.thi747.tespat.service.mapper.LocalMapper;
 import jakarta.persistence.EntityManager;
-import java.util.UUID;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,9 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class LocalResourceIT {
 
+    private static final String DEFAULT_NOME = "AAAAAAAAAA";
+    private static final String UPDATED_NOME = "BBBBBBBBBB";
+
     private static final String DEFAULT_DESCRICAO = "AAAAAAAAAA";
     private static final String UPDATED_DESCRICAO = "BBBBBBBBBB";
 
@@ -37,13 +43,19 @@ class LocalResourceIT {
     private static final String UPDATED_SALA = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/locals";
-    private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{nome}";
+    private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
+
+    private static Random random = new Random();
+    private static AtomicLong longCount = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
     @Autowired
     private ObjectMapper om;
 
     @Autowired
     private LocalRepository localRepository;
+
+    @Autowired
+    private LocalMapper localMapper;
 
     @Autowired
     private EntityManager em;
@@ -60,7 +72,7 @@ class LocalResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Local createEntity(EntityManager em) {
-        Local local = new Local().nome(UUID.randomUUID().toString()).descricao(DEFAULT_DESCRICAO).sala(DEFAULT_SALA);
+        Local local = new Local().nome(DEFAULT_NOME).descricao(DEFAULT_DESCRICAO).sala(DEFAULT_SALA);
         return local;
     }
 
@@ -71,7 +83,7 @@ class LocalResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Local createUpdatedEntity(EntityManager em) {
-        Local local = new Local().nome(UUID.randomUUID().toString()).descricao(UPDATED_DESCRICAO).sala(UPDATED_SALA);
+        Local local = new Local().nome(UPDATED_NOME).descricao(UPDATED_DESCRICAO).sala(UPDATED_SALA);
         return local;
     }
 
@@ -85,18 +97,20 @@ class LocalResourceIT {
     void createLocal() throws Exception {
         long databaseSizeBeforeCreate = getRepositoryCount();
         // Create the Local
-        var returnedLocal = om.readValue(
+        LocalDTO localDTO = localMapper.toDto(local);
+        var returnedLocalDTO = om.readValue(
             restLocalMockMvc
-                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(local)))
+                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(localDTO)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse()
                 .getContentAsString(),
-            Local.class
+            LocalDTO.class
         );
 
         // Validate the Local in the database
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
+        var returnedLocal = localMapper.toEntity(returnedLocalDTO);
         assertLocalUpdatableFieldsEquals(returnedLocal, getPersistedLocal(returnedLocal));
     }
 
@@ -104,13 +118,14 @@ class LocalResourceIT {
     @Transactional
     void createLocalWithExistingId() throws Exception {
         // Create the Local with an existing ID
-        localRepository.saveAndFlush(local);
+        local.setId(1L);
+        LocalDTO localDTO = localMapper.toDto(local);
 
         long databaseSizeBeforeCreate = getRepositoryCount();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restLocalMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(local)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(localDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Local in the database
@@ -119,17 +134,34 @@ class LocalResourceIT {
 
     @Test
     @Transactional
+    void checkNomeIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        local.setNome(null);
+
+        // Create the Local, which fails.
+        LocalDTO localDTO = localMapper.toDto(local);
+
+        restLocalMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(localDTO)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllLocals() throws Exception {
         // Initialize the database
-        local.setNome(UUID.randomUUID().toString());
         localRepository.saveAndFlush(local);
 
         // Get all the localList
         restLocalMockMvc
-            .perform(get(ENTITY_API_URL + "?sort=nome,desc"))
+            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].nome").value(hasItem(local.getNome())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(local.getId().intValue())))
+            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)))
             .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)))
             .andExpect(jsonPath("$.[*].sala").value(hasItem(DEFAULT_SALA)));
     }
@@ -138,15 +170,15 @@ class LocalResourceIT {
     @Transactional
     void getLocal() throws Exception {
         // Initialize the database
-        local.setNome(UUID.randomUUID().toString());
         localRepository.saveAndFlush(local);
 
         // Get the local
         restLocalMockMvc
-            .perform(get(ENTITY_API_URL_ID, local.getNome()))
+            .perform(get(ENTITY_API_URL_ID, local.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.nome").value(local.getNome()))
+            .andExpect(jsonPath("$.id").value(local.getId().intValue()))
+            .andExpect(jsonPath("$.nome").value(DEFAULT_NOME))
             .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO))
             .andExpect(jsonPath("$.sala").value(DEFAULT_SALA));
     }
@@ -162,22 +194,20 @@ class LocalResourceIT {
     @Transactional
     void putExistingLocal() throws Exception {
         // Initialize the database
-        local.setNome(UUID.randomUUID().toString());
         localRepository.saveAndFlush(local);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
         // Update the local
-        Local updatedLocal = localRepository.findById(local.getNome()).orElseThrow();
+        Local updatedLocal = localRepository.findById(local.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedLocal are not directly saved in db
         em.detach(updatedLocal);
-        updatedLocal.descricao(UPDATED_DESCRICAO).sala(UPDATED_SALA);
+        updatedLocal.nome(UPDATED_NOME).descricao(UPDATED_DESCRICAO).sala(UPDATED_SALA);
+        LocalDTO localDTO = localMapper.toDto(updatedLocal);
 
         restLocalMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedLocal.getNome())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(updatedLocal))
+                put(ENTITY_API_URL_ID, localDTO.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(localDTO))
             )
             .andExpect(status().isOk());
 
@@ -190,11 +220,16 @@ class LocalResourceIT {
     @Transactional
     void putNonExistingLocal() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        local.setNome(UUID.randomUUID().toString());
+        local.setId(longCount.incrementAndGet());
+
+        // Create the Local
+        LocalDTO localDTO = localMapper.toDto(local);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restLocalMockMvc
-            .perform(put(ENTITY_API_URL_ID, local.getNome()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(local)))
+            .perform(
+                put(ENTITY_API_URL_ID, localDTO.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(localDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the Local in the database
@@ -205,14 +240,17 @@ class LocalResourceIT {
     @Transactional
     void putWithIdMismatchLocal() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        local.setNome(UUID.randomUUID().toString());
+        local.setId(longCount.incrementAndGet());
+
+        // Create the Local
+        LocalDTO localDTO = localMapper.toDto(local);
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restLocalMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, UUID.randomUUID().toString())
+                put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(local))
+                    .content(om.writeValueAsBytes(localDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -224,11 +262,14 @@ class LocalResourceIT {
     @Transactional
     void putWithMissingIdPathParamLocal() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        local.setNome(UUID.randomUUID().toString());
+        local.setId(longCount.incrementAndGet());
+
+        // Create the Local
+        LocalDTO localDTO = localMapper.toDto(local);
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restLocalMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(local)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(localDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Local in the database
@@ -239,20 +280,19 @@ class LocalResourceIT {
     @Transactional
     void partialUpdateLocalWithPatch() throws Exception {
         // Initialize the database
-        local.setNome(UUID.randomUUID().toString());
         localRepository.saveAndFlush(local);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
         // Update the local using partial update
         Local partialUpdatedLocal = new Local();
-        partialUpdatedLocal.setNome(local.getNome());
+        partialUpdatedLocal.setId(local.getId());
 
-        partialUpdatedLocal.descricao(UPDATED_DESCRICAO).sala(UPDATED_SALA);
+        partialUpdatedLocal.nome(UPDATED_NOME).descricao(UPDATED_DESCRICAO);
 
         restLocalMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedLocal.getNome())
+                patch(ENTITY_API_URL_ID, partialUpdatedLocal.getId())
                     .contentType("application/merge-patch+json")
                     .content(om.writeValueAsBytes(partialUpdatedLocal))
             )
@@ -268,20 +308,19 @@ class LocalResourceIT {
     @Transactional
     void fullUpdateLocalWithPatch() throws Exception {
         // Initialize the database
-        local.setNome(UUID.randomUUID().toString());
         localRepository.saveAndFlush(local);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
         // Update the local using partial update
         Local partialUpdatedLocal = new Local();
-        partialUpdatedLocal.setNome(local.getNome());
+        partialUpdatedLocal.setId(local.getId());
 
-        partialUpdatedLocal.descricao(UPDATED_DESCRICAO).sala(UPDATED_SALA);
+        partialUpdatedLocal.nome(UPDATED_NOME).descricao(UPDATED_DESCRICAO).sala(UPDATED_SALA);
 
         restLocalMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, partialUpdatedLocal.getNome())
+                patch(ENTITY_API_URL_ID, partialUpdatedLocal.getId())
                     .contentType("application/merge-patch+json")
                     .content(om.writeValueAsBytes(partialUpdatedLocal))
             )
@@ -297,12 +336,17 @@ class LocalResourceIT {
     @Transactional
     void patchNonExistingLocal() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        local.setNome(UUID.randomUUID().toString());
+        local.setId(longCount.incrementAndGet());
+
+        // Create the Local
+        LocalDTO localDTO = localMapper.toDto(local);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restLocalMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, local.getNome()).contentType("application/merge-patch+json").content(om.writeValueAsBytes(local))
+                patch(ENTITY_API_URL_ID, localDTO.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(localDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -314,14 +358,17 @@ class LocalResourceIT {
     @Transactional
     void patchWithIdMismatchLocal() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        local.setNome(UUID.randomUUID().toString());
+        local.setId(longCount.incrementAndGet());
+
+        // Create the Local
+        LocalDTO localDTO = localMapper.toDto(local);
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restLocalMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, UUID.randomUUID().toString())
+                patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(local))
+                    .content(om.writeValueAsBytes(localDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -333,11 +380,14 @@ class LocalResourceIT {
     @Transactional
     void patchWithMissingIdPathParamLocal() throws Exception {
         long databaseSizeBeforeUpdate = getRepositoryCount();
-        local.setNome(UUID.randomUUID().toString());
+        local.setId(longCount.incrementAndGet());
+
+        // Create the Local
+        LocalDTO localDTO = localMapper.toDto(local);
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restLocalMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(local)))
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(localDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Local in the database
@@ -348,14 +398,13 @@ class LocalResourceIT {
     @Transactional
     void deleteLocal() throws Exception {
         // Initialize the database
-        local.setNome(UUID.randomUUID().toString());
         localRepository.saveAndFlush(local);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 
         // Delete the local
         restLocalMockMvc
-            .perform(delete(ENTITY_API_URL_ID, local.getNome()).accept(MediaType.APPLICATION_JSON))
+            .perform(delete(ENTITY_API_URL_ID, local.getId()).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNoContent());
 
         // Validate the database contains one less item
@@ -379,7 +428,7 @@ class LocalResourceIT {
     }
 
     protected Local getPersistedLocal(Local local) {
-        return localRepository.findById(local.getNome()).orElseThrow();
+        return localRepository.findById(local.getId()).orElseThrow();
     }
 
     protected void assertPersistedLocalToMatchAllProperties(Local expectedLocal) {

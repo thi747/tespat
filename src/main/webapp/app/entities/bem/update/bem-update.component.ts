@@ -69,7 +69,7 @@ export class BemUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const bem = this.bemFormService.getBem(this.editForm);
-    if (bem.patrimonio !== null) {
+    if (bem.id !== null) {
       this.subscribeToSaveResponse(this.bemService.update(bem));
     } else {
       this.subscribeToSaveResponse(this.bemService.create(bem));

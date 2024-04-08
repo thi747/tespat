@@ -15,13 +15,13 @@
           <dd>
             <span>{{ movimentacao.id }}</span>
           </dd>
-          <dt><span jhiTranslate="tesPatApp.movimentacao.descricao">Descricao</span></dt>
-          <dd>
-            <span>{{ movimentacao.descricao }}</span>
-          </dd>
           <dt><span jhiTranslate="tesPatApp.movimentacao.data">Data</span></dt>
           <dd>
             <span>{{ movimentacao.data | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.movimentacao.descricao">Descricao</span></dt>
+          <dd>
+            <span>{{ movimentacao.descricao }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.movimentacao.tipo">Tipo</span></dt>
           <dd>
@@ -31,7 +31,7 @@
           <dd>
             @if (movimentacao.bem) {
               <div>
-                <a [routerLink]="['/bem', movimentacao.bem.patrimonio, 'view']">{{ movimentacao.bem.patrimonio }}</a>
+                <a [routerLink]="['/bem', movimentacao.bem.id, 'view']">{{ movimentacao.bem.patrimonio }}</a>
               </div>
             }
           </dd>
@@ -39,7 +39,7 @@
           <dd>
             @if (movimentacao.pessoa) {
               <div>
-                <a [routerLink]="['/pessoa', movimentacao.pessoa.usuario, 'view']">{{ movimentacao.pessoa.usuario }}</a>
+                <a [routerLink]="['/pessoa', movimentacao.pessoa.id, 'view']">{{ movimentacao.pessoa.usuario }}</a>
               </div>
             }
           </dd>

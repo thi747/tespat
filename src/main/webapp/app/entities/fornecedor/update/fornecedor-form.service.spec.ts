@@ -19,10 +19,11 @@ describe('Fornecedor Form Service', () => {
 
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
+            id: expect.any(Object),
             nome: expect.any(Object),
-            descricao: expect.any(Object),
             cpfOuCnpj: expect.any(Object),
             email: expect.any(Object),
+            descricao: expect.any(Object),
             telefone: expect.any(Object),
             endereco: expect.any(Object),
             cidade: expect.any(Object),
@@ -36,10 +37,11 @@ describe('Fornecedor Form Service', () => {
 
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
+            id: expect.any(Object),
             nome: expect.any(Object),
-            descricao: expect.any(Object),
             cpfOuCnpj: expect.any(Object),
             email: expect.any(Object),
+            descricao: expect.any(Object),
             telefone: expect.any(Object),
             endereco: expect.any(Object),
             cidade: expect.any(Object),
@@ -72,6 +74,26 @@ describe('Fornecedor Form Service', () => {
         const fornecedor = service.getFornecedor(formGroup) as any;
 
         expect(fornecedor).toMatchObject(sampleWithRequiredData);
+      });
+    });
+
+    describe('resetForm', () => {
+      it('passing IFornecedor should not enable id FormControl', () => {
+        const formGroup = service.createFornecedorFormGroup();
+        expect(formGroup.controls.id.disabled).toBe(true);
+
+        service.resetForm(formGroup, sampleWithRequiredData);
+
+        expect(formGroup.controls.id.disabled).toBe(true);
+      });
+
+      it('passing NewFornecedor should disable id FormControl', () => {
+        const formGroup = service.createFornecedorFormGroup(sampleWithRequiredData);
+        expect(formGroup.controls.id.disabled).toBe(true);
+
+        service.resetForm(formGroup, { id: null });
+
+        expect(formGroup.controls.id.disabled).toBe(true);
       });
     });
   });

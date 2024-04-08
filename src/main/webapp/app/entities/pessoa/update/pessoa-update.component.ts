@@ -44,7 +44,7 @@ export class PessoaUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const pessoa = this.pessoaFormService.getPessoa(this.editForm);
-    if (pessoa.usuario !== null) {
+    if (pessoa.id !== null) {
       this.subscribeToSaveResponse(this.pessoaService.update(pessoa));
     } else {
       this.subscribeToSaveResponse(this.pessoaService.create(pessoa));

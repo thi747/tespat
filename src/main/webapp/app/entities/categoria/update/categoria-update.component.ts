@@ -44,7 +44,11 @@ export class CategoriaUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const categoria = this.categoriaFormService.getCategoria(this.editForm);
-    this.subscribeToSaveResponse(this.categoriaService.create(categoria));
+    if (categoria.id !== null) {
+      this.subscribeToSaveResponse(this.categoriaService.update(categoria));
+    } else {
+      this.subscribeToSaveResponse(this.categoriaService.create(categoria));
+    }
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ICategoria>>): void {

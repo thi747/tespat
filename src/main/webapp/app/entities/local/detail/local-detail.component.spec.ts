@@ -18,7 +18,7 @@ describe('Local Management Detail Component', () => {
             {
               path: '**',
               component: LocalDetailComponent,
-              resolve: { local: () => of({ nome: 'ABC' }) },
+              resolve: { local: () => of({ id: 123 }) },
             },
           ],
           withComponentInputBinding(),
@@ -40,7 +40,7 @@ describe('Local Management Detail Component', () => {
       const instance = await harness.navigateByUrl('/', LocalDetailComponent);
 
       // THEN
-      expect(instance.local).toEqual(expect.objectContaining({ nome: 'ABC' }));
+      expect(instance.local).toEqual(expect.objectContaining({ id: 123 }));
     });
   });
 

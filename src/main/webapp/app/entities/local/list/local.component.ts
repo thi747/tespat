@@ -41,7 +41,7 @@ export class LocalComponent implements OnInit {
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
 
-  trackNome = (_index: number, item: ILocal): string => this.localService.getLocalIdentifier(item);
+  trackId = (_index: number, item: ILocal): number => this.localService.getLocalIdentifier(item);
 
   ngOnInit(): void {
     this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])

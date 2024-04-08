@@ -40,8 +40,8 @@ describe('Categoria routing resolve service', () => {
   describe('resolve', () => {
     it('should return ICategoria returned by find', () => {
       // GIVEN
-      service.find = jest.fn(nome => of(new HttpResponse({ body: { nome } })));
-      mockActivatedRouteSnapshot.params = { nome: 'ABC' };
+      service.find = jest.fn(id => of(new HttpResponse({ body: { id } })));
+      mockActivatedRouteSnapshot.params = { id: 123 };
 
       // WHEN
       TestBed.runInInjectionContext(() => {
@@ -53,8 +53,8 @@ describe('Categoria routing resolve service', () => {
       });
 
       // THEN
-      expect(service.find).toBeCalledWith('ABC');
-      expect(resultCategoria).toEqual({ nome: 'ABC' });
+      expect(service.find).toBeCalledWith(123);
+      expect(resultCategoria).toEqual({ id: 123 });
     });
 
     it('should return null if id is not provided', () => {
@@ -79,7 +79,7 @@ describe('Categoria routing resolve service', () => {
     it('should route to 404 page if data not found in server', () => {
       // GIVEN
       jest.spyOn(service, 'find').mockReturnValue(of(new HttpResponse<ICategoria>({ body: null })));
-      mockActivatedRouteSnapshot.params = { nome: 'ABC' };
+      mockActivatedRouteSnapshot.params = { id: 123 };
 
       // WHEN
       TestBed.runInInjectionContext(() => {
@@ -91,7 +91,7 @@ describe('Categoria routing resolve service', () => {
       });
 
       // THEN
-      expect(service.find).toBeCalledWith('ABC');
+      expect(service.find).toBeCalledWith(123);
       expect(resultCategoria).toEqual(undefined);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['404']);
     });

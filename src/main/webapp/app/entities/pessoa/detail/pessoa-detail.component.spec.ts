@@ -18,7 +18,7 @@ describe('Pessoa Management Detail Component', () => {
             {
               path: '**',
               component: PessoaDetailComponent,
-              resolve: { pessoa: () => of({ usuario: 'ABC' }) },
+              resolve: { pessoa: () => of({ id: 123 }) },
             },
           ],
           withComponentInputBinding(),
@@ -40,7 +40,7 @@ describe('Pessoa Management Detail Component', () => {
       const instance = await harness.navigateByUrl('/', PessoaDetailComponent);
 
       // THEN
-      expect(instance.pessoa).toEqual(expect.objectContaining({ usuario: 'ABC' }));
+      expect(instance.pessoa).toEqual(expect.objectContaining({ id: 123 }));
     });
   });
 

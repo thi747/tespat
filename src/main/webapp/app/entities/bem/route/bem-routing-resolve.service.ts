@@ -8,7 +8,7 @@ import { IBem } from '../bem.model';
 import { BemService } from '../service/bem.service';
 
 const bemResolve = (route: ActivatedRouteSnapshot): Observable<null | IBem> => {
-  const id = route.params['patrimonio'];
+  const id = route.params['id'];
   if (id) {
     return inject(BemService)
       .find(id)

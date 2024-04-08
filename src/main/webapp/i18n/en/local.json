@@ -17,10 +17,10 @@
       "detail": {
         "title": "Local"
       },
+      "id": "Id",
       "nome": "Nome",
       "descricao": "Descricao",
-      "sala": "Sala",
-      "bem": "Bem"
+      "sala": "Sala"
     }
   }
 }

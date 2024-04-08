@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
+import { ASC } from 'app/config/navigation.constants';
 import { PessoaComponent } from './list/pessoa.component';
 import { PessoaDetailComponent } from './detail/pessoa-detail.component';
 import { PessoaUpdateComponent } from './update/pessoa-update.component';
@@ -10,11 +11,13 @@ const pessoaRoute: Routes = [
   {
     path: '',
     component: PessoaComponent,
-    data: {},
+    data: {
+      defaultSort: 'id,' + ASC,
+    },
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':usuario/view',
+    path: ':id/view',
     component: PessoaDetailComponent,
     resolve: {
       pessoa: PessoaResolve,
@@ -30,7 +33,7 @@ const pessoaRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':usuario/edit',
+    path: ':id/edit',
     component: PessoaUpdateComponent,
     resolve: {
       pessoa: PessoaResolve,

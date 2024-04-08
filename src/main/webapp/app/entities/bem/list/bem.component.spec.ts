@@ -26,13 +26,13 @@ describe('Bem Management Component', () => {
           provide: ActivatedRoute,
           useValue: {
             data: of({
-              defaultSort: 'patrimonio,asc',
+              defaultSort: 'id,asc',
             }),
             queryParamMap: of(
               jest.requireActual('@angular/router').convertToParamMap({
                 page: '1',
                 size: '1',
-                sort: 'patrimonio,desc',
+                sort: 'id,desc',
               }),
             ),
             snapshot: {
@@ -40,7 +40,7 @@ describe('Bem Management Component', () => {
               queryParamMap: jest.requireActual('@angular/router').convertToParamMap({
                 page: '1',
                 size: '1',
-                sort: 'patrimonio,desc',
+                sort: 'id,desc',
               }),
             },
           },
@@ -60,7 +60,7 @@ describe('Bem Management Component', () => {
       .mockReturnValueOnce(
         of(
           new HttpResponse({
-            body: [{ patrimonio: 123 }],
+            body: [{ id: 123 }],
             headers: new HttpHeaders({
               link: '<http://localhost/api/foo?page=1&size=20>; rel="next"',
             }),
@@ -70,7 +70,7 @@ describe('Bem Management Component', () => {
       .mockReturnValueOnce(
         of(
           new HttpResponse({
-            body: [{ patrimonio: 456 }],
+            body: [{ id: 456 }],
             headers: new HttpHeaders({
               link: '<http://localhost/api/foo?page=0&size=20>; rel="prev",<http://localhost/api/foo?page=2&size=20>; rel="next"',
             }),
@@ -85,16 +85,16 @@ describe('Bem Management Component', () => {
 
     // THEN
     expect(service.query).toHaveBeenCalled();
-    expect(comp.bems?.[0]).toEqual(expect.objectContaining({ patrimonio: 123 }));
+    expect(comp.bems?.[0]).toEqual(expect.objectContaining({ id: 123 }));
   });
 
-  describe('trackPatrimonio', () => {
+  describe('trackId', () => {
     it('Should forward to bemService', () => {
-      const entity = { patrimonio: 123 };
+      const entity = { id: 123 };
       jest.spyOn(service, 'getBemIdentifier');
-      const patrimonio = comp.trackPatrimonio(0, entity);
+      const id = comp.trackId(0, entity);
       expect(service.getBemIdentifier).toHaveBeenCalledWith(entity);
-      expect(patrimonio).toBe(entity.patrimonio);
+      expect(id).toBe(entity.id);
     });
   });
 
@@ -118,7 +118,7 @@ describe('Bem Management Component', () => {
     comp.ngOnInit();
 
     // THEN
-    expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ sort: ['patrimonio,desc'] }));
+    expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ sort: ['id,desc'] }));
   });
 
   describe('delete', () => {

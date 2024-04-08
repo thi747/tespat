@@ -37,11 +37,11 @@ describe('Local Management Delete Component', () => {
         jest.spyOn(service, 'delete').mockReturnValue(of(new HttpResponse({ body: {} })));
 
         // WHEN
-        comp.confirmDelete('ABC');
+        comp.confirmDelete(123);
         tick();
 
         // THEN
-        expect(service.delete).toHaveBeenCalledWith('ABC');
+        expect(service.delete).toHaveBeenCalledWith(123);
         expect(mockActiveModal.close).toHaveBeenCalledWith('deleted');
       }),
     ));

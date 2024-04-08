@@ -1,32 +1,36 @@
 import { IFornecedor, NewFornecedor } from './fornecedor.model';
 
 export const sampleWithRequiredData: IFornecedor = {
-  nome: '4ea2a0ed-2b71-4ea4-9e00-d635bb1678b9',
-  cpfOuCnpj: 'finallyXXXX',
+  id: 31813,
+  nome: 'petal loop gently',
+  cpfOuCnpj: 'betweenXXXX',
 };
 
 export const sampleWithPartialData: IFornecedor = {
-  nome: '785b52af-1ec6-4df6-b93a-5d273c42b3f0',
-  cpfOuCnpj: 'hen voluntarily coolly',
-  email: 'Gardner_Spinka@yahoo.com',
-  telefone: 'energetically formal',
-  endereco: 'putrefy commonly',
+  id: 27550,
+  nome: 'breed',
+  cpfOuCnpj: 'naive scattering',
+  email: 'Matilda.Walter@yahoo.com',
+  endereco: 'ornate',
+  cidade: 'peel if',
 };
 
 export const sampleWithFullData: IFornecedor = {
-  nome: '6c91394f-8131-46f5-8469-7b57d612cbc1',
-  descricao: 'huge video circular',
-  cpfOuCnpj: 'gah recklessly willfully',
-  email: 'Dallas67@gmail.com',
-  telefone: 'surmise mmm and',
-  endereco: 'oh if playfully',
-  cidade: 'although finally address',
-  estado: 'un',
+  id: 30006,
+  nome: 'rescind alight',
+  cpfOuCnpj: 'buzzingXXXX',
+  email: 'Jennings.Rau@yahoo.com',
+  descricao: 'finally',
+  telefone: 'memorialise blah positively',
+  endereco: 'through',
+  cidade: 'whether',
+  estado: 'hm',
 };
 
 export const sampleWithNewData: NewFornecedor = {
-  cpfOuCnpj: 'an follow successfully',
-  nome: null,
+  nome: 'instead pirouette incidentally',
+  cpfOuCnpj: 'pace muffle sheep',
+  id: null,
 };
 
 Object.freeze(sampleWithNewData);

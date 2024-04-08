@@ -8,7 +8,7 @@ import { ILocal } from '../local.model';
 import { LocalService } from '../service/local.service';
 
 const localResolve = (route: ActivatedRouteSnapshot): Observable<null | ILocal> => {
-  const id = route.params['nome'];
+  const id = route.params['id'];
   if (id) {
     return inject(LocalService)
       .find(id)

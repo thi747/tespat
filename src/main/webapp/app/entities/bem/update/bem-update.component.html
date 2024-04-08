@@ -8,33 +8,37 @@
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        @if (editForm.controls.patrimonio.value !== null) {
+        @if (editForm.controls.id.value !== null) {
           <div class="mb-3">
-            <label class="form-label" jhiTranslate="tesPatApp.bem.patrimonio" for="field_patrimonio">Patrimonio</label>
-            <input
-              type="number"
-              class="form-control"
-              name="patrimonio"
-              id="field_patrimonio"
-              data-cy="patrimonio"
-              formControlName="patrimonio"
-              [readonly]="true"
-            />
-            @if (editForm.get('patrimonio')!.invalid && (editForm.get('patrimonio')!.dirty || editForm.get('patrimonio')!.touched)) {
-              <div>
-                @if (editForm.get('patrimonio')?.errors?.required) {
-                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
-                }
-                <small
-                  class="form-text text-danger"
-                  [hidden]="!editForm.get('patrimonio')?.errors?.number"
-                  jhiTranslate="entity.validation.number"
-                  >This field should be a number.</small
-                >
-              </div>
-            }
+            <label class="form-label" jhiTranslate="tesPatApp.bem.id" for="field_id">Id</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
           </div>
         }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.bem.patrimonio" for="field_patrimonio">Patrimonio</label>
+          <input
+            type="number"
+            class="form-control"
+            name="patrimonio"
+            id="field_patrimonio"
+            data-cy="patrimonio"
+            formControlName="patrimonio"
+          />
+          @if (editForm.get('patrimonio')!.invalid && (editForm.get('patrimonio')!.dirty || editForm.get('patrimonio')!.touched)) {
+            <div>
+              @if (editForm.get('patrimonio')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('patrimonio')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
 
         <div class="mb-3">
           <label class="form-label" jhiTranslate="tesPatApp.bem.nome" for="field_nome">Nome</label>
@@ -51,18 +55,6 @@
         <div class="mb-3">
           <label class="form-label" jhiTranslate="tesPatApp.bem.descricao" for="field_descricao">Descricao</label>
           <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.bem.observacoes" for="field_observacoes">Observacoes</label>
-          <input
-            type="text"
-            class="form-control"
-            name="observacoes"
-            id="field_observacoes"
-            data-cy="observacoes"
-            formControlName="observacoes"
-          />
         </div>
 
         <div class="mb-3">
@@ -138,6 +130,18 @@
               <option [value]="tipoStatus">{{ 'tesPatApp.TipoStatus.' + tipoStatus | translate }}</option>
             }
           </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.bem.observacoes" for="field_observacoes">Observacoes</label>
+          <input
+            type="text"
+            class="form-control"
+            name="observacoes"
+            id="field_observacoes"
+            data-cy="observacoes"
+            formControlName="observacoes"
+          />
         </div>
 
         <div class="mb-3">

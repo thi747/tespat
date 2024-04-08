@@ -6,7 +6,7 @@ import { IPessoa, NewPessoa } from '../pessoa.model';
 /**
  * A partial Type with required key is used as form input.
  */
-type PartialWithRequiredKeyOf<T extends { usuario: unknown }> = Partial<Omit<T, 'usuario'>> & { usuario: T['usuario'] };
+type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>> & { id: T['id'] };
 
 /**
  * Type for createFormGroup and resetForm argument.
@@ -14,10 +14,11 @@ type PartialWithRequiredKeyOf<T extends { usuario: unknown }> = Partial<Omit<T, 
  */
 type PessoaFormGroupInput = IPessoa | PartialWithRequiredKeyOf<NewPessoa>;
 
-type PessoaFormDefaults = Pick<NewPessoa, 'usuario' | 'ativo'>;
+type PessoaFormDefaults = Pick<NewPessoa, 'id' | 'ativo'>;
 
 type PessoaFormGroupContent = {
-  usuario: FormControl<IPessoa['usuario'] | NewPessoa['usuario']>;
+  id: FormControl<IPessoa['id'] | NewPessoa['id']>;
+  usuario: FormControl<IPessoa['usuario']>;
   nome: FormControl<IPessoa['nome']>;
   cpf: FormControl<IPessoa['cpf']>;
   email: FormControl<IPessoa['email']>;
@@ -31,19 +32,22 @@ export type PessoaFormGroup = FormGroup<PessoaFormGroupContent>;
 
 @Injectable({ providedIn: 'root' })
 export class PessoaFormService {
-  createPessoaFormGroup(pessoa: PessoaFormGroupInput = { usuario: null }): PessoaFormGroup {
+  createPessoaFormGroup(pessoa: PessoaFormGroupInput = { id: null }): PessoaFormGroup {
     const pessoaRawValue = {
       ...this.getFormDefaults(),
       ...pessoa,
     };
     return new FormGroup<PessoaFormGroupContent>({
-      usuario: new FormControl(
-        { value: pessoaRawValue.usuario, disabled: pessoaRawValue.usuario !== null },
+      id: new FormControl(
+        { value: pessoaRawValue.id, disabled: true },
         {
           nonNullable: true,
           validators: [Validators.required],
         },
       ),
+      usuario: new FormControl(pessoaRawValue.usuario, {
+        validators: [Validators.required],
+      }),
       nome: new FormControl(pessoaRawValue.nome, {
         validators: [Validators.required],
       }),
@@ -71,14 +75,14 @@ export class PessoaFormService {
     form.reset(
       {
         ...pessoaRawValue,
-        usuario: { value: pessoaRawValue.usuario, disabled: pessoaRawValue.usuario !== null },
+        id: { value: pessoaRawValue.id, disabled: true },
       } as any /* cast to workaround https://github.com/angular/angular/issues/46458 */,
     );
   }
 
   private getFormDefaults(): PessoaFormDefaults {
     return {
-      usuario: null,
+      id: null,
       ativo: false,
     };
   }

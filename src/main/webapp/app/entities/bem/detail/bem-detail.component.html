@@ -11,6 +11,10 @@
         <jhi-alert></jhi-alert>
 
         <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="tesPatApp.bem.id">Id</span></dt>
+          <dd>
+            <span>{{ bem.id }}</span>
+          </dd>
           <dt><span jhiTranslate="tesPatApp.bem.patrimonio">Patrimonio</span></dt>
           <dd>
             <span>{{ bem.patrimonio }}</span>
@@ -22,10 +26,6 @@
           <dt><span jhiTranslate="tesPatApp.bem.descricao">Descricao</span></dt>
           <dd>
             <span>{{ bem.descricao }}</span>
-          </dd>
-          <dt><span jhiTranslate="tesPatApp.bem.observacoes">Observacoes</span></dt>
-          <dd>
-            <span>{{ bem.observacoes }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.bem.numeroDeSerie">Numero De Serie</span></dt>
           <dd>
@@ -51,11 +51,15 @@
           <dd>
             <span jhiTranslate="{{ 'tesPatApp.TipoStatus.' + bem.status }}">{{ bem.status }}</span>
           </dd>
+          <dt><span jhiTranslate="tesPatApp.bem.observacoes">Observacoes</span></dt>
+          <dd>
+            <span>{{ bem.observacoes }}</span>
+          </dd>
           <dt><span jhiTranslate="tesPatApp.bem.categoria">Categoria</span></dt>
           <dd>
             @if (bem.categoria) {
               <div>
-                <a [routerLink]="['/categoria', bem.categoria.nome, 'view']">{{ bem.categoria.nome }}</a>
+                <a [routerLink]="['/categoria', bem.categoria.id, 'view']">{{ bem.categoria.nome }}</a>
               </div>
             }
           </dd>
@@ -63,7 +67,7 @@
           <dd>
             @if (bem.fornecedor) {
               <div>
-                <a [routerLink]="['/fornecedor', bem.fornecedor.nome, 'view']">{{ bem.fornecedor.nome }}</a>
+                <a [routerLink]="['/fornecedor', bem.fornecedor.id, 'view']">{{ bem.fornecedor.nome }}</a>
               </div>
             }
           </dd>
@@ -71,7 +75,7 @@
           <dd>
             @if (bem.local) {
               <div>
-                <a [routerLink]="['/local', bem.local.nome, 'view']">{{ bem.local.nome }}</a>
+                <a [routerLink]="['/local', bem.local.id, 'view']">{{ bem.local.nome }}</a>
               </div>
             }
           </dd>
@@ -81,7 +85,7 @@
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
         </button>
 
-        <button type="button" [routerLink]="['/bem', bem.patrimonio, 'edit']" class="btn btn-primary">
+        <button type="button" [routerLink]="['/bem', bem.id, 'edit']" class="btn btn-primary">
           <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
         </button>
       </div>

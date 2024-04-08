@@ -44,7 +44,7 @@ export class LocalUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const local = this.localFormService.getLocal(this.editForm);
-    if (local.nome !== null) {
+    if (local.id !== null) {
       this.subscribeToSaveResponse(this.localService.update(local));
     } else {
       this.subscribeToSaveResponse(this.localService.create(local));

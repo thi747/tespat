@@ -17,15 +17,15 @@
       "detail": {
         "title": "Fornecedor"
       },
+      "id": "Id",
       "nome": "Nome",
-      "descricao": "Descricao",
       "cpfOuCnpj": "Cpf Ou Cnpj",
       "email": "Email",
+      "descricao": "Descricao",
       "telefone": "Telefone",
       "endereco": "Endereco",
       "cidade": "Cidade",
-      "estado": "Estado",
-      "bem": "Bem"
+      "estado": "Estado"
     }
   }
 }

@@ -45,7 +45,7 @@ describe('Local Management Update Component', () => {
 
   describe('ngOnInit', () => {
     it('Should update editForm', () => {
-      const local: ILocal = { nome: 'CBA' };
+      const local: ILocal = { id: 456 };
 
       activatedRoute.data = of({ local });
       comp.ngOnInit();
@@ -58,7 +58,7 @@ describe('Local Management Update Component', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<ILocal>>();
-      const local = { nome: 'ABC' };
+      const local = { id: 123 };
       jest.spyOn(localFormService, 'getLocal').mockReturnValue(local);
       jest.spyOn(localService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
@@ -81,8 +81,8 @@ describe('Local Management Update Component', () => {
     it('Should call create service on save for new entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<ILocal>>();
-      const local = { nome: 'ABC' };
-      jest.spyOn(localFormService, 'getLocal').mockReturnValue({ nome: null });
+      const local = { id: 123 };
+      jest.spyOn(localFormService, 'getLocal').mockReturnValue({ id: null });
       jest.spyOn(localService, 'create').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ local: null });
@@ -104,7 +104,7 @@ describe('Local Management Update Component', () => {
     it('Should set isSaving to false on error', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<ILocal>>();
-      const local = { nome: 'ABC' };
+      const local = { id: 123 };
       jest.spyOn(localService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ local });

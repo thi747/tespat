@@ -1,7 +1,8 @@
 export interface ILocal {
-  nome: string;
+  id: number;
+  nome?: string | null;
   descricao?: string | null;
   sala?: string | null;
 }
 
-export type NewLocal = Omit<ILocal, 'nome'> & { nome: null };
+export type NewLocal = Omit<ILocal, 'id'> & { id: null };

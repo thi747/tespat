@@ -18,8 +18,8 @@
         "title": "Movimentacao"
       },
       "id": "Id",
-      "descricao": "Descricao",
       "data": "Data",
+      "descricao": "Descricao",
       "tipo": "Tipo",
       "bem": "Bem",
       "pessoa": "Pessoa"

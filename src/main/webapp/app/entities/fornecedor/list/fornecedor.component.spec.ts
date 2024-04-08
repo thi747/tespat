@@ -30,13 +30,13 @@ describe('Fornecedor Management Component', () => {
           provide: ActivatedRoute,
           useValue: {
             data: of({
-              defaultSort: 'nome,asc',
+              defaultSort: 'id,asc',
             }),
             queryParamMap: of(
               jest.requireActual('@angular/router').convertToParamMap({
                 page: '1',
                 size: '1',
-                sort: 'nome,desc',
+                sort: 'id,desc',
               }),
             ),
             snapshot: {
@@ -44,7 +44,7 @@ describe('Fornecedor Management Component', () => {
               queryParamMap: jest.requireActual('@angular/router').convertToParamMap({
                 page: '1',
                 size: '1',
-                sort: 'nome,desc',
+                sort: 'id,desc',
               }),
             },
           },
@@ -64,7 +64,7 @@ describe('Fornecedor Management Component', () => {
       .mockReturnValueOnce(
         of(
           new HttpResponse({
-            body: [{ nome: 'ABC' }],
+            body: [{ id: 123 }],
             headers: new HttpHeaders({
               link: '<http://localhost/api/foo?page=1&size=20>; rel="next"',
             }),
@@ -74,7 +74,7 @@ describe('Fornecedor Management Component', () => {
       .mockReturnValueOnce(
         of(
           new HttpResponse({
-            body: [{ nome: 'CBA' }],
+            body: [{ id: 456 }],
             headers: new HttpHeaders({
               link: '<http://localhost/api/foo?page=0&size=20>; rel="prev",<http://localhost/api/foo?page=2&size=20>; rel="next"',
             }),
@@ -89,16 +89,16 @@ describe('Fornecedor Management Component', () => {
 
     // THEN
     expect(service.query).toHaveBeenCalled();
-    expect(comp.fornecedors?.[0]).toEqual(expect.objectContaining({ nome: 'ABC' }));
+    expect(comp.fornecedors?.[0]).toEqual(expect.objectContaining({ id: 123 }));
   });
 
-  describe('trackNome', () => {
+  describe('trackId', () => {
     it('Should forward to fornecedorService', () => {
-      const entity = { nome: 'ABC' };
+      const entity = { id: 123 };
       jest.spyOn(service, 'getFornecedorIdentifier');
-      const nome = comp.trackNome(0, entity);
+      const id = comp.trackId(0, entity);
       expect(service.getFornecedorIdentifier).toHaveBeenCalledWith(entity);
-      expect(nome).toBe(entity.nome);
+      expect(id).toBe(entity.id);
     });
   });
 
@@ -122,7 +122,7 @@ describe('Fornecedor Management Component', () => {
     comp.ngOnInit();
 
     // THEN
-    expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ sort: ['nome,desc'] }));
+    expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ sort: ['id,desc'] }));
   });
 
   describe('delete', () => {

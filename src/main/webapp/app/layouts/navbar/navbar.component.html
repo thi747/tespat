@@ -185,6 +185,14 @@
                 </a>
               </li>
             }
+            @if (!inProduction) {
+              <li>
+                <a class="dropdown-item" href="./h2-console/" target="_tab" (click)="collapseNavbar()">
+                  <fa-icon icon="database" [fixedWidth]="true"></fa-icon>
+                  <span jhiTranslate="global.menu.admin.database">Database</span>
+                </a>
+              </li>
+            }
           </ul>
         </li>
         @if (languages && languages.length > 1) {

@@ -1,5 +1,5 @@
 @if (local) {
-  <form name="deleteForm" (ngSubmit)="confirmDelete(local.nome!)">
+  <form name="deleteForm" (ngSubmit)="confirmDelete(local.id!)">
     <div class="modal-header">
       <h4 class="modal-title" data-cy="localDeleteDialogHeading" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
 
@@ -8,8 +8,8 @@
 
     <div class="modal-body">
       <jhi-alert-error></jhi-alert-error>
-      <p id="jhi-delete-local-heading" jhiTranslate="tesPatApp.local.delete.question" [translateValues]="{ id: local.nome }">
-        Are you sure you want to delete Local {{ local.nome }}?
+      <p id="jhi-delete-local-heading" jhiTranslate="tesPatApp.local.delete.question" [translateValues]="{ id: local.id }">
+        Are you sure you want to delete Local {{ local.id }}?
       </p>
     </div>
 

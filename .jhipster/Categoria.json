@@ -1,27 +1,26 @@
 {
   "annotations": {
-    "changelogDate": "20240408032809"
+    "changelogDate": "20240408181744"
   },
   "applications": ["TESPat"],
+  "dto": "mapstruct",
   "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "options": {
+        "generatedValue": true,
+        "id": true
+      }
+    },
     {
       "fieldName": "nome",
       "fieldType": "String",
-      "fieldValidateRules": ["required"],
-      "options": {
-        "id": true
-      }
+      "fieldValidateRules": ["required", "unique"]
     }
   ],
   "name": "Categoria",
-  "relationships": [
-    {
-      "otherEntityName": "bem",
-      "otherEntityRelationshipName": "categoria",
-      "relationshipName": "bem",
-      "relationshipSide": "right",
-      "relationshipType": "one-to-many"
-    }
-  ],
-  "searchEngine": "no"
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
 }

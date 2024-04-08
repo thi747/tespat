@@ -1,29 +1,35 @@
 {
   "annotations": {
-    "changelogDate": "20240408032909"
+    "changelogDate": "20240408181844"
   },
   "applications": ["TESPat"],
+  "dto": "mapstruct",
   "fields": [
     {
-      "fieldName": "nome",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"],
+      "fieldName": "id",
+      "fieldType": "Long",
       "options": {
+        "generatedValue": true,
         "id": true
       }
     },
     {
-      "fieldName": "descricao",
-      "fieldType": "String"
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "cpfOuCnpj",
       "fieldType": "String",
-      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRules": ["required", "unique", "minlength"],
       "fieldValidateRulesMinlength": "11"
     },
     {
       "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descricao",
       "fieldType": "String"
     },
     {
@@ -47,14 +53,7 @@
     }
   ],
   "name": "Fornecedor",
-  "relationships": [
-    {
-      "otherEntityName": "bem",
-      "otherEntityRelationshipName": "fornecedor",
-      "relationshipName": "bem",
-      "relationshipSide": "right",
-      "relationshipType": "one-to-many"
-    }
-  ],
-  "searchEngine": "no"
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
 }

@@ -29,7 +29,7 @@ describe('Categoria Service', () => {
       const returnedFromService = { ...requireRestSample };
       const expected = { ...sampleWithRequiredData };
 
-      service.find('ABC').subscribe(resp => (expectedResult = resp.body));
+      service.find(123).subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush(returnedFromService);
@@ -44,6 +44,30 @@ describe('Categoria Service', () => {
       service.create(categoria).subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'POST' });
+      req.flush(returnedFromService);
+      expect(expectedResult).toMatchObject(expected);
+    });
+
+    it('should update a Categoria', () => {
+      const categoria = { ...sampleWithRequiredData };
+      const returnedFromService = { ...requireRestSample };
+      const expected = { ...sampleWithRequiredData };
+
+      service.update(categoria).subscribe(resp => (expectedResult = resp.body));
+
+      const req = httpMock.expectOne({ method: 'PUT' });
+      req.flush(returnedFromService);
+      expect(expectedResult).toMatchObject(expected);
+    });
+
+    it('should partial update a Categoria', () => {
+      const patchObject = { ...sampleWithPartialData };
+      const returnedFromService = { ...requireRestSample };
+      const expected = { ...sampleWithRequiredData };
+
+      service.partialUpdate(patchObject).subscribe(resp => (expectedResult = resp.body));
+
+      const req = httpMock.expectOne({ method: 'PATCH' });
       req.flush(returnedFromService);
       expect(expectedResult).toMatchObject(expected);
     });
@@ -64,7 +88,7 @@ describe('Categoria Service', () => {
     it('should delete a Categoria', () => {
       const expected = true;
 
-      service.delete('ABC').subscribe(resp => (expectedResult = resp.ok));
+      service.delete(123).subscribe(resp => (expectedResult = resp.ok));
 
       const req = httpMock.expectOne({ method: 'DELETE' });
       req.flush({ status: 200 });
@@ -140,7 +164,7 @@ describe('Categoria Service', () => {
       });
 
       it('Should return false if one entity is null', () => {
-        const entity1 = { nome: 'ABC' };
+        const entity1 = { id: 123 };
         const entity2 = null;
 
         const compareResult1 = service.compareCategoria(entity1, entity2);
@@ -151,8 +175,8 @@ describe('Categoria Service', () => {
       });
 
       it('Should return false if primaryKey differs', () => {
-        const entity1 = { nome: 'ABC' };
-        const entity2 = { nome: 'CBA' };
+        const entity1 = { id: 123 };
+        const entity2 = { id: 456 };
 
         const compareResult1 = service.compareCategoria(entity1, entity2);
         const compareResult2 = service.compareCategoria(entity2, entity1);
@@ -162,8 +186,8 @@ describe('Categoria Service', () => {
       });
 
       it('Should return false if primaryKey matches', () => {
-        const entity1 = { nome: 'ABC' };
-        const entity2 = { nome: 'ABC' };
+        const entity1 = { id: 123 };
+        const entity2 = { id: 123 };
 
         const compareResult1 = service.compareCategoria(entity1, entity2);
         const compareResult2 = service.compareCategoria(entity2, entity1);

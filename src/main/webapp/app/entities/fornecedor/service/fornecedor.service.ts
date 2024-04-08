@@ -7,7 +7,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { IFornecedor, NewFornecedor } from '../fornecedor.model';
 
-export type PartialUpdateFornecedor = Partial<IFornecedor> & Pick<IFornecedor, 'nome'>;
+export type PartialUpdateFornecedor = Partial<IFornecedor> & Pick<IFornecedor, 'id'>;
 
 export type EntityResponseType = HttpResponse<IFornecedor>;
 export type EntityArrayResponseType = HttpResponse<IFornecedor[]>;
@@ -35,7 +35,7 @@ export class FornecedorService {
     });
   }
 
-  find(id: string): Observable<EntityResponseType> {
+  find(id: number): Observable<EntityResponseType> {
     return this.http.get<IFornecedor>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
@@ -44,19 +44,19 @@ export class FornecedorService {
     return this.http.get<IFornecedor[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
-  delete(id: string): Observable<HttpResponse<{}>> {
+  delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  getFornecedorIdentifier(fornecedor: Pick<IFornecedor, 'nome'>): string {
-    return fornecedor.nome;
+  getFornecedorIdentifier(fornecedor: Pick<IFornecedor, 'id'>): number {
+    return fornecedor.id;
   }
 
-  compareFornecedor(o1: Pick<IFornecedor, 'nome'> | null, o2: Pick<IFornecedor, 'nome'> | null): boolean {
+  compareFornecedor(o1: Pick<IFornecedor, 'id'> | null, o2: Pick<IFornecedor, 'id'> | null): boolean {
     return o1 && o2 ? this.getFornecedorIdentifier(o1) === this.getFornecedorIdentifier(o2) : o1 === o2;
   }
 
-  addFornecedorToCollectionIfMissing<Type extends Pick<IFornecedor, 'nome'>>(
+  addFornecedorToCollectionIfMissing<Type extends Pick<IFornecedor, 'id'>>(
     fornecedorCollection: Type[],
     ...fornecedorsToCheck: (Type | null | undefined)[]
   ): Type[] {

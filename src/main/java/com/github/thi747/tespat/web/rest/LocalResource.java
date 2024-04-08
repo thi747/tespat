@@ -1,7 +1,8 @@
 package com.github.thi747.tespat.web.rest;
 
-import com.github.thi747.tespat.domain.Local;
 import com.github.thi747.tespat.repository.LocalRepository;
+import com.github.thi747.tespat.service.LocalService;
+import com.github.thi747.tespat.service.dto.LocalDTO;
 import com.github.thi747.tespat.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -24,7 +24,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/locals")
-@Transactional
 public class LocalResource {
 
     private final Logger log = LoggerFactory.getLogger(LocalResource.class);
@@ -34,108 +33,101 @@ public class LocalResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final LocalService localService;
+
     private final LocalRepository localRepository;
 
-    public LocalResource(LocalRepository localRepository) {
+    public LocalResource(LocalService localService, LocalRepository localRepository) {
+        this.localService = localService;
         this.localRepository = localRepository;
     }
 
     /**
      * {@code POST  /locals} : Create a new local.
      *
-     * @param local the local to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new local, or with status {@code 400 (Bad Request)} if the local has already an ID.
+     * @param localDTO the localDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new localDTO, or with status {@code 400 (Bad Request)} if the local has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
-    public ResponseEntity<Local> createLocal(@Valid @RequestBody Local local) throws URISyntaxException {
-        log.debug("REST request to save Local : {}", local);
-        if (localRepository.existsById(local.getNome())) {
-            throw new BadRequestAlertException("local already exists", ENTITY_NAME, "idexists");
+    public ResponseEntity<LocalDTO> createLocal(@Valid @RequestBody LocalDTO localDTO) throws URISyntaxException {
+        log.debug("REST request to save Local : {}", localDTO);
+        if (localDTO.getId() != null) {
+            throw new BadRequestAlertException("A new local cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        local = localRepository.save(local);
-        return ResponseEntity.created(new URI("/api/locals/" + local.getNome()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, local.getNome()))
-            .body(local);
+        localDTO = localService.save(localDTO);
+        return ResponseEntity.created(new URI("/api/locals/" + localDTO.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, localDTO.getId().toString()))
+            .body(localDTO);
     }
 
     /**
-     * {@code PUT  /locals/:nome} : Updates an existing local.
+     * {@code PUT  /locals/:id} : Updates an existing local.
      *
-     * @param nome the id of the local to save.
-     * @param local the local to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated local,
-     * or with status {@code 400 (Bad Request)} if the local is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the local couldn't be updated.
+     * @param id the id of the localDTO to save.
+     * @param localDTO the localDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated localDTO,
+     * or with status {@code 400 (Bad Request)} if the localDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the localDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/{nome}")
-    public ResponseEntity<Local> updateLocal(
-        @PathVariable(value = "nome", required = false) final String nome,
-        @Valid @RequestBody Local local
+    @PutMapping("/{id}")
+    public ResponseEntity<LocalDTO> updateLocal(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody LocalDTO localDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update Local : {}, {}", nome, local);
-        if (local.getNome() == null) {
+        log.debug("REST request to update Local : {}, {}", id, localDTO);
+        if (localDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(nome, local.getNome())) {
+        if (!Objects.equals(id, localDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!localRepository.existsById(nome)) {
+        if (!localRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        local.setIsPersisted();
-        local = localRepository.save(local);
+        localDTO = localService.update(localDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, local.getNome()))
-            .body(local);
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, localDTO.getId().toString()))
+            .body(localDTO);
     }
 
     /**
-     * {@code PATCH  /locals/:nome} : Partial updates given fields of an existing local, field will ignore if it is null
+     * {@code PATCH  /locals/:id} : Partial updates given fields of an existing local, field will ignore if it is null
      *
-     * @param nome the id of the local to save.
-     * @param local the local to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated local,
-     * or with status {@code 400 (Bad Request)} if the local is not valid,
-     * or with status {@code 404 (Not Found)} if the local is not found,
-     * or with status {@code 500 (Internal Server Error)} if the local couldn't be updated.
+     * @param id the id of the localDTO to save.
+     * @param localDTO the localDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated localDTO,
+     * or with status {@code 400 (Bad Request)} if the localDTO is not valid,
+     * or with status {@code 404 (Not Found)} if the localDTO is not found,
+     * or with status {@code 500 (Internal Server Error)} if the localDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/{nome}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Local> partialUpdateLocal(
-        @PathVariable(value = "nome", required = false) final String nome,
-        @NotNull @RequestBody Local local
+    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    public ResponseEntity<LocalDTO> partialUpdateLocal(
+        @PathVariable(value = "id", required = false) final Long id,
+        @NotNull @RequestBody LocalDTO localDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Local partially : {}, {}", nome, local);
-        if (local.getNome() == null) {
+        log.debug("REST request to partial update Local partially : {}, {}", id, localDTO);
+        if (localDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(nome, local.getNome())) {
+        if (!Objects.equals(id, localDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!localRepository.existsById(nome)) {
+        if (!localRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Local> result = localRepository
-            .findById(local.getNome())
-            .map(existingLocal -> {
-                if (local.getDescricao() != null) {
-                    existingLocal.setDescricao(local.getDescricao());
-                }
-                if (local.getSala() != null) {
-                    existingLocal.setSala(local.getSala());
-                }
+        Optional<LocalDTO> result = localService.partialUpdate(localDTO);
 
-                return existingLocal;
-            })
-            .map(localRepository::save);
-
-        return ResponseUtil.wrapOrNotFound(result, HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, local.getNome()));
+        return ResponseUtil.wrapOrNotFound(
+            result,
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, localDTO.getId().toString())
+        );
     }
 
     /**
@@ -144,34 +136,36 @@ public class LocalResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of locals in body.
      */
     @GetMapping("")
-    public List<Local> getAllLocals() {
+    public List<LocalDTO> getAllLocals() {
         log.debug("REST request to get all Locals");
-        return localRepository.findAll();
+        return localService.findAll();
     }
 
     /**
      * {@code GET  /locals/:id} : get the "id" local.
      *
-     * @param id the id of the local to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the local, or with status {@code 404 (Not Found)}.
+     * @param id the id of the localDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the localDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Local> getLocal(@PathVariable("id") String id) {
+    public ResponseEntity<LocalDTO> getLocal(@PathVariable("id") Long id) {
         log.debug("REST request to get Local : {}", id);
-        Optional<Local> local = localRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(local);
+        Optional<LocalDTO> localDTO = localService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(localDTO);
     }
 
     /**
      * {@code DELETE  /locals/:id} : delete the "id" local.
      *
-     * @param id the id of the local to delete.
+     * @param id the id of the localDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLocal(@PathVariable("id") String id) {
+    public ResponseEntity<Void> deleteLocal(@PathVariable("id") Long id) {
         log.debug("REST request to delete Local : {}", id);
-        localRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
+        localService.delete(id);
+        return ResponseEntity.noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
     }
 }

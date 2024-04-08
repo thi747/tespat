@@ -6,19 +6,20 @@ import { TipoConservacao } from 'app/entities/enumerations/tipo-conservacao.mode
 import { TipoStatus } from 'app/entities/enumerations/tipo-status.model';
 
 export interface IBem {
-  patrimonio: number;
+  id: number;
+  patrimonio?: number | null;
   nome?: string | null;
   descricao?: string | null;
-  observacoes?: string | null;
   numeroDeSerie?: string | null;
   dataAquisicao?: dayjs.Dayjs | null;
   valorCompra?: number | null;
   valorAtual?: number | null;
   estado?: keyof typeof TipoConservacao | null;
   status?: keyof typeof TipoStatus | null;
-  categoria?: ICategoria | null;
-  fornecedor?: IFornecedor | null;
-  local?: ILocal | null;
+  observacoes?: string | null;
+  categoria?: Pick<ICategoria, 'id' | 'nome'> | null;
+  fornecedor?: Pick<IFornecedor, 'id' | 'nome'> | null;
+  local?: Pick<ILocal, 'id' | 'nome'> | null;
 }
 
-export type NewBem = Omit<IBem, 'patrimonio'> & { patrimonio: null };
+export type NewBem = Omit<IBem, 'id'> & { id: null };

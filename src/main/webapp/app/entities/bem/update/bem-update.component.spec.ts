@@ -57,11 +57,11 @@ describe('Bem Management Update Component', () => {
 
   describe('ngOnInit', () => {
     it('Should call Categoria query and add missing value', () => {
-      const bem: IBem = { patrimonio: 456 };
-      const categoria: ICategoria = { nome: '115b157c-f54b-4ce3-9981-cced14f0c4ad' };
+      const bem: IBem = { id: 456 };
+      const categoria: ICategoria = { id: 3928 };
       bem.categoria = categoria;
 
-      const categoriaCollection: ICategoria[] = [{ nome: '7b2c6a36-e597-4a23-a606-098d5e921a4f' }];
+      const categoriaCollection: ICategoria[] = [{ id: 12236 }];
       jest.spyOn(categoriaService, 'query').mockReturnValue(of(new HttpResponse({ body: categoriaCollection })));
       const additionalCategorias = [categoria];
       const expectedCollection: ICategoria[] = [...additionalCategorias, ...categoriaCollection];
@@ -79,11 +79,11 @@ describe('Bem Management Update Component', () => {
     });
 
     it('Should call Fornecedor query and add missing value', () => {
-      const bem: IBem = { patrimonio: 456 };
-      const fornecedor: IFornecedor = { nome: '4400fc67-4245-4a02-96a3-58827d254020' };
+      const bem: IBem = { id: 456 };
+      const fornecedor: IFornecedor = { id: 9899 };
       bem.fornecedor = fornecedor;
 
-      const fornecedorCollection: IFornecedor[] = [{ nome: '95a56ba7-09d0-4480-8c54-188c98fd88f3' }];
+      const fornecedorCollection: IFornecedor[] = [{ id: 1545 }];
       jest.spyOn(fornecedorService, 'query').mockReturnValue(of(new HttpResponse({ body: fornecedorCollection })));
       const additionalFornecedors = [fornecedor];
       const expectedCollection: IFornecedor[] = [...additionalFornecedors, ...fornecedorCollection];
@@ -101,11 +101,11 @@ describe('Bem Management Update Component', () => {
     });
 
     it('Should call Local query and add missing value', () => {
-      const bem: IBem = { patrimonio: 456 };
-      const local: ILocal = { nome: 'b8c8217f-e1f3-4161-8c0c-07ae03f1692f' };
+      const bem: IBem = { id: 456 };
+      const local: ILocal = { id: 16825 };
       bem.local = local;
 
-      const localCollection: ILocal[] = [{ nome: 'b9bb548a-9f46-46b8-8655-7f09b399fe76' }];
+      const localCollection: ILocal[] = [{ id: 25617 }];
       jest.spyOn(localService, 'query').mockReturnValue(of(new HttpResponse({ body: localCollection })));
       const additionalLocals = [local];
       const expectedCollection: ILocal[] = [...additionalLocals, ...localCollection];
@@ -123,12 +123,12 @@ describe('Bem Management Update Component', () => {
     });
 
     it('Should update editForm', () => {
-      const bem: IBem = { patrimonio: 456 };
-      const categoria: ICategoria = { nome: '4e58b354-8af5-438b-a519-63adaaf334a4' };
+      const bem: IBem = { id: 456 };
+      const categoria: ICategoria = { id: 23315 };
       bem.categoria = categoria;
-      const fornecedor: IFornecedor = { nome: 'fcc8b4e8-426b-43cf-be97-b98667924a64' };
+      const fornecedor: IFornecedor = { id: 1815 };
       bem.fornecedor = fornecedor;
-      const local: ILocal = { nome: '903c6776-aa27-4299-9332-df9f18b29b43' };
+      const local: ILocal = { id: 17451 };
       bem.local = local;
 
       activatedRoute.data = of({ bem });
@@ -145,7 +145,7 @@ describe('Bem Management Update Component', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<IBem>>();
-      const bem = { patrimonio: 123 };
+      const bem = { id: 123 };
       jest.spyOn(bemFormService, 'getBem').mockReturnValue(bem);
       jest.spyOn(bemService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
@@ -168,8 +168,8 @@ describe('Bem Management Update Component', () => {
     it('Should call create service on save for new entity', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<IBem>>();
-      const bem = { patrimonio: 123 };
-      jest.spyOn(bemFormService, 'getBem').mockReturnValue({ patrimonio: null });
+      const bem = { id: 123 };
+      jest.spyOn(bemFormService, 'getBem').mockReturnValue({ id: null });
       jest.spyOn(bemService, 'create').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ bem: null });
@@ -191,7 +191,7 @@ describe('Bem Management Update Component', () => {
     it('Should set isSaving to false on error', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<IBem>>();
-      const bem = { patrimonio: 123 };
+      const bem = { id: 123 };
       jest.spyOn(bemService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ bem });
@@ -212,8 +212,8 @@ describe('Bem Management Update Component', () => {
   describe('Compare relationships', () => {
     describe('compareCategoria', () => {
       it('Should forward to categoriaService', () => {
-        const entity = { nome: 'ABC' };
-        const entity2 = { nome: 'CBA' };
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
         jest.spyOn(categoriaService, 'compareCategoria');
         comp.compareCategoria(entity, entity2);
         expect(categoriaService.compareCategoria).toHaveBeenCalledWith(entity, entity2);
@@ -222,8 +222,8 @@ describe('Bem Management Update Component', () => {
 
     describe('compareFornecedor', () => {
       it('Should forward to fornecedorService', () => {
-        const entity = { nome: 'ABC' };
-        const entity2 = { nome: 'CBA' };
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
         jest.spyOn(fornecedorService, 'compareFornecedor');
         comp.compareFornecedor(entity, entity2);
         expect(fornecedorService.compareFornecedor).toHaveBeenCalledWith(entity, entity2);
@@ -232,8 +232,8 @@ describe('Bem Management Update Component', () => {
 
     describe('compareLocal', () => {
       it('Should forward to localService', () => {
-        const entity = { nome: 'ABC' };
-        const entity2 = { nome: 'CBA' };
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
         jest.spyOn(localService, 'compareLocal');
         comp.compareLocal(entity, entity2);
         expect(localService.compareLocal).toHaveBeenCalledWith(entity, entity2);

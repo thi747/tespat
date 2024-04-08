@@ -17,20 +17,20 @@
       "detail": {
         "title": "Bem"
       },
+      "id": "Id",
       "patrimonio": "Patrimonio",
       "nome": "Nome",
       "descricao": "Descricao",
-      "observacoes": "Observacoes",
       "numeroDeSerie": "Numero De Serie",
       "dataAquisicao": "Data Aquisicao",
       "valorCompra": "Valor Compra",
       "valorAtual": "Valor Atual",
       "estado": "Estado",
       "status": "Status",
+      "observacoes": "Observacoes",
       "categoria": "Categoria",
       "fornecedor": "Fornecedor",
-      "local": "Local",
-      "movimentacao": "Movimentacao"
+      "local": "Local"
     }
   }
 }

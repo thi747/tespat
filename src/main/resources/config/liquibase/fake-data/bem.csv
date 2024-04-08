@@ -1,11 +1,11 @@
-patrimonio;nome;descricao;observacoes;numero_de_serie;data_aquisicao;valor_compra;valor_atual;estado;status
-1;linear beach cardboard;access;fibre imbalance;cyclone stale amazing;2024-04-07;14544.91;6930.02;BOM;USO
-2;granular dignify;whoever phase which;stiff;lycra whinge consequently;2024-04-07;32763.4;17948.5;RUIM;MANUTENCAO
-3;doodle paintwork;urgently;ew bob versus;merrily excluding well-worn;2024-04-07;8944.56;17451.48;INSERVIVEL;USO
-4;supposing incompetence yowza;without;even sans focused;triangular yum regarding;2024-04-07;9948.85;23058.21;INSERVIVEL;MANUTENCAO
-5;yowza branch;nearly;heating humor;reservoir gee likewise;2024-04-07;1755.73;14367.02;REGULAR;MANUTENCAO
-6;pish consequently inveigh;yuck extinguish;grubby bell;flu;2024-04-08;27822.24;31779.48;BOM;MANUTENCAO
-7;yieldingly zowie disdain;because elegantly even;bootleg waterfall bouncy;beneath gleeful frilly;2024-04-08;2372.88;12999.18;INSERVIVEL;USO
-8;while blah positively;hm;once venom;finally creative;2024-04-07;2923.07;12570.84;INSERVIVEL;USO
-9;although shyly underpants;tremor prevent;square when;queasy which;2024-04-07;11009.77;17797;RUIM;MANUTENCAO
-10;heavily duh steady;woot;behind suspiciously;experienced piece;2024-04-07;19514.37;26985.76;NOVO;ESTOQUE
+id;patrimonio;nome;descricao;numero_de_serie;data_aquisicao;valor_compra;valor_atual;estado;status;observacoes
+1;24140;incidentally;lift;who;2024-04-08;4630.88;30756.11;NOVO;USO;fibre imbalance
+2;29853;enrollment;joshingly failing vengeful;until prudent grandparent;2024-04-08;22607.1;12140.4;RUIM;MANUTENCAO;monthly wary lycra
+3;4266;enlightened worth over;pfft pixellate bitmap;dueling;2024-04-08;22067.95;16294.07;NOVO;ESTOQUE;pro lest veto
+4;15643;obediently scene wallow;overconfidently limestone since;accost laundry;2024-04-07;26021.63;9722.9;RUIM;MANUTENCAO;superior beneath emotion
+5;23058;free specialize saucer;snack ew hope;but grave;2024-04-08;27636.69;13845.47;RUIM;USO;decompress even
+6;3257;parch plus unlike;well;given once;2024-04-08;11584.7;3459.47;INSERVIVEL;MANUTENCAO;expensive yuck
+7;29283;disdain officially intently;even;bootleg waterfall bouncy;2024-04-07;1330.95;8021.11;NOVO;ESTOQUE;pertain
+8;21527;frilly where;juvenile ugh before;brooch;2024-04-08;5044.65;2871.32;REGULAR;ESTOQUE;venom an
+9;6398;huzzah whoa;next;now;2024-04-08;28393.2;30825.08;REGULAR;USO;of yippee urban
+10;3201;underneath;bludge marketplace;helplessly waterwheel blather;2024-04-08;27957.85;6612.05;BOM;USO;host or

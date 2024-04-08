@@ -35,16 +35,16 @@
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
           <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-            <th scope="col" jhiSortBy="nome">
+            <th scope="col" jhiSortBy="id">
               <div class="d-flex">
-                <span jhiTranslate="tesPatApp.fornecedor.nome">Nome</span>
+                <span jhiTranslate="tesPatApp.fornecedor.id">Id</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="descricao">
+            <th scope="col" jhiSortBy="nome">
               <div class="d-flex">
-                <span jhiTranslate="tesPatApp.fornecedor.descricao">Descricao</span>
+                <span jhiTranslate="tesPatApp.fornecedor.nome">Nome</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -59,6 +59,13 @@
             <th scope="col" jhiSortBy="email">
               <div class="d-flex">
                 <span jhiTranslate="tesPatApp.fornecedor.email">Email</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="descricao">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.fornecedor.descricao">Descricao</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -95,26 +102,27 @@
           </tr>
         </thead>
         <tbody>
-          @for (fornecedor of fornecedors; track trackNome) {
+          @for (fornecedor of fornecedors; track trackId) {
             <tr data-cy="entityTable">
               <td>
-                <a [routerLink]="['/fornecedor', fornecedor.nome, 'view']">{{ fornecedor.nome }}</a>
+                <a [routerLink]="['/fornecedor', fornecedor.id, 'view']">{{ fornecedor.id }}</a>
               </td>
-              <td>{{ fornecedor.descricao }}</td>
+              <td>{{ fornecedor.nome }}</td>
               <td>{{ fornecedor.cpfOuCnpj }}</td>
               <td>{{ fornecedor.email }}</td>
+              <td>{{ fornecedor.descricao }}</td>
               <td>{{ fornecedor.telefone }}</td>
               <td>{{ fornecedor.endereco }}</td>
               <td>{{ fornecedor.cidade }}</td>
               <td>{{ fornecedor.estado }}</td>
               <td class="text-end">
                 <div class="btn-group">
-                  <a [routerLink]="['/fornecedor', fornecedor.nome, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                  <a [routerLink]="['/fornecedor', fornecedor.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                     <fa-icon icon="eye"></fa-icon>
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                   </a>
 
-                  <a [routerLink]="['/fornecedor', fornecedor.nome, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                  <a [routerLink]="['/fornecedor', fornecedor.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                     <fa-icon icon="pencil-alt"></fa-icon>
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                   </a>

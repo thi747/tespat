@@ -6,7 +6,7 @@ import { IFornecedor, NewFornecedor } from '../fornecedor.model';
 /**
  * A partial Type with required key is used as form input.
  */
-type PartialWithRequiredKeyOf<T extends { nome: unknown }> = Partial<Omit<T, 'nome'>> & { nome: T['nome'] };
+type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>> & { id: T['id'] };
 
 /**
  * Type for createFormGroup and resetForm argument.
@@ -14,13 +14,14 @@ type PartialWithRequiredKeyOf<T extends { nome: unknown }> = Partial<Omit<T, 'no
  */
 type FornecedorFormGroupInput = IFornecedor | PartialWithRequiredKeyOf<NewFornecedor>;
 
-type FornecedorFormDefaults = Pick<NewFornecedor, 'nome'>;
+type FornecedorFormDefaults = Pick<NewFornecedor, 'id'>;
 
 type FornecedorFormGroupContent = {
-  nome: FormControl<IFornecedor['nome'] | NewFornecedor['nome']>;
-  descricao: FormControl<IFornecedor['descricao']>;
+  id: FormControl<IFornecedor['id'] | NewFornecedor['id']>;
+  nome: FormControl<IFornecedor['nome']>;
   cpfOuCnpj: FormControl<IFornecedor['cpfOuCnpj']>;
   email: FormControl<IFornecedor['email']>;
+  descricao: FormControl<IFornecedor['descricao']>;
   telefone: FormControl<IFornecedor['telefone']>;
   endereco: FormControl<IFornecedor['endereco']>;
   cidade: FormControl<IFornecedor['cidade']>;
@@ -31,24 +32,27 @@ export type FornecedorFormGroup = FormGroup<FornecedorFormGroupContent>;
 
 @Injectable({ providedIn: 'root' })
 export class FornecedorFormService {
-  createFornecedorFormGroup(fornecedor: FornecedorFormGroupInput = { nome: null }): FornecedorFormGroup {
+  createFornecedorFormGroup(fornecedor: FornecedorFormGroupInput = { id: null }): FornecedorFormGroup {
     const fornecedorRawValue = {
       ...this.getFormDefaults(),
       ...fornecedor,
     };
     return new FormGroup<FornecedorFormGroupContent>({
-      nome: new FormControl(
-        { value: fornecedorRawValue.nome, disabled: fornecedorRawValue.nome !== null },
+      id: new FormControl(
+        { value: fornecedorRawValue.id, disabled: true },
         {
           nonNullable: true,
           validators: [Validators.required],
         },
       ),
-      descricao: new FormControl(fornecedorRawValue.descricao),
+      nome: new FormControl(fornecedorRawValue.nome, {
+        validators: [Validators.required],
+      }),
       cpfOuCnpj: new FormControl(fornecedorRawValue.cpfOuCnpj, {
         validators: [Validators.required, Validators.minLength(11)],
       }),
       email: new FormControl(fornecedorRawValue.email),
+      descricao: new FormControl(fornecedorRawValue.descricao),
       telefone: new FormControl(fornecedorRawValue.telefone),
       endereco: new FormControl(fornecedorRawValue.endereco),
       cidade: new FormControl(fornecedorRawValue.cidade),
@@ -67,14 +71,14 @@ export class FornecedorFormService {
     form.reset(
       {
         ...fornecedorRawValue,
-        nome: { value: fornecedorRawValue.nome, disabled: fornecedorRawValue.nome !== null },
+        id: { value: fornecedorRawValue.id, disabled: true },
       } as any /* cast to workaround https://github.com/angular/angular/issues/46458 */,
     );
   }
 
   private getFormDefaults(): FornecedorFormDefaults {
     return {
-      nome: null,
+      id: null,
     };
   }
 }

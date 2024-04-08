@@ -47,8 +47,8 @@ public class MovimentacaoAsserts {
     public static void assertMovimentacaoUpdatableFieldsEquals(Movimentacao expected, Movimentacao actual) {
         assertThat(expected)
             .as("Verify Movimentacao relevant properties")
-            .satisfies(e -> assertThat(e.getDescricao()).as("check descricao").isEqualTo(actual.getDescricao()))
             .satisfies(e -> assertThat(e.getData()).as("check data").isEqualTo(actual.getData()))
+            .satisfies(e -> assertThat(e.getDescricao()).as("check descricao").isEqualTo(actual.getDescricao()))
             .satisfies(e -> assertThat(e.getTipo()).as("check tipo").isEqualTo(actual.getTipo()));
     }
 

@@ -1,11 +1,11 @@
-id;descricao;data;tipo
-1;near;2024-04-07;SAIDA
-2;swerve eyeball;2024-04-07;SAIDA
-3;gosh gracefully yet;2024-04-07;ENTRADA
-4;blah limp;2024-04-07;SAIDA
-5;knottily how but;2024-04-07;ENTRADA
-6;profitable whereas;2024-04-07;SAIDA
-7;qua intently;2024-04-07;ENTRADA
-8;ha even;2024-04-08;ENTRADA
-9;although unless sniveling;2024-04-07;SAIDA
-10;opposite download;2024-04-08;ENTRADA
+id;data;descricao;tipo;bem_id;pessoa_id
+1;2024-04-08;loathsome;SAIDA;1;1
+2;2024-04-08;maiden since;SAIDA;2;2
+3;2024-04-07;occasion phooey;ENTRADA;3;3
+4;2024-04-07;while;ENTRADA;4;4
+5;2024-04-08;commonsense;SAIDA;5;5
+6;2024-04-07;tickle jealously;SAIDA;6;6
+7;2024-04-08;but;ENTRADA;7;7
+8;2024-04-08;profitable whereas;SAIDA;8;8
+9;2024-04-08;qua intently;SAIDA;9;9
+10;2024-04-08;ha even;ENTRADA;10;10

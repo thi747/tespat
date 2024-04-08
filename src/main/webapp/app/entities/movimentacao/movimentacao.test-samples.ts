@@ -9,19 +9,19 @@ export const sampleWithRequiredData: IMovimentacao = {
 
 export const sampleWithPartialData: IMovimentacao = {
   id: 896,
-  data: dayjs('2024-04-07'),
+  descricao: 'treble whether ha',
   tipo: 'SAIDA',
 };
 
 export const sampleWithFullData: IMovimentacao = {
-  id: 30038,
-  descricao: 'rough famously',
-  data: dayjs('2024-04-07'),
-  tipo: 'ENTRADA',
+  id: 11335,
+  data: dayjs('2024-04-08'),
+  descricao: 'into dangerous amongst',
+  tipo: 'SAIDA',
 };
 
 export const sampleWithNewData: NewMovimentacao = {
-  tipo: 'SAIDA',
+  tipo: 'ENTRADA',
   id: null,
 };
 

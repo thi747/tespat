@@ -5,9 +5,11 @@ application {
     packageName com.github.thi747.tespat
     authenticationType jwt
     prodDatabaseType mysql
+    devDatabaseType h2Memory
     clientFramework angularX
   }
   entities *
+dto * with mapstruct
 }
 
 enum TipoConservacao {
@@ -27,45 +29,50 @@ enum TipoStatus {
   MANUTENCAO
 }
 entity Bem {
-  @Id patrimonio Long required
+  @Id @GeneratedValue id Long
+  patrimonio Long required unique
   nome String required
   descricao String
-  observacoes String
   numeroDeSerie String
   dataAquisicao LocalDate
   valorCompra Double
   valorAtual Double
   estado TipoConservacao
   status TipoStatus
+  observacoes String
 }
 entity Categoria {
-  @Id nome String required
+  @Id @GeneratedValue id Long
+  nome String required unique
 }
 entity Fornecedor {
-  @Id nome String required
-  descricao String
-  cpfOuCnpj String required minlength(11)
+  @Id @GeneratedValue id Long
+  nome String required unique
+  cpfOuCnpj String required unique minlength(11)
   email String
+  descricao String
   telefone String
   endereco String
   cidade String
   estado String minlength(2) maxlength(2)
 }
 entity Local {
-  @Id nome String required
+  @Id @GeneratedValue id Long
+  nome String required unique
   descricao String
   sala String
 }
 entity Movimentacao {
-  @Id id Long required
-  descricao String
+  @Id @GeneratedValue id Long
   data LocalDate
+  descricao String
   tipo TipoMovimentacao required
 }
 entity Pessoa {
-  @Id usuario String required
+  @Id @GeneratedValue id Long
+  usuario String required unique
   nome String required
-  cpf String required minlength(11)
+  cpf String required unique minlength(11)
   email String
   ativo Boolean required
   endereco String
@@ -73,9 +80,9 @@ entity Pessoa {
   estado String minlength(2) maxlength(2)
 }
 relationship ManyToOne {
-  Bem to Categoria
-  Bem to Fornecedor
-  Bem to Local
-  Movimentacao to Bem
-  Movimentacao to Pessoa
+  Bem{categoria (nome)} to Categoria
+  Bem{fornecedor (nome)} to Fornecedor
+  Bem{local (nome)} to Local
+  Movimentacao{bem (patrimonio) required} to Bem
+  Movimentacao{pessoa (usuario) required} to Pessoa
 }
