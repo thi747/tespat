@@ -53,8 +53,8 @@ entity Fornecedor {
   descricao String
   telefone String
   endereco String
-  cidade String
-  estado String minlength(2) maxlength(2)
+  municipio String
+  uf String minlength(2) maxlength(2)
 }
 entity Local {
   @Id @GeneratedValue id Long
@@ -76,13 +76,13 @@ entity Pessoa {
   email String
   ativo Boolean required
   endereco String
-  cidade String
-  estado String minlength(2) maxlength(2)
+  municipio String
+  uf String minlength(2) maxlength(2)
 }
 relationship ManyToOne {
   Bem{categoria (nome)} to Categoria
   Bem{fornecedor (nome)} to Fornecedor
-  Bem{local (nome)} to Local
   Movimentacao{bem (patrimonio) required} to Bem
-  Movimentacao{pessoa (usuario) required} to Pessoa
+  Movimentacao{local (nome) required} to Local
+  Movimentacao{pessoa (usuario)} to Pessoa
 }
