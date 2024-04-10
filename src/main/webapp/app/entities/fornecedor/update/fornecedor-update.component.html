@@ -65,21 +65,21 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.fornecedor.cidade" for="field_cidade">Cidade</label>
-          <input type="text" class="form-control" name="cidade" id="field_cidade" data-cy="cidade" formControlName="cidade" />
+          <label class="form-label" jhiTranslate="tesPatApp.fornecedor.municipio" for="field_municipio">Municipio</label>
+          <input type="text" class="form-control" name="municipio" id="field_municipio" data-cy="municipio" formControlName="municipio" />
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.fornecedor.estado" for="field_estado">Estado</label>
-          <input type="text" class="form-control" name="estado" id="field_estado" data-cy="estado" formControlName="estado" />
-          @if (editForm.get('estado')!.invalid && (editForm.get('estado')!.dirty || editForm.get('estado')!.touched)) {
+          <label class="form-label" jhiTranslate="tesPatApp.fornecedor.uf" for="field_uf">Uf</label>
+          <input type="text" class="form-control" name="uf" id="field_uf" data-cy="uf" formControlName="uf" />
+          @if (editForm.get('uf')!.invalid && (editForm.get('uf')!.dirty || editForm.get('uf')!.touched)) {
             <div>
-              @if (editForm.get('estado')?.errors?.minlength) {
+              @if (editForm.get('uf')?.errors?.minlength) {
                 <small class="form-text text-danger" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 2 }"
                   >This field is required to be at least 2 characters.</small
                 >
               }
-              @if (editForm.get('estado')?.errors?.maxlength) {
+              @if (editForm.get('uf')?.errors?.maxlength) {
                 <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 2 }"
                   >This field cannot be longer than 2 characters.</small
                 >

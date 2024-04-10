@@ -73,13 +73,6 @@
       "relationshipName": "fornecedor",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityField": "nome",
-      "otherEntityName": "local",
-      "relationshipName": "local",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no",

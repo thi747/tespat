@@ -69,6 +69,12 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="local.nome">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.movimentacao.local">Local</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="pessoa.usuario">
               <div class="d-flex">
                 <span jhiTranslate="tesPatApp.movimentacao.pessoa">Pessoa</span>
@@ -91,6 +97,13 @@
                 @if (movimentacao.bem) {
                   <div>
                     <a [routerLink]="['/bem', movimentacao.bem.id, 'view']">{{ movimentacao.bem.patrimonio }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (movimentacao.local) {
+                  <div>
+                    <a [routerLink]="['/local', movimentacao.local.id, 'view']">{{ movimentacao.local.nome }}</a>
                   </div>
                 }
               </td>

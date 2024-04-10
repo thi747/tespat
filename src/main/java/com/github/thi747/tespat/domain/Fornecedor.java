@@ -43,12 +43,12 @@ public class Fornecedor implements Serializable {
     @Column(name = "endereco")
     private String endereco;
 
-    @Column(name = "cidade")
-    private String cidade;
+    @Column(name = "municipio")
+    private String municipio;
 
     @Size(min = 2, max = 2)
-    @Column(name = "estado", length = 2)
-    private String estado;
+    @Column(name = "uf", length = 2)
+    private String uf;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -143,30 +143,30 @@ public class Fornecedor implements Serializable {
         this.endereco = endereco;
     }
 
-    public String getCidade() {
-        return this.cidade;
+    public String getMunicipio() {
+        return this.municipio;
     }
 
-    public Fornecedor cidade(String cidade) {
-        this.setCidade(cidade);
+    public Fornecedor municipio(String municipio) {
+        this.setMunicipio(municipio);
         return this;
     }
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
+    public void setMunicipio(String municipio) {
+        this.municipio = municipio;
     }
 
-    public String getEstado() {
-        return this.estado;
+    public String getUf() {
+        return this.uf;
     }
 
-    public Fornecedor estado(String estado) {
-        this.setEstado(estado);
+    public Fornecedor uf(String uf) {
+        this.setUf(uf);
         return this;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setUf(String uf) {
+        this.uf = uf;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -199,8 +199,8 @@ public class Fornecedor implements Serializable {
             ", descricao='" + getDescricao() + "'" +
             ", telefone='" + getTelefone() + "'" +
             ", endereco='" + getEndereco() + "'" +
-            ", cidade='" + getCidade() + "'" +
-            ", estado='" + getEstado() + "'" +
+            ", municipio='" + getMunicipio() + "'" +
+            ", uf='" + getUf() + "'" +
             "}";
     }
 }

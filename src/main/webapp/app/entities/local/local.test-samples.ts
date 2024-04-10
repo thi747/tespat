@@ -1,26 +1,25 @@
 import { ILocal, NewLocal } from './local.model';
 
 export const sampleWithRequiredData: ILocal = {
-  id: 5368,
-  nome: 'cheerfully',
+  id: 16825,
+  nome: 'bark although enormously',
 };
 
 export const sampleWithPartialData: ILocal = {
-  id: 26397,
-  nome: 'enormously',
-  descricao: 'seemingly till mushy',
-  sala: 'recognition humiliate',
+  id: 14272,
+  nome: 'satisfied finished',
+  sala: 'jolly eek',
 };
 
 export const sampleWithFullData: ILocal = {
-  id: 3908,
-  nome: 'lest than',
-  descricao: 'big',
-  sala: 'miserably gosh',
+  id: 32354,
+  nome: 'solemnly cuddly deliberately',
+  descricao: 'anenst feminise pension',
+  sala: 'hm',
 };
 
 export const sampleWithNewData: NewLocal = {
-  nome: 'ensconce ultimately',
+  nome: 'lambast ah aha',
   id: null,
 };
 

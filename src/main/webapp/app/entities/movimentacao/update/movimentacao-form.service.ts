@@ -22,6 +22,7 @@ type MovimentacaoFormGroupContent = {
   descricao: FormControl<IMovimentacao['descricao']>;
   tipo: FormControl<IMovimentacao['tipo']>;
   bem: FormControl<IMovimentacao['bem']>;
+  local: FormControl<IMovimentacao['local']>;
   pessoa: FormControl<IMovimentacao['pessoa']>;
 };
 
@@ -50,9 +51,10 @@ export class MovimentacaoFormService {
       bem: new FormControl(movimentacaoRawValue.bem, {
         validators: [Validators.required],
       }),
-      pessoa: new FormControl(movimentacaoRawValue.pessoa, {
+      local: new FormControl(movimentacaoRawValue.local, {
         validators: [Validators.required],
       }),
+      pessoa: new FormControl(movimentacaoRawValue.pessoa),
     });
   }
 

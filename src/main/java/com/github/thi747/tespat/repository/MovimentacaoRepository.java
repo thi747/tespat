@@ -27,16 +27,18 @@ public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long
     }
 
     @Query(
-        value = "select movimentacao from Movimentacao movimentacao left join fetch movimentacao.bem left join fetch movimentacao.pessoa",
+        value = "select movimentacao from Movimentacao movimentacao left join fetch movimentacao.bem left join fetch movimentacao.local left join fetch movimentacao.pessoa",
         countQuery = "select count(movimentacao) from Movimentacao movimentacao"
     )
     Page<Movimentacao> findAllWithToOneRelationships(Pageable pageable);
 
-    @Query("select movimentacao from Movimentacao movimentacao left join fetch movimentacao.bem left join fetch movimentacao.pessoa")
+    @Query(
+        "select movimentacao from Movimentacao movimentacao left join fetch movimentacao.bem left join fetch movimentacao.local left join fetch movimentacao.pessoa"
+    )
     List<Movimentacao> findAllWithToOneRelationships();
 
     @Query(
-        "select movimentacao from Movimentacao movimentacao left join fetch movimentacao.bem left join fetch movimentacao.pessoa where movimentacao.id =:id"
+        "select movimentacao from Movimentacao movimentacao left join fetch movimentacao.bem left join fetch movimentacao.local left join fetch movimentacao.pessoa where movimentacao.id =:id"
     )
     Optional<Movimentacao> findOneWithToOneRelationships(@Param("id") Long id);
 }

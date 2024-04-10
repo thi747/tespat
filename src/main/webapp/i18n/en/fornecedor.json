@@ -24,8 +24,8 @@
       "descricao": "Descricao",
       "telefone": "Telefone",
       "endereco": "Endereco",
-      "cidade": "Cidade",
-      "estado": "Estado"
+      "municipio": "Municipio",
+      "uf": "Uf"
     }
   }
 }

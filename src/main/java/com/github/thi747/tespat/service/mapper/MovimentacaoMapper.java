@@ -1,9 +1,11 @@
 package com.github.thi747.tespat.service.mapper;
 
 import com.github.thi747.tespat.domain.Bem;
+import com.github.thi747.tespat.domain.Local;
 import com.github.thi747.tespat.domain.Movimentacao;
 import com.github.thi747.tespat.domain.Pessoa;
 import com.github.thi747.tespat.service.dto.BemDTO;
+import com.github.thi747.tespat.service.dto.LocalDTO;
 import com.github.thi747.tespat.service.dto.MovimentacaoDTO;
 import com.github.thi747.tespat.service.dto.PessoaDTO;
 import org.mapstruct.*;
@@ -14,6 +16,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface MovimentacaoMapper extends EntityMapper<MovimentacaoDTO, Movimentacao> {
     @Mapping(target = "bem", source = "bem", qualifiedByName = "bemPatrimonio")
+    @Mapping(target = "local", source = "local", qualifiedByName = "localNome")
     @Mapping(target = "pessoa", source = "pessoa", qualifiedByName = "pessoaUsuario")
     MovimentacaoDTO toDto(Movimentacao s);
 
@@ -22,6 +25,12 @@ public interface MovimentacaoMapper extends EntityMapper<MovimentacaoDTO, Movime
     @Mapping(target = "id", source = "id")
     @Mapping(target = "patrimonio", source = "patrimonio")
     BemDTO toDtoBemPatrimonio(Bem bem);
+
+    @Named("localNome")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "nome", source = "nome")
+    LocalDTO toDtoLocalNome(Local local);
 
     @Named("pessoaUsuario")
     @BeanMapping(ignoreByDefault = true)

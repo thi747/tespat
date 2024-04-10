@@ -32,10 +32,10 @@
             <column name="endereco" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="cidade" type="varchar(255)">
+            <column name="municipio" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="estado" type="varchar(2)">
+            <column name="uf" type="varchar(2)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -65,8 +65,8 @@
             <column name="email" type="string"/>
             <column name="ativo" type="boolean"/>
             <column name="endereco" type="string"/>
-            <column name="cidade" type="string"/>
-            <column name="estado" type="string"/>
+            <column name="municipio" type="string"/>
+            <column name="uf" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

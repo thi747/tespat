@@ -38,11 +38,14 @@ public class Movimentacao implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "categoria", "fornecedor", "local" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "categoria", "fornecedor" }, allowSetters = true)
     private Bem bem;
 
     @ManyToOne(optional = false)
     @NotNull
+    private Local local;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Pessoa pessoa;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -109,6 +112,19 @@ public class Movimentacao implements Serializable {
 
     public Movimentacao bem(Bem bem) {
         this.setBem(bem);
+        return this;
+    }
+
+    public Local getLocal() {
+        return this.local;
+    }
+
+    public void setLocal(Local local) {
+        this.local = local;
+    }
+
+    public Movimentacao local(Local local) {
+        this.setLocal(local);
         return this;
     }
 

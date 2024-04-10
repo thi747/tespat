@@ -24,8 +24,8 @@ type PessoaFormGroupContent = {
   email: FormControl<IPessoa['email']>;
   ativo: FormControl<IPessoa['ativo']>;
   endereco: FormControl<IPessoa['endereco']>;
-  cidade: FormControl<IPessoa['cidade']>;
-  estado: FormControl<IPessoa['estado']>;
+  municipio: FormControl<IPessoa['municipio']>;
+  uf: FormControl<IPessoa['uf']>;
 };
 
 export type PessoaFormGroup = FormGroup<PessoaFormGroupContent>;
@@ -59,8 +59,8 @@ export class PessoaFormService {
         validators: [Validators.required],
       }),
       endereco: new FormControl(pessoaRawValue.endereco),
-      cidade: new FormControl(pessoaRawValue.cidade),
-      estado: new FormControl(pessoaRawValue.estado, {
+      municipio: new FormControl(pessoaRawValue.municipio),
+      uf: new FormControl(pessoaRawValue.uf, {
         validators: [Validators.minLength(2), Validators.maxLength(2)],
       }),
     });

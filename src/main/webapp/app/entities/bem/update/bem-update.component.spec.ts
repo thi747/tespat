@@ -10,8 +10,6 @@ import { ICategoria } from 'app/entities/categoria/categoria.model';
 import { CategoriaService } from 'app/entities/categoria/service/categoria.service';
 import { IFornecedor } from 'app/entities/fornecedor/fornecedor.model';
 import { FornecedorService } from 'app/entities/fornecedor/service/fornecedor.service';
-import { ILocal } from 'app/entities/local/local.model';
-import { LocalService } from 'app/entities/local/service/local.service';
 import { IBem } from '../bem.model';
 import { BemService } from '../service/bem.service';
 import { BemFormService } from './bem-form.service';
@@ -26,7 +24,6 @@ describe('Bem Management Update Component', () => {
   let bemService: BemService;
   let categoriaService: CategoriaService;
   let fornecedorService: FornecedorService;
-  let localService: LocalService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -50,7 +47,6 @@ describe('Bem Management Update Component', () => {
     bemService = TestBed.inject(BemService);
     categoriaService = TestBed.inject(CategoriaService);
     fornecedorService = TestBed.inject(FornecedorService);
-    localService = TestBed.inject(LocalService);
 
     comp = fixture.componentInstance;
   });
@@ -100,43 +96,18 @@ describe('Bem Management Update Component', () => {
       expect(comp.fornecedorsSharedCollection).toEqual(expectedCollection);
     });
 
-    it('Should call Local query and add missing value', () => {
-      const bem: IBem = { id: 456 };
-      const local: ILocal = { id: 16825 };
-      bem.local = local;
-
-      const localCollection: ILocal[] = [{ id: 25617 }];
-      jest.spyOn(localService, 'query').mockReturnValue(of(new HttpResponse({ body: localCollection })));
-      const additionalLocals = [local];
-      const expectedCollection: ILocal[] = [...additionalLocals, ...localCollection];
-      jest.spyOn(localService, 'addLocalToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ bem });
-      comp.ngOnInit();
-
-      expect(localService.query).toHaveBeenCalled();
-      expect(localService.addLocalToCollectionIfMissing).toHaveBeenCalledWith(
-        localCollection,
-        ...additionalLocals.map(expect.objectContaining),
-      );
-      expect(comp.localsSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const bem: IBem = { id: 456 };
       const categoria: ICategoria = { id: 23315 };
       bem.categoria = categoria;
       const fornecedor: IFornecedor = { id: 1815 };
       bem.fornecedor = fornecedor;
-      const local: ILocal = { id: 17451 };
-      bem.local = local;
 
       activatedRoute.data = of({ bem });
       comp.ngOnInit();
 
       expect(comp.categoriasSharedCollection).toContain(categoria);
       expect(comp.fornecedorsSharedCollection).toContain(fornecedor);
-      expect(comp.localsSharedCollection).toContain(local);
       expect(comp.bem).toEqual(bem);
     });
   });
@@ -227,16 +198,6 @@ describe('Bem Management Update Component', () => {
         jest.spyOn(fornecedorService, 'compareFornecedor');
         comp.compareFornecedor(entity, entity2);
         expect(fornecedorService.compareFornecedor).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
-    describe('compareLocal', () => {
-      it('Should forward to localService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(localService, 'compareLocal');
-        comp.compareLocal(entity, entity2);
-        expect(localService.compareLocal).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

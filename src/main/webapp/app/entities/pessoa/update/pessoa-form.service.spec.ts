@@ -26,8 +26,8 @@ describe('Pessoa Form Service', () => {
             email: expect.any(Object),
             ativo: expect.any(Object),
             endereco: expect.any(Object),
-            cidade: expect.any(Object),
-            estado: expect.any(Object),
+            municipio: expect.any(Object),
+            uf: expect.any(Object),
           }),
         );
       });
@@ -44,8 +44,8 @@ describe('Pessoa Form Service', () => {
             email: expect.any(Object),
             ativo: expect.any(Object),
             endereco: expect.any(Object),
-            cidade: expect.any(Object),
-            estado: expect.any(Object),
+            municipio: expect.any(Object),
+            uf: expect.any(Object),
           }),
         );
       });

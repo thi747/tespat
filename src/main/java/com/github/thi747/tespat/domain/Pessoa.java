@@ -45,12 +45,12 @@ public class Pessoa implements Serializable {
     @Column(name = "endereco")
     private String endereco;
 
-    @Column(name = "cidade")
-    private String cidade;
+    @Column(name = "municipio")
+    private String municipio;
 
     @Size(min = 2, max = 2)
-    @Column(name = "estado", length = 2)
-    private String estado;
+    @Column(name = "uf", length = 2)
+    private String uf;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -145,30 +145,30 @@ public class Pessoa implements Serializable {
         this.endereco = endereco;
     }
 
-    public String getCidade() {
-        return this.cidade;
+    public String getMunicipio() {
+        return this.municipio;
     }
 
-    public Pessoa cidade(String cidade) {
-        this.setCidade(cidade);
+    public Pessoa municipio(String municipio) {
+        this.setMunicipio(municipio);
         return this;
     }
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
+    public void setMunicipio(String municipio) {
+        this.municipio = municipio;
     }
 
-    public String getEstado() {
-        return this.estado;
+    public String getUf() {
+        return this.uf;
     }
 
-    public Pessoa estado(String estado) {
-        this.setEstado(estado);
+    public Pessoa uf(String uf) {
+        this.setUf(uf);
         return this;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setUf(String uf) {
+        this.uf = uf;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -201,8 +201,8 @@ public class Pessoa implements Serializable {
             ", email='" + getEmail() + "'" +
             ", ativo='" + getAtivo() + "'" +
             ", endereco='" + getEndereco() + "'" +
-            ", cidade='" + getCidade() + "'" +
-            ", estado='" + getEstado() + "'" +
+            ", municipio='" + getMunicipio() + "'" +
+            ", uf='" + getUf() + "'" +
             "}";
     }
 }

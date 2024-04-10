@@ -39,12 +39,19 @@
       "relationshipValidateRules": "required"
     },
     {
+      "otherEntityField": "nome",
+      "otherEntityName": "local",
+      "relationshipName": "local",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
       "otherEntityField": "usuario",
       "otherEntityName": "pessoa",
       "relationshipName": "pessoa",
       "relationshipSide": "left",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": "required"
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no",

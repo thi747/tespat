@@ -84,16 +84,16 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="cidade">
+            <th scope="col" jhiSortBy="municipio">
               <div class="d-flex">
-                <span jhiTranslate="tesPatApp.pessoa.cidade">Cidade</span>
+                <span jhiTranslate="tesPatApp.pessoa.municipio">Municipio</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="estado">
+            <th scope="col" jhiSortBy="uf">
               <div class="d-flex">
-                <span jhiTranslate="tesPatApp.pessoa.estado">Estado</span>
+                <span jhiTranslate="tesPatApp.pessoa.uf">Uf</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -113,8 +113,8 @@
               <td>{{ pessoa.email }}</td>
               <td>{{ pessoa.ativo }}</td>
               <td>{{ pessoa.endereco }}</td>
-              <td>{{ pessoa.cidade }}</td>
-              <td>{{ pessoa.estado }}</td>
+              <td>{{ pessoa.municipio }}</td>
+              <td>{{ pessoa.uf }}</td>
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/pessoa', pessoa.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

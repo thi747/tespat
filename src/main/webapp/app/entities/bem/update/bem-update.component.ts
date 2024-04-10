@@ -11,8 +11,6 @@ import { ICategoria } from 'app/entities/categoria/categoria.model';
 import { CategoriaService } from 'app/entities/categoria/service/categoria.service';
 import { IFornecedor } from 'app/entities/fornecedor/fornecedor.model';
 import { FornecedorService } from 'app/entities/fornecedor/service/fornecedor.service';
-import { ILocal } from 'app/entities/local/local.model';
-import { LocalService } from 'app/entities/local/service/local.service';
 import { TipoConservacao } from 'app/entities/enumerations/tipo-conservacao.model';
 import { TipoStatus } from 'app/entities/enumerations/tipo-status.model';
 import { BemService } from '../service/bem.service';
@@ -33,13 +31,11 @@ export class BemUpdateComponent implements OnInit {
 
   categoriasSharedCollection: ICategoria[] = [];
   fornecedorsSharedCollection: IFornecedor[] = [];
-  localsSharedCollection: ILocal[] = [];
 
   protected bemService = inject(BemService);
   protected bemFormService = inject(BemFormService);
   protected categoriaService = inject(CategoriaService);
   protected fornecedorService = inject(FornecedorService);
-  protected localService = inject(LocalService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -48,8 +44,6 @@ export class BemUpdateComponent implements OnInit {
   compareCategoria = (o1: ICategoria | null, o2: ICategoria | null): boolean => this.categoriaService.compareCategoria(o1, o2);
 
   compareFornecedor = (o1: IFornecedor | null, o2: IFornecedor | null): boolean => this.fornecedorService.compareFornecedor(o1, o2);
-
-  compareLocal = (o1: ILocal | null, o2: ILocal | null): boolean => this.localService.compareLocal(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ bem }) => {
@@ -107,7 +101,6 @@ export class BemUpdateComponent implements OnInit {
       this.fornecedorsSharedCollection,
       bem.fornecedor,
     );
-    this.localsSharedCollection = this.localService.addLocalToCollectionIfMissing<ILocal>(this.localsSharedCollection, bem.local);
   }
 
   protected loadRelationshipsOptions(): void {
@@ -130,11 +123,5 @@ export class BemUpdateComponent implements OnInit {
         ),
       )
       .subscribe((fornecedors: IFornecedor[]) => (this.fornecedorsSharedCollection = fornecedors));
-
-    this.localService
-      .query()
-      .pipe(map((res: HttpResponse<ILocal[]>) => res.body ?? []))
-      .pipe(map((locals: ILocal[]) => this.localService.addLocalToCollectionIfMissing<ILocal>(locals, this.bem?.local)))
-      .subscribe((locals: ILocal[]) => (this.localsSharedCollection = locals));
   }
 }

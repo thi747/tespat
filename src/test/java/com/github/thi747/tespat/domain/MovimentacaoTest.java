@@ -1,6 +1,7 @@
 package com.github.thi747.tespat.domain;
 
 import static com.github.thi747.tespat.domain.BemTestSamples.*;
+import static com.github.thi747.tespat.domain.LocalTestSamples.*;
 import static com.github.thi747.tespat.domain.MovimentacaoTestSamples.*;
 import static com.github.thi747.tespat.domain.PessoaTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,6 +35,18 @@ class MovimentacaoTest {
 
         movimentacao.bem(null);
         assertThat(movimentacao.getBem()).isNull();
+    }
+
+    @Test
+    void localTest() throws Exception {
+        Movimentacao movimentacao = getMovimentacaoRandomSampleGenerator();
+        Local localBack = getLocalRandomSampleGenerator();
+
+        movimentacao.setLocal(localBack);
+        assertThat(movimentacao.getLocal()).isEqualTo(localBack);
+
+        movimentacao.local(null);
+        assertThat(movimentacao.getLocal()).isNull();
     }
 
     @Test

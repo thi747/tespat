@@ -65,9 +65,6 @@ public class Bem implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Fornecedor fornecedor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Local local;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -236,19 +233,6 @@ public class Bem implements Serializable {
 
     public Bem fornecedor(Fornecedor fornecedor) {
         this.setFornecedor(fornecedor);
-        return this;
-    }
-
-    public Local getLocal() {
-        return this.local;
-    }
-
-    public void setLocal(Local local) {
-        this.local = local;
-    }
-
-    public Bem local(Local local) {
-        this.setLocal(local);
         return this;
     }
 

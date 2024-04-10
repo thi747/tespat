@@ -78,6 +78,25 @@
         }
 
         <div class="mb-3">
+          <label class="form-label" jhiTranslate="tesPatApp.movimentacao.local" for="field_local">Local</label>
+          <select class="form-control" id="field_local" data-cy="local" name="local" formControlName="local" [compareWith]="compareLocal">
+            @if (!editForm.get('local')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (localOption of localsSharedCollection; track $index) {
+              <option [ngValue]="localOption">{{ localOption.nome }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['local'])!.invalid && (editForm.get(['local'])!.dirty || editForm.get(['local'])!.touched)) {
+          <div>
+            @if (editForm.get(['local'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
           <label class="form-label" jhiTranslate="tesPatApp.movimentacao.pessoa" for="field_pessoa">Pessoa</label>
           <select
             class="form-control"
@@ -87,21 +106,12 @@
             formControlName="pessoa"
             [compareWith]="comparePessoa"
           >
-            @if (!editForm.get('pessoa')!.value) {
-              <option [ngValue]="null" selected></option>
-            }
+            <option [ngValue]="null"></option>
             @for (pessoaOption of pessoasSharedCollection; track $index) {
               <option [ngValue]="pessoaOption">{{ pessoaOption.usuario }}</option>
             }
           </select>
         </div>
-        @if (editForm.get(['pessoa'])!.invalid && (editForm.get(['pessoa'])!.dirty || editForm.get(['pessoa'])!.touched)) {
-          <div>
-            @if (editForm.get(['pessoa'])?.errors?.required) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
-            }
-          </div>
-        }
       </div>
 
       <div>

@@ -29,10 +29,10 @@ public class PessoaDTO implements Serializable {
 
     private String endereco;
 
-    private String cidade;
+    private String municipio;
 
     @Size(min = 2, max = 2)
-    private String estado;
+    private String uf;
 
     public Long getId() {
         return id;
@@ -90,20 +90,20 @@ public class PessoaDTO implements Serializable {
         this.endereco = endereco;
     }
 
-    public String getCidade() {
-        return cidade;
+    public String getMunicipio() {
+        return municipio;
     }
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
+    public void setMunicipio(String municipio) {
+        this.municipio = municipio;
     }
 
-    public String getEstado() {
-        return estado;
+    public String getUf() {
+        return uf;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setUf(String uf) {
+        this.uf = uf;
     }
 
     @Override
@@ -138,8 +138,8 @@ public class PessoaDTO implements Serializable {
             ", email='" + getEmail() + "'" +
             ", ativo='" + getAtivo() + "'" +
             ", endereco='" + getEndereco() + "'" +
-            ", cidade='" + getCidade() + "'" +
-            ", estado='" + getEstado() + "'" +
+            ", municipio='" + getMunicipio() + "'" +
+            ", uf='" + getUf() + "'" +
             "}";
     }
 }

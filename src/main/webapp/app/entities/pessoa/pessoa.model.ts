@@ -6,8 +6,8 @@ export interface IPessoa {
   email?: string | null;
   ativo?: boolean | null;
   endereco?: string | null;
-  cidade?: string | null;
-  estado?: string | null;
+  municipio?: string | null;
+  uf?: string | null;
 }
 
 export type NewPessoa = Omit<IPessoa, 'id'> & { id: null };

@@ -71,14 +71,6 @@
               </div>
             }
           </dd>
-          <dt><span jhiTranslate="tesPatApp.bem.local">Local</span></dt>
-          <dd>
-            @if (bem.local) {
-              <div>
-                <a [routerLink]="['/local', bem.local.id, 'view']">{{ bem.local.nome }}</a>
-              </div>
-            }
-          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

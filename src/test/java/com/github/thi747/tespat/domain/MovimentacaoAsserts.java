@@ -62,6 +62,7 @@ public class MovimentacaoAsserts {
         assertThat(expected)
             .as("Verify Movimentacao relationships")
             .satisfies(e -> assertThat(e.getBem()).as("check bem").isEqualTo(actual.getBem()))
+            .satisfies(e -> assertThat(e.getLocal()).as("check local").isEqualTo(actual.getLocal()))
             .satisfies(e -> assertThat(e.getPessoa()).as("check pessoa").isEqualTo(actual.getPessoa()));
     }
 }

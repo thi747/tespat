@@ -29,8 +29,7 @@
       "status": "Status",
       "observacoes": "Observacoes",
       "categoria": "Categoria",
-      "fornecedor": "Fornecedor",
-      "local": "Local"
+      "fornecedor": "Fornecedor"
     }
   }
 }

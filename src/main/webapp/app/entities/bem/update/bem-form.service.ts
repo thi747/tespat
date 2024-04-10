@@ -30,7 +30,6 @@ type BemFormGroupContent = {
   observacoes: FormControl<IBem['observacoes']>;
   categoria: FormControl<IBem['categoria']>;
   fornecedor: FormControl<IBem['fornecedor']>;
-  local: FormControl<IBem['local']>;
 };
 
 export type BemFormGroup = FormGroup<BemFormGroupContent>;
@@ -66,7 +65,6 @@ export class BemFormService {
       observacoes: new FormControl(bemRawValue.observacoes),
       categoria: new FormControl(bemRawValue.categoria),
       fornecedor: new FormControl(bemRawValue.fornecedor),
-      local: new FormControl(bemRawValue.local),
     });
   }
 

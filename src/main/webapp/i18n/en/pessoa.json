@@ -24,8 +24,8 @@
       "email": "Email",
       "ativo": "Ativo",
       "endereco": "Endereco",
-      "cidade": "Cidade",
-      "estado": "Estado"
+      "municipio": "Municipio",
+      "uf": "Uf"
     }
   }
 }

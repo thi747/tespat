@@ -15,7 +15,7 @@ export const sampleWithPartialData: IPessoa = {
   cpf: 'gee anaesthetise',
   email: 'Margaretta27@hotmail.com',
   ativo: true,
-  cidade: 'beautifully',
+  municipio: 'beautifully',
 };
 
 export const sampleWithFullData: IPessoa = {
@@ -26,8 +26,8 @@ export const sampleWithFullData: IPessoa = {
   email: 'Coby.Hessel@gmail.com',
   ativo: true,
   endereco: 'whether entrepreneur',
-  cidade: 'tightly',
-  estado: 'lo',
+  municipio: 'tightly',
+  uf: 'lo',
 };
 
 export const sampleWithNewData: NewPessoa = {

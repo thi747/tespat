@@ -51,11 +51,11 @@ class PessoaResourceIT {
     private static final String DEFAULT_ENDERECO = "AAAAAAAAAA";
     private static final String UPDATED_ENDERECO = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CIDADE = "AAAAAAAAAA";
-    private static final String UPDATED_CIDADE = "BBBBBBBBBB";
+    private static final String DEFAULT_MUNICIPIO = "AAAAAAAAAA";
+    private static final String UPDATED_MUNICIPIO = "BBBBBBBBBB";
 
-    private static final String DEFAULT_ESTADO = "AA";
-    private static final String UPDATED_ESTADO = "BB";
+    private static final String DEFAULT_UF = "AA";
+    private static final String UPDATED_UF = "BB";
 
     private static final String ENTITY_API_URL = "/api/pessoas";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -94,8 +94,8 @@ class PessoaResourceIT {
             .email(DEFAULT_EMAIL)
             .ativo(DEFAULT_ATIVO)
             .endereco(DEFAULT_ENDERECO)
-            .cidade(DEFAULT_CIDADE)
-            .estado(DEFAULT_ESTADO);
+            .municipio(DEFAULT_MUNICIPIO)
+            .uf(DEFAULT_UF);
         return pessoa;
     }
 
@@ -113,8 +113,8 @@ class PessoaResourceIT {
             .email(UPDATED_EMAIL)
             .ativo(UPDATED_ATIVO)
             .endereco(UPDATED_ENDERECO)
-            .cidade(UPDATED_CIDADE)
-            .estado(UPDATED_ESTADO);
+            .municipio(UPDATED_MUNICIPIO)
+            .uf(UPDATED_UF);
         return pessoa;
     }
 
@@ -249,8 +249,8 @@ class PessoaResourceIT {
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
             .andExpect(jsonPath("$.[*].ativo").value(hasItem(DEFAULT_ATIVO.booleanValue())))
             .andExpect(jsonPath("$.[*].endereco").value(hasItem(DEFAULT_ENDERECO)))
-            .andExpect(jsonPath("$.[*].cidade").value(hasItem(DEFAULT_CIDADE)))
-            .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO)));
+            .andExpect(jsonPath("$.[*].municipio").value(hasItem(DEFAULT_MUNICIPIO)))
+            .andExpect(jsonPath("$.[*].uf").value(hasItem(DEFAULT_UF)));
     }
 
     @Test
@@ -271,8 +271,8 @@ class PessoaResourceIT {
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
             .andExpect(jsonPath("$.ativo").value(DEFAULT_ATIVO.booleanValue()))
             .andExpect(jsonPath("$.endereco").value(DEFAULT_ENDERECO))
-            .andExpect(jsonPath("$.cidade").value(DEFAULT_CIDADE))
-            .andExpect(jsonPath("$.estado").value(DEFAULT_ESTADO));
+            .andExpect(jsonPath("$.municipio").value(DEFAULT_MUNICIPIO))
+            .andExpect(jsonPath("$.uf").value(DEFAULT_UF));
     }
 
     @Test
@@ -301,8 +301,8 @@ class PessoaResourceIT {
             .email(UPDATED_EMAIL)
             .ativo(UPDATED_ATIVO)
             .endereco(UPDATED_ENDERECO)
-            .cidade(UPDATED_CIDADE)
-            .estado(UPDATED_ESTADO);
+            .municipio(UPDATED_MUNICIPIO)
+            .uf(UPDATED_UF);
         PessoaDTO pessoaDTO = pessoaMapper.toDto(updatedPessoa);
 
         restPessoaMockMvc
@@ -423,8 +423,8 @@ class PessoaResourceIT {
             .email(UPDATED_EMAIL)
             .ativo(UPDATED_ATIVO)
             .endereco(UPDATED_ENDERECO)
-            .cidade(UPDATED_CIDADE)
-            .estado(UPDATED_ESTADO);
+            .municipio(UPDATED_MUNICIPIO)
+            .uf(UPDATED_UF);
 
         restPessoaMockMvc
             .perform(

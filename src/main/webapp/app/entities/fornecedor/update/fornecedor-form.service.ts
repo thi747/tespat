@@ -24,8 +24,8 @@ type FornecedorFormGroupContent = {
   descricao: FormControl<IFornecedor['descricao']>;
   telefone: FormControl<IFornecedor['telefone']>;
   endereco: FormControl<IFornecedor['endereco']>;
-  cidade: FormControl<IFornecedor['cidade']>;
-  estado: FormControl<IFornecedor['estado']>;
+  municipio: FormControl<IFornecedor['municipio']>;
+  uf: FormControl<IFornecedor['uf']>;
 };
 
 export type FornecedorFormGroup = FormGroup<FornecedorFormGroupContent>;
@@ -55,8 +55,8 @@ export class FornecedorFormService {
       descricao: new FormControl(fornecedorRawValue.descricao),
       telefone: new FormControl(fornecedorRawValue.telefone),
       endereco: new FormControl(fornecedorRawValue.endereco),
-      cidade: new FormControl(fornecedorRawValue.cidade),
-      estado: new FormControl(fornecedorRawValue.estado, {
+      municipio: new FormControl(fornecedorRawValue.municipio),
+      uf: new FormControl(fornecedorRawValue.uf, {
         validators: [Validators.minLength(2), Validators.maxLength(2)],
       }),
     });

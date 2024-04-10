@@ -1,4 +1,4 @@
-id;data;descricao;tipo;bem_id;pessoa_id
+id;data;descricao;tipo;bem_id;local_id
 1;2024-04-08;loathsome;SAIDA;1;1
 2;2024-04-08;maiden since;SAIDA;2;2
 3;2024-04-07;occasion phooey;ENTRADA;3;3

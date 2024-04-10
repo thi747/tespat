@@ -25,6 +25,8 @@ public class MovimentacaoDTO implements Serializable {
     private BemDTO bem;
 
     @NotNull
+    private LocalDTO local;
+
     private PessoaDTO pessoa;
 
     public Long getId() {
@@ -67,6 +69,14 @@ public class MovimentacaoDTO implements Serializable {
         this.bem = bem;
     }
 
+    public LocalDTO getLocal() {
+        return local;
+    }
+
+    public void setLocal(LocalDTO local) {
+        this.local = local;
+    }
+
     public PessoaDTO getPessoa() {
         return pessoa;
     }
@@ -105,6 +115,7 @@ public class MovimentacaoDTO implements Serializable {
             ", descricao='" + getDescricao() + "'" +
             ", tipo='" + getTipo() + "'" +
             ", bem=" + getBem() +
+            ", local=" + getLocal() +
             ", pessoa=" + getPessoa() +
             "}";
     }

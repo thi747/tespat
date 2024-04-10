@@ -26,8 +26,11 @@
             <column name="bem_id" type="bigint">
                 <constraints nullable="false" />
             </column>
-            <column name="pessoa_id" type="bigint">
+            <column name="local_id" type="bigint">
                 <constraints nullable="false" />
+            </column>
+            <column name="pessoa_id" type="bigint">
+                <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -54,7 +57,7 @@
             <column name="descricao" type="string"/>
             <column name="tipo" type="string"/>
             <column name="bem_id" type="numeric"/>
-            <column name="pessoa_id" type="numeric"/>
+            <column name="local_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -69,7 +69,6 @@ public class BemAsserts {
         assertThat(expected)
             .as("Verify Bem relationships")
             .satisfies(e -> assertThat(e.getCategoria()).as("check categoria").isEqualTo(actual.getCategoria()))
-            .satisfies(e -> assertThat(e.getFornecedor()).as("check fornecedor").isEqualTo(actual.getFornecedor()))
-            .satisfies(e -> assertThat(e.getLocal()).as("check local").isEqualTo(actual.getLocal()));
+            .satisfies(e -> assertThat(e.getFornecedor()).as("check fornecedor").isEqualTo(actual.getFornecedor()));
     }
 }

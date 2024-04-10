@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IBem } from 'app/entities/bem/bem.model';
 import { BemService } from 'app/entities/bem/service/bem.service';
+import { ILocal } from 'app/entities/local/local.model';
+import { LocalService } from 'app/entities/local/service/local.service';
 import { IPessoa } from 'app/entities/pessoa/pessoa.model';
 import { PessoaService } from 'app/entities/pessoa/service/pessoa.service';
 import { TipoMovimentacao } from 'app/entities/enumerations/tipo-movimentacao.model';
@@ -28,11 +30,13 @@ export class MovimentacaoUpdateComponent implements OnInit {
   tipoMovimentacaoValues = Object.keys(TipoMovimentacao);
 
   bemsSharedCollection: IBem[] = [];
+  localsSharedCollection: ILocal[] = [];
   pessoasSharedCollection: IPessoa[] = [];
 
   protected movimentacaoService = inject(MovimentacaoService);
   protected movimentacaoFormService = inject(MovimentacaoFormService);
   protected bemService = inject(BemService);
+  protected localService = inject(LocalService);
   protected pessoaService = inject(PessoaService);
   protected activatedRoute = inject(ActivatedRoute);
 
@@ -40,6 +44,8 @@ export class MovimentacaoUpdateComponent implements OnInit {
   editForm: MovimentacaoFormGroup = this.movimentacaoFormService.createMovimentacaoFormGroup();
 
   compareBem = (o1: IBem | null, o2: IBem | null): boolean => this.bemService.compareBem(o1, o2);
+
+  compareLocal = (o1: ILocal | null, o2: ILocal | null): boolean => this.localService.compareLocal(o1, o2);
 
   comparePessoa = (o1: IPessoa | null, o2: IPessoa | null): boolean => this.pessoaService.comparePessoa(o1, o2);
 
@@ -92,6 +98,7 @@ export class MovimentacaoUpdateComponent implements OnInit {
     this.movimentacaoFormService.resetForm(this.editForm, movimentacao);
 
     this.bemsSharedCollection = this.bemService.addBemToCollectionIfMissing<IBem>(this.bemsSharedCollection, movimentacao.bem);
+    this.localsSharedCollection = this.localService.addLocalToCollectionIfMissing<ILocal>(this.localsSharedCollection, movimentacao.local);
     this.pessoasSharedCollection = this.pessoaService.addPessoaToCollectionIfMissing<IPessoa>(
       this.pessoasSharedCollection,
       movimentacao.pessoa,
@@ -104,6 +111,12 @@ export class MovimentacaoUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IBem[]>) => res.body ?? []))
       .pipe(map((bems: IBem[]) => this.bemService.addBemToCollectionIfMissing<IBem>(bems, this.movimentacao?.bem)))
       .subscribe((bems: IBem[]) => (this.bemsSharedCollection = bems));
+
+    this.localService
+      .query()
+      .pipe(map((res: HttpResponse<ILocal[]>) => res.body ?? []))
+      .pipe(map((locals: ILocal[]) => this.localService.addLocalToCollectionIfMissing<ILocal>(locals, this.movimentacao?.local)))
+      .subscribe((locals: ILocal[]) => (this.localsSharedCollection = locals));
 
     this.pessoaService
       .query()

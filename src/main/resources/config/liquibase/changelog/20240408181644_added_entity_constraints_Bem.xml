@@ -23,12 +23,5 @@
                                  referencedColumnNames="id"
                                  referencedTableName="fornecedor"
                                  />
-
-        <addForeignKeyConstraint baseColumnNames="local_id"
-                                 baseTableName="bem"
-                                 constraintName="fk_bem__local_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="local"
-                                 />
     </changeSet>
 </databaseChangeLog>

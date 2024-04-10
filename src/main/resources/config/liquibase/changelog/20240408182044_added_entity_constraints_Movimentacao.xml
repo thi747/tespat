@@ -17,6 +17,13 @@
                                  referencedTableName="bem"
                                  />
 
+        <addForeignKeyConstraint baseColumnNames="local_id"
+                                 baseTableName="movimentacao"
+                                 constraintName="fk_movimentacao__local_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="local"
+                                 />
+
         <addForeignKeyConstraint baseColumnNames="pessoa_id"
                                  baseTableName="movimentacao"
                                  constraintName="fk_movimentacao__pessoa_id"

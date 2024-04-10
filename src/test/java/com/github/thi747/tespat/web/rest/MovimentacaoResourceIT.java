@@ -11,8 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.thi747.tespat.IntegrationTest;
 import com.github.thi747.tespat.domain.Bem;
+import com.github.thi747.tespat.domain.Local;
 import com.github.thi747.tespat.domain.Movimentacao;
-import com.github.thi747.tespat.domain.Pessoa;
 import com.github.thi747.tespat.domain.enumeration.TipoMovimentacao;
 import com.github.thi747.tespat.repository.MovimentacaoRepository;
 import com.github.thi747.tespat.service.MovimentacaoService;
@@ -104,15 +104,15 @@ class MovimentacaoResourceIT {
         }
         movimentacao.setBem(bem);
         // Add required entity
-        Pessoa pessoa;
-        if (TestUtil.findAll(em, Pessoa.class).isEmpty()) {
-            pessoa = PessoaResourceIT.createEntity(em);
-            em.persist(pessoa);
+        Local local;
+        if (TestUtil.findAll(em, Local.class).isEmpty()) {
+            local = LocalResourceIT.createEntity(em);
+            em.persist(local);
             em.flush();
         } else {
-            pessoa = TestUtil.findAll(em, Pessoa.class).get(0);
+            local = TestUtil.findAll(em, Local.class).get(0);
         }
-        movimentacao.setPessoa(pessoa);
+        movimentacao.setLocal(local);
         return movimentacao;
     }
 
@@ -135,15 +135,15 @@ class MovimentacaoResourceIT {
         }
         movimentacao.setBem(bem);
         // Add required entity
-        Pessoa pessoa;
-        if (TestUtil.findAll(em, Pessoa.class).isEmpty()) {
-            pessoa = PessoaResourceIT.createUpdatedEntity(em);
-            em.persist(pessoa);
+        Local local;
+        if (TestUtil.findAll(em, Local.class).isEmpty()) {
+            local = LocalResourceIT.createUpdatedEntity(em);
+            em.persist(local);
             em.flush();
         } else {
-            pessoa = TestUtil.findAll(em, Pessoa.class).get(0);
+            local = TestUtil.findAll(em, Local.class).get(0);
         }
-        movimentacao.setPessoa(pessoa);
+        movimentacao.setLocal(local);
         return movimentacao;
     }
 

@@ -51,11 +51,11 @@ class FornecedorResourceIT {
     private static final String DEFAULT_ENDERECO = "AAAAAAAAAA";
     private static final String UPDATED_ENDERECO = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CIDADE = "AAAAAAAAAA";
-    private static final String UPDATED_CIDADE = "BBBBBBBBBB";
+    private static final String DEFAULT_MUNICIPIO = "AAAAAAAAAA";
+    private static final String UPDATED_MUNICIPIO = "BBBBBBBBBB";
 
-    private static final String DEFAULT_ESTADO = "AA";
-    private static final String UPDATED_ESTADO = "BB";
+    private static final String DEFAULT_UF = "AA";
+    private static final String UPDATED_UF = "BB";
 
     private static final String ENTITY_API_URL = "/api/fornecedors";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -94,8 +94,8 @@ class FornecedorResourceIT {
             .descricao(DEFAULT_DESCRICAO)
             .telefone(DEFAULT_TELEFONE)
             .endereco(DEFAULT_ENDERECO)
-            .cidade(DEFAULT_CIDADE)
-            .estado(DEFAULT_ESTADO);
+            .municipio(DEFAULT_MUNICIPIO)
+            .uf(DEFAULT_UF);
         return fornecedor;
     }
 
@@ -113,8 +113,8 @@ class FornecedorResourceIT {
             .descricao(UPDATED_DESCRICAO)
             .telefone(UPDATED_TELEFONE)
             .endereco(UPDATED_ENDERECO)
-            .cidade(UPDATED_CIDADE)
-            .estado(UPDATED_ESTADO);
+            .municipio(UPDATED_MUNICIPIO)
+            .uf(UPDATED_UF);
         return fornecedor;
     }
 
@@ -215,8 +215,8 @@ class FornecedorResourceIT {
             .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)))
             .andExpect(jsonPath("$.[*].telefone").value(hasItem(DEFAULT_TELEFONE)))
             .andExpect(jsonPath("$.[*].endereco").value(hasItem(DEFAULT_ENDERECO)))
-            .andExpect(jsonPath("$.[*].cidade").value(hasItem(DEFAULT_CIDADE)))
-            .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO)));
+            .andExpect(jsonPath("$.[*].municipio").value(hasItem(DEFAULT_MUNICIPIO)))
+            .andExpect(jsonPath("$.[*].uf").value(hasItem(DEFAULT_UF)));
     }
 
     @Test
@@ -237,8 +237,8 @@ class FornecedorResourceIT {
             .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO))
             .andExpect(jsonPath("$.telefone").value(DEFAULT_TELEFONE))
             .andExpect(jsonPath("$.endereco").value(DEFAULT_ENDERECO))
-            .andExpect(jsonPath("$.cidade").value(DEFAULT_CIDADE))
-            .andExpect(jsonPath("$.estado").value(DEFAULT_ESTADO));
+            .andExpect(jsonPath("$.municipio").value(DEFAULT_MUNICIPIO))
+            .andExpect(jsonPath("$.uf").value(DEFAULT_UF));
     }
 
     @Test
@@ -267,8 +267,8 @@ class FornecedorResourceIT {
             .descricao(UPDATED_DESCRICAO)
             .telefone(UPDATED_TELEFONE)
             .endereco(UPDATED_ENDERECO)
-            .cidade(UPDATED_CIDADE)
-            .estado(UPDATED_ESTADO);
+            .municipio(UPDATED_MUNICIPIO)
+            .uf(UPDATED_UF);
         FornecedorDTO fornecedorDTO = fornecedorMapper.toDto(updatedFornecedor);
 
         restFornecedorMockMvc
@@ -362,8 +362,8 @@ class FornecedorResourceIT {
             .descricao(UPDATED_DESCRICAO)
             .telefone(UPDATED_TELEFONE)
             .endereco(UPDATED_ENDERECO)
-            .cidade(UPDATED_CIDADE)
-            .estado(UPDATED_ESTADO);
+            .municipio(UPDATED_MUNICIPIO)
+            .uf(UPDATED_UF);
 
         restFornecedorMockMvc
             .perform(
@@ -401,8 +401,8 @@ class FornecedorResourceIT {
             .descricao(UPDATED_DESCRICAO)
             .telefone(UPDATED_TELEFONE)
             .endereco(UPDATED_ENDERECO)
-            .cidade(UPDATED_CIDADE)
-            .estado(UPDATED_ESTADO);
+            .municipio(UPDATED_MUNICIPIO)
+            .uf(UPDATED_UF);
 
         restFornecedorMockMvc
             .perform(

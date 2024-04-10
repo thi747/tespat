@@ -32,7 +32,6 @@ describe('Bem Form Service', () => {
             observacoes: expect.any(Object),
             categoria: expect.any(Object),
             fornecedor: expect.any(Object),
-            local: expect.any(Object),
           }),
         );
       });
@@ -55,7 +54,6 @@ describe('Bem Form Service', () => {
             observacoes: expect.any(Object),
             categoria: expect.any(Object),
             fornecedor: expect.any(Object),
-            local: expect.any(Object),
           }),
         );
       });

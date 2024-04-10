@@ -3,7 +3,6 @@ package com.github.thi747.tespat.domain;
 import static com.github.thi747.tespat.domain.BemTestSamples.*;
 import static com.github.thi747.tespat.domain.CategoriaTestSamples.*;
 import static com.github.thi747.tespat.domain.FornecedorTestSamples.*;
-import static com.github.thi747.tespat.domain.LocalTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.thi747.tespat.web.rest.TestUtil;
@@ -47,17 +46,5 @@ class BemTest {
 
         bem.fornecedor(null);
         assertThat(bem.getFornecedor()).isNull();
-    }
-
-    @Test
-    void localTest() throws Exception {
-        Bem bem = getBemRandomSampleGenerator();
-        Local localBack = getLocalRandomSampleGenerator();
-
-        bem.setLocal(localBack);
-        assertThat(bem.getLocal()).isEqualTo(localBack);
-
-        bem.local(null);
-        assertThat(bem.getLocal()).isNull();
     }
 }

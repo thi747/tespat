@@ -124,12 +124,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="local.nome">
-              <div class="d-flex">
-                <span jhiTranslate="tesPatApp.bem.local">Local</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -160,13 +154,6 @@
                 @if (bem.fornecedor) {
                   <div>
                     <a [routerLink]="['/fornecedor', bem.fornecedor.id, 'view']">{{ bem.fornecedor.nome }}</a>
-                  </div>
-                }
-              </td>
-              <td>
-                @if (bem.local) {
-                  <div>
-                    <a [routerLink]="['/local', bem.local.id, 'view']">{{ bem.local.nome }}</a>
                   </div>
                 }
               </td>

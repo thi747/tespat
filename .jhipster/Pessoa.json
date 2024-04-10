@@ -43,11 +43,11 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "cidade",
+      "fieldName": "municipio",
       "fieldType": "String"
     },
     {
-      "fieldName": "estado",
+      "fieldName": "uf",
       "fieldType": "String",
       "fieldValidateRules": ["minlength", "maxlength"],
       "fieldValidateRulesMaxlength": "2",

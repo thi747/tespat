@@ -6,8 +6,8 @@ export interface IFornecedor {
   descricao?: string | null;
   telefone?: string | null;
   endereco?: string | null;
-  cidade?: string | null;
-  estado?: string | null;
+  municipio?: string | null;
+  uf?: string | null;
 }
 
 export type NewFornecedor = Omit<IFornecedor, 'id'> & { id: null };

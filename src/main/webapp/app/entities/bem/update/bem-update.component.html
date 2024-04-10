@@ -177,16 +177,6 @@
             }
           </select>
         </div>
-
-        <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.bem.local" for="field_local">Local</label>
-          <select class="form-control" id="field_local" data-cy="local" name="local" formControlName="local" [compareWith]="compareLocal">
-            <option [ngValue]="null"></option>
-            @for (localOption of localsSharedCollection; track $index) {
-              <option [ngValue]="localOption">{{ localOption.nome }}</option>
-            }
-          </select>
-        </div>
       </div>
 
       <div>

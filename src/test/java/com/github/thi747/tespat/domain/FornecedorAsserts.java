@@ -53,8 +53,8 @@ public class FornecedorAsserts {
             .satisfies(e -> assertThat(e.getDescricao()).as("check descricao").isEqualTo(actual.getDescricao()))
             .satisfies(e -> assertThat(e.getTelefone()).as("check telefone").isEqualTo(actual.getTelefone()))
             .satisfies(e -> assertThat(e.getEndereco()).as("check endereco").isEqualTo(actual.getEndereco()))
-            .satisfies(e -> assertThat(e.getCidade()).as("check cidade").isEqualTo(actual.getCidade()))
-            .satisfies(e -> assertThat(e.getEstado()).as("check estado").isEqualTo(actual.getEstado()));
+            .satisfies(e -> assertThat(e.getMunicipio()).as("check municipio").isEqualTo(actual.getMunicipio()))
+            .satisfies(e -> assertThat(e.getUf()).as("check uf").isEqualTo(actual.getUf()));
     }
 
     /**

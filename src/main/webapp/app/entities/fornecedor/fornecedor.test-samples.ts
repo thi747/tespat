@@ -12,7 +12,7 @@ export const sampleWithPartialData: IFornecedor = {
   cpfOuCnpj: 'naive scattering',
   email: 'Matilda.Walter@yahoo.com',
   endereco: 'ornate',
-  cidade: 'peel if',
+  municipio: 'peel if',
 };
 
 export const sampleWithFullData: IFornecedor = {
@@ -23,8 +23,8 @@ export const sampleWithFullData: IFornecedor = {
   descricao: 'finally',
   telefone: 'memorialise blah positively',
   endereco: 'through',
-  cidade: 'whether',
-  estado: 'hm',
+  municipio: 'whether',
+  uf: 'hm',
 };
 
 export const sampleWithNewData: NewFornecedor = {

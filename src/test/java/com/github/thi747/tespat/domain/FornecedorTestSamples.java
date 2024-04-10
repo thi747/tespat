@@ -18,8 +18,8 @@ public class FornecedorTestSamples {
             .descricao("descricao1")
             .telefone("telefone1")
             .endereco("endereco1")
-            .cidade("cidade1")
-            .estado("estado1");
+            .municipio("municipio1")
+            .uf("uf1");
     }
 
     public static Fornecedor getFornecedorSample2() {
@@ -31,8 +31,8 @@ public class FornecedorTestSamples {
             .descricao("descricao2")
             .telefone("telefone2")
             .endereco("endereco2")
-            .cidade("cidade2")
-            .estado("estado2");
+            .municipio("municipio2")
+            .uf("uf2");
     }
 
     public static Fornecedor getFornecedorRandomSampleGenerator() {
@@ -44,7 +44,7 @@ public class FornecedorTestSamples {
             .descricao(UUID.randomUUID().toString())
             .telefone(UUID.randomUUID().toString())
             .endereco(UUID.randomUUID().toString())
-            .cidade(UUID.randomUUID().toString())
-            .estado(UUID.randomUUID().toString());
+            .municipio(UUID.randomUUID().toString())
+            .uf(UUID.randomUUID().toString());
     }
 }

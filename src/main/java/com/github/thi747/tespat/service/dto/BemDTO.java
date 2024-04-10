@@ -41,8 +41,6 @@ public class BemDTO implements Serializable {
 
     private FornecedorDTO fornecedor;
 
-    private LocalDTO local;
-
     public Long getId() {
         return id;
     }
@@ -147,14 +145,6 @@ public class BemDTO implements Serializable {
         this.fornecedor = fornecedor;
     }
 
-    public LocalDTO getLocal() {
-        return local;
-    }
-
-    public void setLocal(LocalDTO local) {
-        this.local = local;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -193,7 +183,6 @@ public class BemDTO implements Serializable {
             ", observacoes='" + getObservacoes() + "'" +
             ", categoria=" + getCategoria() +
             ", fornecedor=" + getFornecedor() +
-            ", local=" + getLocal() +
             "}";
     }
 }

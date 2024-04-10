@@ -53,8 +53,8 @@ public class PessoaAsserts {
             .satisfies(e -> assertThat(e.getEmail()).as("check email").isEqualTo(actual.getEmail()))
             .satisfies(e -> assertThat(e.getAtivo()).as("check ativo").isEqualTo(actual.getAtivo()))
             .satisfies(e -> assertThat(e.getEndereco()).as("check endereco").isEqualTo(actual.getEndereco()))
-            .satisfies(e -> assertThat(e.getCidade()).as("check cidade").isEqualTo(actual.getCidade()))
-            .satisfies(e -> assertThat(e.getEstado()).as("check estado").isEqualTo(actual.getEstado()));
+            .satisfies(e -> assertThat(e.getMunicipio()).as("check municipio").isEqualTo(actual.getMunicipio()))
+            .satisfies(e -> assertThat(e.getUf()).as("check uf").isEqualTo(actual.getUf()));
     }
 
     /**

@@ -17,8 +17,8 @@ public class PessoaTestSamples {
             .cpf("cpf1")
             .email("email1")
             .endereco("endereco1")
-            .cidade("cidade1")
-            .estado("estado1");
+            .municipio("municipio1")
+            .uf("uf1");
     }
 
     public static Pessoa getPessoaSample2() {
@@ -29,8 +29,8 @@ public class PessoaTestSamples {
             .cpf("cpf2")
             .email("email2")
             .endereco("endereco2")
-            .cidade("cidade2")
-            .estado("estado2");
+            .municipio("municipio2")
+            .uf("uf2");
     }
 
     public static Pessoa getPessoaRandomSampleGenerator() {
@@ -41,7 +41,7 @@ public class PessoaTestSamples {
             .cpf(UUID.randomUUID().toString())
             .email(UUID.randomUUID().toString())
             .endereco(UUID.randomUUID().toString())
-            .cidade(UUID.randomUUID().toString())
-            .estado(UUID.randomUUID().toString());
+            .municipio(UUID.randomUUID().toString())
+            .uf(UUID.randomUUID().toString());
     }
 }

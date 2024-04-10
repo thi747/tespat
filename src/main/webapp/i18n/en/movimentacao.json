@@ -22,6 +22,7 @@
       "descricao": "Descricao",
       "tipo": "Tipo",
       "bem": "Bem",
+      "local": "Local",
       "pessoa": "Pessoa"
     }
   }

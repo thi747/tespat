@@ -27,16 +27,14 @@ public interface BemRepository extends JpaRepository<Bem, Long> {
     }
 
     @Query(
-        value = "select bem from Bem bem left join fetch bem.categoria left join fetch bem.fornecedor left join fetch bem.local",
+        value = "select bem from Bem bem left join fetch bem.categoria left join fetch bem.fornecedor",
         countQuery = "select count(bem) from Bem bem"
     )
     Page<Bem> findAllWithToOneRelationships(Pageable pageable);
 
-    @Query("select bem from Bem bem left join fetch bem.categoria left join fetch bem.fornecedor left join fetch bem.local")
+    @Query("select bem from Bem bem left join fetch bem.categoria left join fetch bem.fornecedor")
     List<Bem> findAllWithToOneRelationships();
 
-    @Query(
-        "select bem from Bem bem left join fetch bem.categoria left join fetch bem.fornecedor left join fetch bem.local where bem.id =:id"
-    )
+    @Query("select bem from Bem bem left join fetch bem.categoria left join fetch bem.fornecedor where bem.id =:id")
     Optional<Bem> findOneWithToOneRelationships(@Param("id") Long id);
 }
