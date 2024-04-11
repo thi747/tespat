@@ -25,7 +25,7 @@ export const sampleWithFullData: IBem = {
   nome: 'psst phew',
   descricao: 'geez ouch or',
   numeroDeSerie: 'gosh right',
-  dataAquisicao: dayjs('2024-04-08'),
+  dataAquisicao: dayjs('2024-04-11'),
   valorCompra: 29345.91,
   valorAtual: 6440.28,
   estado: 'REGULAR',

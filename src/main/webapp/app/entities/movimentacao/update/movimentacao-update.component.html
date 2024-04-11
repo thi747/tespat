@@ -64,7 +64,7 @@
             @if (!editForm.get('bem')!.value) {
               <option [ngValue]="null" selected></option>
             }
-            @for (bemOption of bemsSharedCollection; track $index) {
+            @for (bemOption of bensSharedCollection; track $index) {
               <option [ngValue]="bemOption">{{ bemOption.patrimonio }}</option>
             }
           </select>
@@ -83,7 +83,7 @@
             @if (!editForm.get('local')!.value) {
               <option [ngValue]="null" selected></option>
             }
-            @for (localOption of localsSharedCollection; track $index) {
+            @for (localOption of locaisSharedCollection; track $index) {
               <option [ngValue]="localOption">{{ localOption.nome }}</option>
             }
           </select>

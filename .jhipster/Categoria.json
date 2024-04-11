@@ -1,6 +1,7 @@
 {
   "annotations": {
-    "changelogDate": "20240408181744"
+    "changelogDate": "20240411222450",
+    "entityNamePlural": "Categorias"
   },
   "applications": ["TESPat"],
   "dto": "mapstruct",

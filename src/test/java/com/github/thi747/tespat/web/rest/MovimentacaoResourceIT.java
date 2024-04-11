@@ -56,7 +56,7 @@ class MovimentacaoResourceIT {
     private static final TipoMovimentacao DEFAULT_TIPO = TipoMovimentacao.ENTRADA;
     private static final TipoMovimentacao UPDATED_TIPO = TipoMovimentacao.SAIDA;
 
-    private static final String ENTITY_API_URL = "/api/movimentacaos";
+    private static final String ENTITY_API_URL = "/api/movimentacoes";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
     private static Random random = new Random();
@@ -211,7 +211,7 @@ class MovimentacaoResourceIT {
 
     @Test
     @Transactional
-    void getAllMovimentacaos() throws Exception {
+    void getAllMovimentacoes() throws Exception {
         // Initialize the database
         movimentacaoRepository.saveAndFlush(movimentacao);
 
@@ -227,7 +227,7 @@ class MovimentacaoResourceIT {
     }
 
     @SuppressWarnings({ "unchecked" })
-    void getAllMovimentacaosWithEagerRelationshipsIsEnabled() throws Exception {
+    void getAllMovimentacoesWithEagerRelationshipsIsEnabled() throws Exception {
         when(movimentacaoServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restMovimentacaoMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
@@ -236,7 +236,7 @@ class MovimentacaoResourceIT {
     }
 
     @SuppressWarnings({ "unchecked" })
-    void getAllMovimentacaosWithEagerRelationshipsIsNotEnabled() throws Exception {
+    void getAllMovimentacoesWithEagerRelationshipsIsNotEnabled() throws Exception {
         when(movimentacaoServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restMovimentacaoMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());

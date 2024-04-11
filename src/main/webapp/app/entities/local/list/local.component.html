@@ -1,6 +1,6 @@
 <div>
   <h2 id="page-heading" data-cy="LocalHeading">
-    <span jhiTranslate="tesPatApp.local.home.title">Locals</span>
+    <span jhiTranslate="tesPatApp.local.home.title">Locais</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
@@ -24,13 +24,13 @@
 
   <jhi-alert></jhi-alert>
 
-  @if (locals?.length === 0) {
+  @if (locais?.length === 0) {
     <div class="alert alert-warning" id="no-result">
-      <span jhiTranslate="tesPatApp.local.home.notFound">No Locals found</span>
+      <span jhiTranslate="tesPatApp.local.home.notFound">No Locais found</span>
     </div>
   }
 
-  @if (locals && locals.length > 0) {
+  @if (locais && locais.length > 0) {
     <div class="table-responsive table-entities" id="entities">
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
@@ -67,7 +67,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (local of locals; track trackId) {
+          @for (local of locais; track trackId) {
             <tr data-cy="entityTable">
               <td>
                 <a [routerLink]="['/local', local.id, 'view']">{{ local.id }}</a>

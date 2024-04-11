@@ -78,13 +78,13 @@ public class LocalService {
     }
 
     /**
-     * Get all the locals.
+     * Get all the locais.
      *
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
     public List<LocalDTO> findAll() {
-        log.debug("Request to get all Locals");
+        log.debug("Request to get all Locais");
         return localRepository.findAll().stream().map(localMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 

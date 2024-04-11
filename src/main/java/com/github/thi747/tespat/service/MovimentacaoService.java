@@ -80,18 +80,18 @@ public class MovimentacaoService {
     }
 
     /**
-     * Get all the movimentacaos.
+     * Get all the movimentacoes.
      *
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
     public List<MovimentacaoDTO> findAll() {
-        log.debug("Request to get all Movimentacaos");
+        log.debug("Request to get all Movimentacoes");
         return movimentacaoRepository.findAll().stream().map(movimentacaoMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**
-     * Get all the movimentacaos with eager load of many-to-many relationships.
+     * Get all the movimentacoes with eager load of many-to-many relationships.
      *
      * @return the list of entities.
      */

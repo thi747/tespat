@@ -2,11 +2,11 @@
   "tesPatApp": {
     "movimentacao": {
       "home": {
-        "title": "Movimentacaos",
+        "title": "Movimentacoes",
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Movimentacao",
         "createOrEditLabel": "Create or edit a Movimentacao",
-        "notFound": "No Movimentacaos found"
+        "notFound": "No Movimentacoes found"
       },
       "created": "A new Movimentacao is created with identifier {{ param }}",
       "updated": "A Movimentacao is updated with identifier {{ param }}",

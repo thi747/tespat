@@ -30,7 +30,7 @@ export class MovimentacaoService {
   protected http = inject(HttpClient);
   protected applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/movimentacaos');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/movimentacoes');
 
   create(movimentacao: NewMovimentacao): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(movimentacao);
@@ -80,14 +80,14 @@ export class MovimentacaoService {
 
   addMovimentacaoToCollectionIfMissing<Type extends Pick<IMovimentacao, 'id'>>(
     movimentacaoCollection: Type[],
-    ...movimentacaosToCheck: (Type | null | undefined)[]
+    ...movimentacoesToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const movimentacaos: Type[] = movimentacaosToCheck.filter(isPresent);
-    if (movimentacaos.length > 0) {
+    const movimentacoes: Type[] = movimentacoesToCheck.filter(isPresent);
+    if (movimentacoes.length > 0) {
       const movimentacaoCollectionIdentifiers = movimentacaoCollection.map(movimentacaoItem =>
         this.getMovimentacaoIdentifier(movimentacaoItem),
       );
-      const movimentacaosToAdd = movimentacaos.filter(movimentacaoItem => {
+      const movimentacoesToAdd = movimentacoes.filter(movimentacaoItem => {
         const movimentacaoIdentifier = this.getMovimentacaoIdentifier(movimentacaoItem);
         if (movimentacaoCollectionIdentifiers.includes(movimentacaoIdentifier)) {
           return false;
@@ -95,7 +95,7 @@ export class MovimentacaoService {
         movimentacaoCollectionIdentifiers.push(movimentacaoIdentifier);
         return true;
       });
-      return [...movimentacaosToAdd, ...movimentacaoCollection];
+      return [...movimentacoesToAdd, ...movimentacaoCollection];
     }
     return movimentacaoCollection;
   }

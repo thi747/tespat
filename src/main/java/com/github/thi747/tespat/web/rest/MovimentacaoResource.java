@@ -23,7 +23,7 @@ import tech.jhipster.web.util.ResponseUtil;
  * REST controller for managing {@link com.github.thi747.tespat.domain.Movimentacao}.
  */
 @RestController
-@RequestMapping("/api/movimentacaos")
+@RequestMapping("/api/movimentacoes")
 public class MovimentacaoResource {
 
     private final Logger log = LoggerFactory.getLogger(MovimentacaoResource.class);
@@ -43,7 +43,7 @@ public class MovimentacaoResource {
     }
 
     /**
-     * {@code POST  /movimentacaos} : Create a new movimentacao.
+     * {@code POST  /movimentacoes} : Create a new movimentacao.
      *
      * @param movimentacaoDTO the movimentacaoDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new movimentacaoDTO, or with status {@code 400 (Bad Request)} if the movimentacao has already an ID.
@@ -57,13 +57,13 @@ public class MovimentacaoResource {
             throw new BadRequestAlertException("A new movimentacao cannot already have an ID", ENTITY_NAME, "idexists");
         }
         movimentacaoDTO = movimentacaoService.save(movimentacaoDTO);
-        return ResponseEntity.created(new URI("/api/movimentacaos/" + movimentacaoDTO.getId()))
+        return ResponseEntity.created(new URI("/api/movimentacoes/" + movimentacaoDTO.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, movimentacaoDTO.getId().toString()))
             .body(movimentacaoDTO);
     }
 
     /**
-     * {@code PUT  /movimentacaos/:id} : Updates an existing movimentacao.
+     * {@code PUT  /movimentacoes/:id} : Updates an existing movimentacao.
      *
      * @param id the id of the movimentacaoDTO to save.
      * @param movimentacaoDTO the movimentacaoDTO to update.
@@ -96,7 +96,7 @@ public class MovimentacaoResource {
     }
 
     /**
-     * {@code PATCH  /movimentacaos/:id} : Partial updates given fields of an existing movimentacao, field will ignore if it is null
+     * {@code PATCH  /movimentacoes/:id} : Partial updates given fields of an existing movimentacao, field will ignore if it is null
      *
      * @param id the id of the movimentacaoDTO to save.
      * @param movimentacaoDTO the movimentacaoDTO to update.
@@ -132,21 +132,21 @@ public class MovimentacaoResource {
     }
 
     /**
-     * {@code GET  /movimentacaos} : get all the movimentacaos.
+     * {@code GET  /movimentacoes} : get all the movimentacoes.
      *
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of movimentacaos in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of movimentacoes in body.
      */
     @GetMapping("")
-    public List<MovimentacaoDTO> getAllMovimentacaos(
+    public List<MovimentacaoDTO> getAllMovimentacoes(
         @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
     ) {
-        log.debug("REST request to get all Movimentacaos");
+        log.debug("REST request to get all Movimentacoes");
         return movimentacaoService.findAll();
     }
 
     /**
-     * {@code GET  /movimentacaos/:id} : get the "id" movimentacao.
+     * {@code GET  /movimentacoes/:id} : get the "id" movimentacao.
      *
      * @param id the id of the movimentacaoDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the movimentacaoDTO, or with status {@code 404 (Not Found)}.
@@ -159,7 +159,7 @@ public class MovimentacaoResource {
     }
 
     /**
-     * {@code DELETE  /movimentacaos/:id} : delete the "id" movimentacao.
+     * {@code DELETE  /movimentacoes/:id} : delete the "id" movimentacao.
      *
      * @param id the id of the movimentacaoDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.

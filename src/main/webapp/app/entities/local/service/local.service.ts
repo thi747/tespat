@@ -17,7 +17,7 @@ export class LocalService {
   protected http = inject(HttpClient);
   protected applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/locals');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/locais');
 
   create(local: NewLocal): Observable<EntityResponseType> {
     return this.http.post<ILocal>(this.resourceUrl, local, { observe: 'response' });
@@ -54,12 +54,12 @@ export class LocalService {
 
   addLocalToCollectionIfMissing<Type extends Pick<ILocal, 'id'>>(
     localCollection: Type[],
-    ...localsToCheck: (Type | null | undefined)[]
+    ...locaisToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const locals: Type[] = localsToCheck.filter(isPresent);
-    if (locals.length > 0) {
+    const locais: Type[] = locaisToCheck.filter(isPresent);
+    if (locais.length > 0) {
       const localCollectionIdentifiers = localCollection.map(localItem => this.getLocalIdentifier(localItem));
-      const localsToAdd = locals.filter(localItem => {
+      const locaisToAdd = locais.filter(localItem => {
         const localIdentifier = this.getLocalIdentifier(localItem);
         if (localCollectionIdentifiers.includes(localIdentifier)) {
           return false;
@@ -67,7 +67,7 @@ export class LocalService {
         localCollectionIdentifiers.push(localIdentifier);
         return true;
       });
-      return [...localsToAdd, ...localCollection];
+      return [...locaisToAdd, ...localCollection];
     }
     return localCollection;
   }

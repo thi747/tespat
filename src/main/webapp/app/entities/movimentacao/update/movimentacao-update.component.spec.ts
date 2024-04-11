@@ -72,7 +72,7 @@ describe('Movimentacao Management Update Component', () => {
 
       expect(bemService.query).toHaveBeenCalled();
       expect(bemService.addBemToCollectionIfMissing).toHaveBeenCalledWith(bemCollection, ...additionalBems.map(expect.objectContaining));
-      expect(comp.bemsSharedCollection).toEqual(expectedCollection);
+      expect(comp.bensSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should call Local query and add missing value', () => {
@@ -94,7 +94,7 @@ describe('Movimentacao Management Update Component', () => {
         localCollection,
         ...additionalLocals.map(expect.objectContaining),
       );
-      expect(comp.localsSharedCollection).toEqual(expectedCollection);
+      expect(comp.locaisSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should call Pessoa query and add missing value', () => {
@@ -131,8 +131,8 @@ describe('Movimentacao Management Update Component', () => {
       activatedRoute.data = of({ movimentacao });
       comp.ngOnInit();
 
-      expect(comp.bemsSharedCollection).toContain(bem);
-      expect(comp.localsSharedCollection).toContain(local);
+      expect(comp.bensSharedCollection).toContain(bem);
+      expect(comp.locaisSharedCollection).toContain(local);
       expect(comp.pessoasSharedCollection).toContain(pessoa);
       expect(comp.movimentacao).toEqual(movimentacao);
     });

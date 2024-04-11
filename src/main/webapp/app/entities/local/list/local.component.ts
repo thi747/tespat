@@ -29,7 +29,7 @@ import { LocalDeleteDialogComponent } from '../delete/local-delete-dialog.compon
 })
 export class LocalComponent implements OnInit {
   subscription: Subscription | null = null;
-  locals?: ILocal[];
+  locais?: ILocal[];
   isLoading = false;
 
   sortState = sortStateSignal({});
@@ -48,7 +48,7 @@ export class LocalComponent implements OnInit {
       .pipe(
         tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
         tap(() => {
-          if (!this.locals || this.locals.length === 0) {
+          if (!this.locais || this.locais.length === 0) {
             this.load();
           }
         }),
@@ -86,7 +86,7 @@ export class LocalComponent implements OnInit {
 
   protected onResponseSuccess(response: EntityArrayResponseType): void {
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
-    this.locals = this.refineData(dataFromBody);
+    this.locais = this.refineData(dataFromBody);
   }
 
   protected refineData(data: ILocal[]): ILocal[] {

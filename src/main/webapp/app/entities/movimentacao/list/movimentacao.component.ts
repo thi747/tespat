@@ -29,7 +29,7 @@ import { MovimentacaoDeleteDialogComponent } from '../delete/movimentacao-delete
 })
 export class MovimentacaoComponent implements OnInit {
   subscription: Subscription | null = null;
-  movimentacaos?: IMovimentacao[];
+  movimentacoes?: IMovimentacao[];
   isLoading = false;
 
   sortState = sortStateSignal({});
@@ -48,7 +48,7 @@ export class MovimentacaoComponent implements OnInit {
       .pipe(
         tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
         tap(() => {
-          if (!this.movimentacaos || this.movimentacaos.length === 0) {
+          if (!this.movimentacoes || this.movimentacoes.length === 0) {
             this.load();
           }
         }),
@@ -86,7 +86,7 @@ export class MovimentacaoComponent implements OnInit {
 
   protected onResponseSuccess(response: EntityArrayResponseType): void {
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
-    this.movimentacaos = this.refineData(dataFromBody);
+    this.movimentacoes = this.refineData(dataFromBody);
   }
 
   protected refineData(data: IMovimentacao[]): IMovimentacao[] {

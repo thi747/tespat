@@ -2,11 +2,11 @@
   "tesPatApp": {
     "local": {
       "home": {
-        "title": "Locals",
+        "title": "Locais",
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Local",
         "createOrEditLabel": "Create or edit a Local",
-        "notFound": "No Locals found"
+        "notFound": "No Locais found"
       },
       "created": "A new Local is created with identifier {{ param }}",
       "updated": "A Local is updated with identifier {{ param }}",

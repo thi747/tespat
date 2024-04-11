@@ -1,0 +1,29 @@
+{
+  "tesPatApp": {
+    "movimentacao": {
+      "home": {
+        "title": "Movimentacoes",
+        "refreshListLabel": "Atualizar lista",
+        "createLabel": "Criar novo Movimentacao",
+        "createOrEditLabel": "Criar ou editar Movimentacao",
+        "notFound": "Nenhum Movimentacao encontrado"
+      },
+      "created": "Um novo Movimentacao foi criado com o identificador {{ param }}",
+      "updated": "Um Movimentacao foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Movimentacao foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Movimentacao {{ id }}?"
+      },
+      "detail": {
+        "title": "Movimentacao"
+      },
+      "id": "Id",
+      "data": "Data",
+      "descricao": "Descricao",
+      "tipo": "Tipo",
+      "bem": "Bem",
+      "local": "Local",
+      "pessoa": "Pessoa"
+    }
+  }
+}

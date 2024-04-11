@@ -29,7 +29,7 @@ import { BemDeleteDialogComponent } from '../delete/bem-delete-dialog.component'
 })
 export class BemComponent implements OnInit {
   subscription: Subscription | null = null;
-  bems?: IBem[];
+  bens?: IBem[];
   isLoading = false;
 
   sortState = sortStateSignal({});
@@ -48,7 +48,7 @@ export class BemComponent implements OnInit {
       .pipe(
         tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
         tap(() => {
-          if (!this.bems || this.bems.length === 0) {
+          if (!this.bens || this.bens.length === 0) {
             this.load();
           }
         }),
@@ -86,7 +86,7 @@ export class BemComponent implements OnInit {
 
   protected onResponseSuccess(response: EntityArrayResponseType): void {
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
-    this.bems = this.refineData(dataFromBody);
+    this.bens = this.refineData(dataFromBody);
   }
 
   protected refineData(data: IBem[]): IBem[] {

@@ -17,7 +17,7 @@ export class FornecedorService {
   protected http = inject(HttpClient);
   protected applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/fornecedors');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/fornecedores');
 
   create(fornecedor: NewFornecedor): Observable<EntityResponseType> {
     return this.http.post<IFornecedor>(this.resourceUrl, fornecedor, { observe: 'response' });
@@ -58,12 +58,12 @@ export class FornecedorService {
 
   addFornecedorToCollectionIfMissing<Type extends Pick<IFornecedor, 'id'>>(
     fornecedorCollection: Type[],
-    ...fornecedorsToCheck: (Type | null | undefined)[]
+    ...fornecedoresToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const fornecedors: Type[] = fornecedorsToCheck.filter(isPresent);
-    if (fornecedors.length > 0) {
+    const fornecedores: Type[] = fornecedoresToCheck.filter(isPresent);
+    if (fornecedores.length > 0) {
       const fornecedorCollectionIdentifiers = fornecedorCollection.map(fornecedorItem => this.getFornecedorIdentifier(fornecedorItem));
-      const fornecedorsToAdd = fornecedors.filter(fornecedorItem => {
+      const fornecedoresToAdd = fornecedores.filter(fornecedorItem => {
         const fornecedorIdentifier = this.getFornecedorIdentifier(fornecedorItem);
         if (fornecedorCollectionIdentifiers.includes(fornecedorIdentifier)) {
           return false;
@@ -71,7 +71,7 @@ export class FornecedorService {
         fornecedorCollectionIdentifiers.push(fornecedorIdentifier);
         return true;
       });
-      return [...fornecedorsToAdd, ...fornecedorCollection];
+      return [...fornecedoresToAdd, ...fornecedorCollection];
     }
     return fornecedorCollection;
   }

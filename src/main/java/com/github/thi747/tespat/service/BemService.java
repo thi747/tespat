@@ -80,18 +80,18 @@ public class BemService {
     }
 
     /**
-     * Get all the bems.
+     * Get all the bens.
      *
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
     public List<BemDTO> findAll() {
-        log.debug("Request to get all Bems");
+        log.debug("Request to get all Bens");
         return bemRepository.findAll().stream().map(bemMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**
-     * Get all the bems with eager load of many-to-many relationships.
+     * Get all the bens with eager load of many-to-many relationships.
      *
      * @return the list of entities.
      */

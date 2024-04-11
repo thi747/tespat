@@ -1,6 +1,6 @@
 <div>
   <h2 id="page-heading" data-cy="MovimentacaoHeading">
-    <span jhiTranslate="tesPatApp.movimentacao.home.title">Movimentacaos</span>
+    <span jhiTranslate="tesPatApp.movimentacao.home.title">Movimentacoes</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
@@ -24,13 +24,13 @@
 
   <jhi-alert></jhi-alert>
 
-  @if (movimentacaos?.length === 0) {
+  @if (movimentacoes?.length === 0) {
     <div class="alert alert-warning" id="no-result">
-      <span jhiTranslate="tesPatApp.movimentacao.home.notFound">No Movimentacaos found</span>
+      <span jhiTranslate="tesPatApp.movimentacao.home.notFound">No Movimentacoes found</span>
     </div>
   }
 
-  @if (movimentacaos && movimentacaos.length > 0) {
+  @if (movimentacoes && movimentacoes.length > 0) {
     <div class="table-responsive table-entities" id="entities">
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
@@ -85,7 +85,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (movimentacao of movimentacaos; track trackId) {
+          @for (movimentacao of movimentacoes; track trackId) {
             <tr data-cy="entityTable">
               <td>
                 <a [routerLink]="['/movimentacao', movimentacao.id, 'view']">{{ movimentacao.id }}</a>

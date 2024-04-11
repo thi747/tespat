@@ -172,7 +172,7 @@
             [compareWith]="compareFornecedor"
           >
             <option [ngValue]="null"></option>
-            @for (fornecedorOption of fornecedorsSharedCollection; track $index) {
+            @for (fornecedorOption of fornecedoresSharedCollection; track $index) {
               <option [ngValue]="fornecedorOption">{{ fornecedorOption.nome }}</option>
             }
           </select>

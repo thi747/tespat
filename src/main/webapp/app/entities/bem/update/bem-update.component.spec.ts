@@ -93,7 +93,7 @@ describe('Bem Management Update Component', () => {
         fornecedorCollection,
         ...additionalFornecedors.map(expect.objectContaining),
       );
-      expect(comp.fornecedorsSharedCollection).toEqual(expectedCollection);
+      expect(comp.fornecedoresSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should update editForm', () => {
@@ -107,7 +107,7 @@ describe('Bem Management Update Component', () => {
       comp.ngOnInit();
 
       expect(comp.categoriasSharedCollection).toContain(categoria);
-      expect(comp.fornecedorsSharedCollection).toContain(fornecedor);
+      expect(comp.fornecedoresSharedCollection).toContain(fornecedor);
       expect(comp.bem).toEqual(bem);
     });
   });

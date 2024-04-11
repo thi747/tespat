@@ -57,7 +57,7 @@ class FornecedorResourceIT {
     private static final String DEFAULT_UF = "AA";
     private static final String UPDATED_UF = "BB";
 
-    private static final String ENTITY_API_URL = "/api/fornecedors";
+    private static final String ENTITY_API_URL = "/api/fornecedores";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
     private static Random random = new Random();
@@ -199,7 +199,7 @@ class FornecedorResourceIT {
 
     @Test
     @Transactional
-    void getAllFornecedors() throws Exception {
+    void getAllFornecedores() throws Exception {
         // Initialize the database
         fornecedorRepository.saveAndFlush(fornecedor);
 

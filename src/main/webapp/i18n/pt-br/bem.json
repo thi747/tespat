@@ -1,0 +1,35 @@
+{
+  "tesPatApp": {
+    "bem": {
+      "home": {
+        "title": "Bens",
+        "refreshListLabel": "Atualizar lista",
+        "createLabel": "Criar novo Bem",
+        "createOrEditLabel": "Criar ou editar Bem",
+        "notFound": "Nenhum Bem encontrado"
+      },
+      "created": "Um novo Bem foi criado com o identificador {{ param }}",
+      "updated": "Um Bem foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Bem foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Bem {{ id }}?"
+      },
+      "detail": {
+        "title": "Bem"
+      },
+      "id": "Id",
+      "patrimonio": "Patrimonio",
+      "nome": "Nome",
+      "descricao": "Descricao",
+      "numeroDeSerie": "Numero De Serie",
+      "dataAquisicao": "Data Aquisicao",
+      "valorCompra": "Valor Compra",
+      "valorAtual": "Valor Atual",
+      "estado": "Estado",
+      "status": "Status",
+      "observacoes": "Observacoes",
+      "categoria": "Categoria",
+      "fornecedor": "Fornecedor"
+    }
+  }
+}

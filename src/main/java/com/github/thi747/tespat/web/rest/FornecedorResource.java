@@ -23,7 +23,7 @@ import tech.jhipster.web.util.ResponseUtil;
  * REST controller for managing {@link com.github.thi747.tespat.domain.Fornecedor}.
  */
 @RestController
-@RequestMapping("/api/fornecedors")
+@RequestMapping("/api/fornecedores")
 public class FornecedorResource {
 
     private final Logger log = LoggerFactory.getLogger(FornecedorResource.class);
@@ -43,7 +43,7 @@ public class FornecedorResource {
     }
 
     /**
-     * {@code POST  /fornecedors} : Create a new fornecedor.
+     * {@code POST  /fornecedores} : Create a new fornecedor.
      *
      * @param fornecedorDTO the fornecedorDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new fornecedorDTO, or with status {@code 400 (Bad Request)} if the fornecedor has already an ID.
@@ -56,13 +56,13 @@ public class FornecedorResource {
             throw new BadRequestAlertException("A new fornecedor cannot already have an ID", ENTITY_NAME, "idexists");
         }
         fornecedorDTO = fornecedorService.save(fornecedorDTO);
-        return ResponseEntity.created(new URI("/api/fornecedors/" + fornecedorDTO.getId()))
+        return ResponseEntity.created(new URI("/api/fornecedores/" + fornecedorDTO.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, fornecedorDTO.getId().toString()))
             .body(fornecedorDTO);
     }
 
     /**
-     * {@code PUT  /fornecedors/:id} : Updates an existing fornecedor.
+     * {@code PUT  /fornecedores/:id} : Updates an existing fornecedor.
      *
      * @param id the id of the fornecedorDTO to save.
      * @param fornecedorDTO the fornecedorDTO to update.
@@ -95,7 +95,7 @@ public class FornecedorResource {
     }
 
     /**
-     * {@code PATCH  /fornecedors/:id} : Partial updates given fields of an existing fornecedor, field will ignore if it is null
+     * {@code PATCH  /fornecedores/:id} : Partial updates given fields of an existing fornecedor, field will ignore if it is null
      *
      * @param id the id of the fornecedorDTO to save.
      * @param fornecedorDTO the fornecedorDTO to update.
@@ -131,18 +131,18 @@ public class FornecedorResource {
     }
 
     /**
-     * {@code GET  /fornecedors} : get all the fornecedors.
+     * {@code GET  /fornecedores} : get all the fornecedores.
      *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of fornecedors in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of fornecedores in body.
      */
     @GetMapping("")
-    public List<FornecedorDTO> getAllFornecedors() {
-        log.debug("REST request to get all Fornecedors");
+    public List<FornecedorDTO> getAllFornecedores() {
+        log.debug("REST request to get all Fornecedores");
         return fornecedorService.findAll();
     }
 
     /**
-     * {@code GET  /fornecedors/:id} : get the "id" fornecedor.
+     * {@code GET  /fornecedores/:id} : get the "id" fornecedor.
      *
      * @param id the id of the fornecedorDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the fornecedorDTO, or with status {@code 404 (Not Found)}.
@@ -155,7 +155,7 @@ public class FornecedorResource {
     }
 
     /**
-     * {@code DELETE  /fornecedors/:id} : delete the "id" fornecedor.
+     * {@code DELETE  /fornecedores/:id} : delete the "id" fornecedor.
      *
      * @param id the id of the fornecedorDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.

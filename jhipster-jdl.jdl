@@ -28,6 +28,7 @@ enum TipoStatus {
   ESTOQUE
   MANUTENCAO
 }
+@entityNamePlural(Bens)
 entity Bem {
   @Id @GeneratedValue id Long
   patrimonio Long required unique
@@ -41,10 +42,12 @@ entity Bem {
   status TipoStatus
   observacoes String
 }
+@entityNamePlural(Categorias)
 entity Categoria {
   @Id @GeneratedValue id Long
   nome String required unique
 }
+@entityNamePlural(Fornecedores)
 entity Fornecedor {
   @Id @GeneratedValue id Long
   nome String required unique
@@ -56,18 +59,21 @@ entity Fornecedor {
   municipio String
   uf String minlength(2) maxlength(2)
 }
+@entityNamePlural(Locais)
 entity Local {
   @Id @GeneratedValue id Long
   nome String required unique
   descricao String
   sala String
 }
+@entityNamePlural(Movimentacoes)
 entity Movimentacao {
   @Id @GeneratedValue id Long
   data LocalDate
   descricao String
   tipo TipoMovimentacao required
 }
+@entityNamePlural(Pessoas)
 entity Pessoa {
   @Id @GeneratedValue id Long
   usuario String required unique

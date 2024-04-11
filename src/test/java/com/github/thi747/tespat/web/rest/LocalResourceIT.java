@@ -42,7 +42,7 @@ class LocalResourceIT {
     private static final String DEFAULT_SALA = "AAAAAAAAAA";
     private static final String UPDATED_SALA = "BBBBBBBBBB";
 
-    private static final String ENTITY_API_URL = "/api/locals";
+    private static final String ENTITY_API_URL = "/api/locais";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
     private static Random random = new Random();
@@ -151,7 +151,7 @@ class LocalResourceIT {
 
     @Test
     @Transactional
-    void getAllLocals() throws Exception {
+    void getAllLocais() throws Exception {
         // Initialize the database
         localRepository.saveAndFlush(local);
 

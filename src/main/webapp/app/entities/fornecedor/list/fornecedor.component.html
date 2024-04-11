@@ -1,6 +1,6 @@
 <div>
   <h2 id="page-heading" data-cy="FornecedorHeading">
-    <span jhiTranslate="tesPatApp.fornecedor.home.title">Fornecedors</span>
+    <span jhiTranslate="tesPatApp.fornecedor.home.title">Fornecedores</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
@@ -24,13 +24,13 @@
 
   <jhi-alert></jhi-alert>
 
-  @if (fornecedors?.length === 0) {
+  @if (fornecedores?.length === 0) {
     <div class="alert alert-warning" id="no-result">
-      <span jhiTranslate="tesPatApp.fornecedor.home.notFound">No Fornecedors found</span>
+      <span jhiTranslate="tesPatApp.fornecedor.home.notFound">No Fornecedores found</span>
     </div>
   }
 
-  @if (fornecedors && fornecedors.length > 0) {
+  @if (fornecedores && fornecedores.length > 0) {
     <div class="table-responsive table-entities" id="entities">
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
@@ -102,7 +102,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (fornecedor of fornecedors; track trackId) {
+          @for (fornecedor of fornecedores; track trackId) {
             <tr data-cy="entityTable">
               <td>
                 <a [routerLink]="['/fornecedor', fornecedor.id, 'view']">{{ fornecedor.id }}</a>

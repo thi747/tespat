@@ -1,6 +1,7 @@
 {
   "annotations": {
-    "changelogDate": "20240408181844"
+    "changelogDate": "20240411222550",
+    "entityNamePlural": "Fornecedores"
   },
   "applications": ["TESPat"],
   "dto": "mapstruct",

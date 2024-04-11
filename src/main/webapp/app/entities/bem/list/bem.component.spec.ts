@@ -85,7 +85,7 @@ describe('Bem Management Component', () => {
 
     // THEN
     expect(service.query).toHaveBeenCalled();
-    expect(comp.bems?.[0]).toEqual(expect.objectContaining({ id: 123 }));
+    expect(comp.bens?.[0]).toEqual(expect.objectContaining({ id: 123 }));
   });
 
   describe('trackId', () => {

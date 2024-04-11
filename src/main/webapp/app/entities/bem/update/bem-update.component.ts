@@ -30,7 +30,7 @@ export class BemUpdateComponent implements OnInit {
   tipoStatusValues = Object.keys(TipoStatus);
 
   categoriasSharedCollection: ICategoria[] = [];
-  fornecedorsSharedCollection: IFornecedor[] = [];
+  fornecedoresSharedCollection: IFornecedor[] = [];
 
   protected bemService = inject(BemService);
   protected bemFormService = inject(BemFormService);
@@ -97,8 +97,8 @@ export class BemUpdateComponent implements OnInit {
       this.categoriasSharedCollection,
       bem.categoria,
     );
-    this.fornecedorsSharedCollection = this.fornecedorService.addFornecedorToCollectionIfMissing<IFornecedor>(
-      this.fornecedorsSharedCollection,
+    this.fornecedoresSharedCollection = this.fornecedorService.addFornecedorToCollectionIfMissing<IFornecedor>(
+      this.fornecedoresSharedCollection,
       bem.fornecedor,
     );
   }
@@ -118,10 +118,10 @@ export class BemUpdateComponent implements OnInit {
       .query()
       .pipe(map((res: HttpResponse<IFornecedor[]>) => res.body ?? []))
       .pipe(
-        map((fornecedors: IFornecedor[]) =>
-          this.fornecedorService.addFornecedorToCollectionIfMissing<IFornecedor>(fornecedors, this.bem?.fornecedor),
+        map((fornecedores: IFornecedor[]) =>
+          this.fornecedorService.addFornecedorToCollectionIfMissing<IFornecedor>(fornecedores, this.bem?.fornecedor),
         ),
       )
-      .subscribe((fornecedors: IFornecedor[]) => (this.fornecedorsSharedCollection = fornecedors));
+      .subscribe((fornecedores: IFornecedor[]) => (this.fornecedoresSharedCollection = fornecedores));
   }
 }

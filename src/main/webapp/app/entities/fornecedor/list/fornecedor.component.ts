@@ -29,7 +29,7 @@ import { FornecedorDeleteDialogComponent } from '../delete/fornecedor-delete-dia
 })
 export class FornecedorComponent implements OnInit {
   subscription: Subscription | null = null;
-  fornecedors?: IFornecedor[];
+  fornecedores?: IFornecedor[];
   isLoading = false;
 
   sortState = sortStateSignal({});
@@ -48,7 +48,7 @@ export class FornecedorComponent implements OnInit {
       .pipe(
         tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
         tap(() => {
-          if (!this.fornecedors || this.fornecedors.length === 0) {
+          if (!this.fornecedores || this.fornecedores.length === 0) {
             this.load();
           }
         }),
@@ -86,7 +86,7 @@ export class FornecedorComponent implements OnInit {
 
   protected onResponseSuccess(response: EntityArrayResponseType): void {
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
-    this.fornecedors = this.refineData(dataFromBody);
+    this.fornecedores = this.refineData(dataFromBody);
   }
 
   protected refineData(data: IFornecedor[]): IFornecedor[] {

@@ -78,13 +78,13 @@ public class FornecedorService {
     }
 
     /**
-     * Get all the fornecedors.
+     * Get all the fornecedores.
      *
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
     public List<FornecedorDTO> findAll() {
-        log.debug("Request to get all Fornecedors");
+        log.debug("Request to get all Fornecedores");
         return fornecedorRepository.findAll().stream().map(fornecedorMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 

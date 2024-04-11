@@ -23,7 +23,7 @@ import tech.jhipster.web.util.ResponseUtil;
  * REST controller for managing {@link com.github.thi747.tespat.domain.Local}.
  */
 @RestController
-@RequestMapping("/api/locals")
+@RequestMapping("/api/locais")
 public class LocalResource {
 
     private final Logger log = LoggerFactory.getLogger(LocalResource.class);
@@ -43,7 +43,7 @@ public class LocalResource {
     }
 
     /**
-     * {@code POST  /locals} : Create a new local.
+     * {@code POST  /locais} : Create a new local.
      *
      * @param localDTO the localDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new localDTO, or with status {@code 400 (Bad Request)} if the local has already an ID.
@@ -56,13 +56,13 @@ public class LocalResource {
             throw new BadRequestAlertException("A new local cannot already have an ID", ENTITY_NAME, "idexists");
         }
         localDTO = localService.save(localDTO);
-        return ResponseEntity.created(new URI("/api/locals/" + localDTO.getId()))
+        return ResponseEntity.created(new URI("/api/locais/" + localDTO.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, localDTO.getId().toString()))
             .body(localDTO);
     }
 
     /**
-     * {@code PUT  /locals/:id} : Updates an existing local.
+     * {@code PUT  /locais/:id} : Updates an existing local.
      *
      * @param id the id of the localDTO to save.
      * @param localDTO the localDTO to update.
@@ -95,7 +95,7 @@ public class LocalResource {
     }
 
     /**
-     * {@code PATCH  /locals/:id} : Partial updates given fields of an existing local, field will ignore if it is null
+     * {@code PATCH  /locais/:id} : Partial updates given fields of an existing local, field will ignore if it is null
      *
      * @param id the id of the localDTO to save.
      * @param localDTO the localDTO to update.
@@ -131,18 +131,18 @@ public class LocalResource {
     }
 
     /**
-     * {@code GET  /locals} : get all the locals.
+     * {@code GET  /locais} : get all the locais.
      *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of locals in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of locais in body.
      */
     @GetMapping("")
-    public List<LocalDTO> getAllLocals() {
-        log.debug("REST request to get all Locals");
+    public List<LocalDTO> getAllLocais() {
+        log.debug("REST request to get all Locais");
         return localService.findAll();
     }
 
     /**
-     * {@code GET  /locals/:id} : get the "id" local.
+     * {@code GET  /locais/:id} : get the "id" local.
      *
      * @param id the id of the localDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the localDTO, or with status {@code 404 (Not Found)}.
@@ -155,7 +155,7 @@ public class LocalResource {
     }
 
     /**
-     * {@code DELETE  /locals/:id} : delete the "id" local.
+     * {@code DELETE  /locais/:id} : delete the "id" local.
      *
      * @param id the id of the localDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.

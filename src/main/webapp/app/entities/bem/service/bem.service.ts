@@ -30,7 +30,7 @@ export class BemService {
   protected http = inject(HttpClient);
   protected applicationConfigService = inject(ApplicationConfigService);
 
-  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/bems');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/bens');
 
   create(bem: NewBem): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(bem);
@@ -76,11 +76,11 @@ export class BemService {
     return o1 && o2 ? this.getBemIdentifier(o1) === this.getBemIdentifier(o2) : o1 === o2;
   }
 
-  addBemToCollectionIfMissing<Type extends Pick<IBem, 'id'>>(bemCollection: Type[], ...bemsToCheck: (Type | null | undefined)[]): Type[] {
-    const bems: Type[] = bemsToCheck.filter(isPresent);
-    if (bems.length > 0) {
+  addBemToCollectionIfMissing<Type extends Pick<IBem, 'id'>>(bemCollection: Type[], ...bensToCheck: (Type | null | undefined)[]): Type[] {
+    const bens: Type[] = bensToCheck.filter(isPresent);
+    if (bens.length > 0) {
       const bemCollectionIdentifiers = bemCollection.map(bemItem => this.getBemIdentifier(bemItem));
-      const bemsToAdd = bems.filter(bemItem => {
+      const bensToAdd = bens.filter(bemItem => {
         const bemIdentifier = this.getBemIdentifier(bemItem);
         if (bemCollectionIdentifiers.includes(bemIdentifier)) {
           return false;
@@ -88,7 +88,7 @@ export class BemService {
         bemCollectionIdentifiers.push(bemIdentifier);
         return true;
       });
-      return [...bemsToAdd, ...bemCollection];
+      return [...bensToAdd, ...bemCollection];
     }
     return bemCollection;
   }

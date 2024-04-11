@@ -2,11 +2,11 @@
   "tesPatApp": {
     "bem": {
       "home": {
-        "title": "Bems",
+        "title": "Bens",
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Bem",
         "createOrEditLabel": "Create or edit a Bem",
-        "notFound": "No Bems found"
+        "notFound": "No Bens found"
       },
       "created": "A new Bem is created with identifier {{ param }}",
       "updated": "A Bem is updated with identifier {{ param }}",

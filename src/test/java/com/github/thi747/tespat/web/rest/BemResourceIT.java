@@ -76,7 +76,7 @@ class BemResourceIT {
     private static final String DEFAULT_OBSERVACOES = "AAAAAAAAAA";
     private static final String UPDATED_OBSERVACOES = "BBBBBBBBBB";
 
-    private static final String ENTITY_API_URL = "/api/bems";
+    private static final String ENTITY_API_URL = "/api/bens";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
     private static Random random = new Random();
@@ -228,7 +228,7 @@ class BemResourceIT {
 
     @Test
     @Transactional
-    void getAllBems() throws Exception {
+    void getAllBens() throws Exception {
         // Initialize the database
         bemRepository.saveAndFlush(bem);
 
@@ -251,7 +251,7 @@ class BemResourceIT {
     }
 
     @SuppressWarnings({ "unchecked" })
-    void getAllBemsWithEagerRelationshipsIsEnabled() throws Exception {
+    void getAllBensWithEagerRelationshipsIsEnabled() throws Exception {
         when(bemServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restBemMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
@@ -260,7 +260,7 @@ class BemResourceIT {
     }
 
     @SuppressWarnings({ "unchecked" })
-    void getAllBemsWithEagerRelationshipsIsNotEnabled() throws Exception {
+    void getAllBensWithEagerRelationshipsIsNotEnabled() throws Exception {
         when(bemServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restBemMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());

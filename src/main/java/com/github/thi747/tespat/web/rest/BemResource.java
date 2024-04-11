@@ -23,7 +23,7 @@ import tech.jhipster.web.util.ResponseUtil;
  * REST controller for managing {@link com.github.thi747.tespat.domain.Bem}.
  */
 @RestController
-@RequestMapping("/api/bems")
+@RequestMapping("/api/bens")
 public class BemResource {
 
     private final Logger log = LoggerFactory.getLogger(BemResource.class);
@@ -43,7 +43,7 @@ public class BemResource {
     }
 
     /**
-     * {@code POST  /bems} : Create a new bem.
+     * {@code POST  /bens} : Create a new bem.
      *
      * @param bemDTO the bemDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new bemDTO, or with status {@code 400 (Bad Request)} if the bem has already an ID.
@@ -56,13 +56,13 @@ public class BemResource {
             throw new BadRequestAlertException("A new bem cannot already have an ID", ENTITY_NAME, "idexists");
         }
         bemDTO = bemService.save(bemDTO);
-        return ResponseEntity.created(new URI("/api/bems/" + bemDTO.getId()))
+        return ResponseEntity.created(new URI("/api/bens/" + bemDTO.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, bemDTO.getId().toString()))
             .body(bemDTO);
     }
 
     /**
-     * {@code PUT  /bems/:id} : Updates an existing bem.
+     * {@code PUT  /bens/:id} : Updates an existing bem.
      *
      * @param id the id of the bemDTO to save.
      * @param bemDTO the bemDTO to update.
@@ -93,7 +93,7 @@ public class BemResource {
     }
 
     /**
-     * {@code PATCH  /bems/:id} : Partial updates given fields of an existing bem, field will ignore if it is null
+     * {@code PATCH  /bens/:id} : Partial updates given fields of an existing bem, field will ignore if it is null
      *
      * @param id the id of the bemDTO to save.
      * @param bemDTO the bemDTO to update.
@@ -129,19 +129,19 @@ public class BemResource {
     }
 
     /**
-     * {@code GET  /bems} : get all the bems.
+     * {@code GET  /bens} : get all the bens.
      *
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of bems in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of bens in body.
      */
     @GetMapping("")
-    public List<BemDTO> getAllBems(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
-        log.debug("REST request to get all Bems");
+    public List<BemDTO> getAllBens(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
+        log.debug("REST request to get all Bens");
         return bemService.findAll();
     }
 
     /**
-     * {@code GET  /bems/:id} : get the "id" bem.
+     * {@code GET  /bens/:id} : get the "id" bem.
      *
      * @param id the id of the bemDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the bemDTO, or with status {@code 404 (Not Found)}.
@@ -154,7 +154,7 @@ public class BemResource {
     }
 
     /**
-     * {@code DELETE  /bems/:id} : delete the "id" bem.
+     * {@code DELETE  /bens/:id} : delete the "id" bem.
      *
      * @param id the id of the bemDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.

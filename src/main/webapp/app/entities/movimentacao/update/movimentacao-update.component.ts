@@ -29,8 +29,8 @@ export class MovimentacaoUpdateComponent implements OnInit {
   movimentacao: IMovimentacao | null = null;
   tipoMovimentacaoValues = Object.keys(TipoMovimentacao);
 
-  bemsSharedCollection: IBem[] = [];
-  localsSharedCollection: ILocal[] = [];
+  bensSharedCollection: IBem[] = [];
+  locaisSharedCollection: ILocal[] = [];
   pessoasSharedCollection: IPessoa[] = [];
 
   protected movimentacaoService = inject(MovimentacaoService);
@@ -97,8 +97,8 @@ export class MovimentacaoUpdateComponent implements OnInit {
     this.movimentacao = movimentacao;
     this.movimentacaoFormService.resetForm(this.editForm, movimentacao);
 
-    this.bemsSharedCollection = this.bemService.addBemToCollectionIfMissing<IBem>(this.bemsSharedCollection, movimentacao.bem);
-    this.localsSharedCollection = this.localService.addLocalToCollectionIfMissing<ILocal>(this.localsSharedCollection, movimentacao.local);
+    this.bensSharedCollection = this.bemService.addBemToCollectionIfMissing<IBem>(this.bensSharedCollection, movimentacao.bem);
+    this.locaisSharedCollection = this.localService.addLocalToCollectionIfMissing<ILocal>(this.locaisSharedCollection, movimentacao.local);
     this.pessoasSharedCollection = this.pessoaService.addPessoaToCollectionIfMissing<IPessoa>(
       this.pessoasSharedCollection,
       movimentacao.pessoa,
@@ -109,14 +109,14 @@ export class MovimentacaoUpdateComponent implements OnInit {
     this.bemService
       .query()
       .pipe(map((res: HttpResponse<IBem[]>) => res.body ?? []))
-      .pipe(map((bems: IBem[]) => this.bemService.addBemToCollectionIfMissing<IBem>(bems, this.movimentacao?.bem)))
-      .subscribe((bems: IBem[]) => (this.bemsSharedCollection = bems));
+      .pipe(map((bens: IBem[]) => this.bemService.addBemToCollectionIfMissing<IBem>(bens, this.movimentacao?.bem)))
+      .subscribe((bens: IBem[]) => (this.bensSharedCollection = bens));
 
     this.localService
       .query()
       .pipe(map((res: HttpResponse<ILocal[]>) => res.body ?? []))
-      .pipe(map((locals: ILocal[]) => this.localService.addLocalToCollectionIfMissing<ILocal>(locals, this.movimentacao?.local)))
-      .subscribe((locals: ILocal[]) => (this.localsSharedCollection = locals));
+      .pipe(map((locais: ILocal[]) => this.localService.addLocalToCollectionIfMissing<ILocal>(locais, this.movimentacao?.local)))
+      .subscribe((locais: ILocal[]) => (this.locaisSharedCollection = locais));
 
     this.pessoaService
       .query()

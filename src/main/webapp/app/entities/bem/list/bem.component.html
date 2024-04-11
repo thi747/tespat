@@ -1,6 +1,6 @@
 <div>
   <h2 id="page-heading" data-cy="BemHeading">
-    <span jhiTranslate="tesPatApp.bem.home.title">Bems</span>
+    <span jhiTranslate="tesPatApp.bem.home.title">Bens</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
@@ -24,13 +24,13 @@
 
   <jhi-alert></jhi-alert>
 
-  @if (bems?.length === 0) {
+  @if (bens?.length === 0) {
     <div class="alert alert-warning" id="no-result">
-      <span jhiTranslate="tesPatApp.bem.home.notFound">No Bems found</span>
+      <span jhiTranslate="tesPatApp.bem.home.notFound">No Bens found</span>
     </div>
   }
 
-  @if (bems && bems.length > 0) {
+  @if (bens && bens.length > 0) {
     <div class="table-responsive table-entities" id="entities">
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
@@ -128,7 +128,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (bem of bems; track trackId) {
+          @for (bem of bens; track trackId) {
             <tr data-cy="entityTable">
               <td>
                 <a [routerLink]="['/bem', bem.id, 'view']">{{ bem.id }}</a>
