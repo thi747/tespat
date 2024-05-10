@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-fornecedor-heading" data-cy="FornecedorCreateUpdateHeading" jhiTranslate="tesPatApp.fornecedor.home.createOrEditLabel">
         Create or edit a Fornecedor
       </h2>
@@ -10,13 +10,13 @@
 
         @if (editForm.controls.id.value !== null) {
           <div class="mb-3">
-            <label class="form-label" jhiTranslate="tesPatApp.fornecedor.id" for="field_id">Id</label>
+            <label class="form-label" for="field_id" jhiTranslate="tesPatApp.fornecedor.id">Id</label>
             <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
           </div>
         }
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.fornecedor.nome" for="field_nome">Nome</label>
+          <label class="form-label" for="field_nome" jhiTranslate="tesPatApp.fornecedor.nome">Nome</label>
           <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
           @if (editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)) {
             <div>
@@ -28,7 +28,7 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.fornecedor.cpfOuCnpj" for="field_cpfOuCnpj">Cpf Ou Cnpj</label>
+          <label class="form-label" for="field_cpfOuCnpj" jhiTranslate="tesPatApp.fornecedor.cpfOuCnpj">Cpf Ou Cnpj</label>
           <input type="text" class="form-control" name="cpfOuCnpj" id="field_cpfOuCnpj" data-cy="cpfOuCnpj" formControlName="cpfOuCnpj" />
           @if (editForm.get('cpfOuCnpj')!.invalid && (editForm.get('cpfOuCnpj')!.dirty || editForm.get('cpfOuCnpj')!.touched)) {
             <div>
@@ -36,7 +36,7 @@
                 <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
               }
               @if (editForm.get('cpfOuCnpj')?.errors?.minlength) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 11 }"
+                <small class="form-text text-danger" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: '11' }"
                   >This field is required to be at least 11 characters.</small
                 >
               }
@@ -45,42 +45,42 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.fornecedor.email" for="field_email">Email</label>
+          <label class="form-label" for="field_email" jhiTranslate="tesPatApp.fornecedor.email">Email</label>
           <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.fornecedor.descricao" for="field_descricao">Descricao</label>
+          <label class="form-label" for="field_descricao" jhiTranslate="tesPatApp.fornecedor.descricao">Descricao</label>
           <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.fornecedor.telefone" for="field_telefone">Telefone</label>
+          <label class="form-label" for="field_telefone" jhiTranslate="tesPatApp.fornecedor.telefone">Telefone</label>
           <input type="text" class="form-control" name="telefone" id="field_telefone" data-cy="telefone" formControlName="telefone" />
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.fornecedor.endereco" for="field_endereco">Endereco</label>
+          <label class="form-label" for="field_endereco" jhiTranslate="tesPatApp.fornecedor.endereco">Endereco</label>
           <input type="text" class="form-control" name="endereco" id="field_endereco" data-cy="endereco" formControlName="endereco" />
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.fornecedor.municipio" for="field_municipio">Municipio</label>
+          <label class="form-label" for="field_municipio" jhiTranslate="tesPatApp.fornecedor.municipio">Municipio</label>
           <input type="text" class="form-control" name="municipio" id="field_municipio" data-cy="municipio" formControlName="municipio" />
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.fornecedor.uf" for="field_uf">Uf</label>
+          <label class="form-label" for="field_uf" jhiTranslate="tesPatApp.fornecedor.uf">Uf</label>
           <input type="text" class="form-control" name="uf" id="field_uf" data-cy="uf" formControlName="uf" />
           @if (editForm.get('uf')!.invalid && (editForm.get('uf')!.dirty || editForm.get('uf')!.touched)) {
             <div>
               @if (editForm.get('uf')?.errors?.minlength) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 2 }"
+                <small class="form-text text-danger" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: '2' }"
                   >This field is required to be at least 2 characters.</small
                 >
               }
               @if (editForm.get('uf')?.errors?.maxlength) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 2 }"
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '2' }"
                   >This field cannot be longer than 2 characters.</small
                 >
               }

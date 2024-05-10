@@ -2,6 +2,7 @@ package com.github.thi747.tespat.service.dto;
 
 import com.github.thi747.tespat.domain.enumeration.TipoConservacao;
 import com.github.thi747.tespat.domain.enumeration.TipoStatus;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -36,6 +37,11 @@ public class BemDTO implements Serializable {
     private TipoStatus status;
 
     private String observacoes;
+
+    @Lob
+    private byte[] imagem;
+
+    private String imagemContentType;
 
     private CategoriaDTO categoria;
 
@@ -129,6 +135,22 @@ public class BemDTO implements Serializable {
         this.observacoes = observacoes;
     }
 
+    public byte[] getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
+    }
+
+    public String getImagemContentType() {
+        return imagemContentType;
+    }
+
+    public void setImagemContentType(String imagemContentType) {
+        this.imagemContentType = imagemContentType;
+    }
+
     public CategoriaDTO getCategoria() {
         return categoria;
     }
@@ -181,6 +203,7 @@ public class BemDTO implements Serializable {
             ", estado='" + getEstado() + "'" +
             ", status='" + getStatus() + "'" +
             ", observacoes='" + getObservacoes() + "'" +
+            ", imagem='" + getImagem() + "'" +
             ", categoria=" + getCategoria() +
             ", fornecedor=" + getFornecedor() +
             "}";

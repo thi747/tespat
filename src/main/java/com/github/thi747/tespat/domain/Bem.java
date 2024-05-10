@@ -59,6 +59,13 @@ public class Bem implements Serializable {
     @Column(name = "observacoes")
     private String observacoes;
 
+    @Lob
+    @Column(name = "imagem")
+    private byte[] imagem;
+
+    @Column(name = "imagem_content_type")
+    private String imagemContentType;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Categoria categoria;
 
@@ -210,6 +217,32 @@ public class Bem implements Serializable {
         this.observacoes = observacoes;
     }
 
+    public byte[] getImagem() {
+        return this.imagem;
+    }
+
+    public Bem imagem(byte[] imagem) {
+        this.setImagem(imagem);
+        return this;
+    }
+
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
+    }
+
+    public String getImagemContentType() {
+        return this.imagemContentType;
+    }
+
+    public Bem imagemContentType(String imagemContentType) {
+        this.imagemContentType = imagemContentType;
+        return this;
+    }
+
+    public void setImagemContentType(String imagemContentType) {
+        this.imagemContentType = imagemContentType;
+    }
+
     public Categoria getCategoria() {
         return this.categoria;
     }
@@ -270,6 +303,8 @@ public class Bem implements Serializable {
             ", estado='" + getEstado() + "'" +
             ", status='" + getStatus() + "'" +
             ", observacoes='" + getObservacoes() + "'" +
+            ", imagem='" + getImagem() + "'" +
+            ", imagemContentType='" + getImagemContentType() + "'" +
             "}";
     }
 }

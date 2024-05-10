@@ -41,6 +41,7 @@ entity Bem {
   estado TipoConservacao
   status TipoStatus
   observacoes String
+  imagem ImageBlob
 }
 @entityNamePlural(Categorias)
 entity Categoria {

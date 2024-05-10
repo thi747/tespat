@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-bem-heading" data-cy="BemCreateUpdateHeading" jhiTranslate="tesPatApp.bem.home.createOrEditLabel">
         Create or edit a Bem
       </h2>
@@ -10,13 +10,13 @@
 
         @if (editForm.controls.id.value !== null) {
           <div class="mb-3">
-            <label class="form-label" jhiTranslate="tesPatApp.bem.id" for="field_id">Id</label>
+            <label class="form-label" for="field_id" jhiTranslate="tesPatApp.bem.id">Id</label>
             <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
           </div>
         }
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.bem.patrimonio" for="field_patrimonio">Patrimonio</label>
+          <label class="form-label" for="field_patrimonio" jhiTranslate="tesPatApp.bem.patrimonio">Patrimonio</label>
           <input
             type="number"
             class="form-control"
@@ -41,7 +41,7 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.bem.nome" for="field_nome">Nome</label>
+          <label class="form-label" for="field_nome" jhiTranslate="tesPatApp.bem.nome">Nome</label>
           <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
           @if (editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)) {
             <div>
@@ -53,12 +53,12 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.bem.descricao" for="field_descricao">Descricao</label>
+          <label class="form-label" for="field_descricao" jhiTranslate="tesPatApp.bem.descricao">Descricao</label>
           <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.bem.numeroDeSerie" for="field_numeroDeSerie">Numero De Serie</label>
+          <label class="form-label" for="field_numeroDeSerie" jhiTranslate="tesPatApp.bem.numeroDeSerie">Numero De Serie</label>
           <input
             type="text"
             class="form-control"
@@ -70,7 +70,7 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.bem.dataAquisicao" for="field_dataAquisicao">Data Aquisicao</label>
+          <label class="form-label" for="field_dataAquisicao" jhiTranslate="tesPatApp.bem.dataAquisicao">Data Aquisicao</label>
           <div class="input-group">
             <input
               id="field_dataAquisicao"
@@ -89,7 +89,7 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.bem.valorCompra" for="field_valorCompra">Valor Compra</label>
+          <label class="form-label" for="field_valorCompra" jhiTranslate="tesPatApp.bem.valorCompra">Valor Compra</label>
           <input
             type="number"
             class="form-control"
@@ -101,7 +101,7 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.bem.valorAtual" for="field_valorAtual">Valor Atual</label>
+          <label class="form-label" for="field_valorAtual" jhiTranslate="tesPatApp.bem.valorAtual">Valor Atual</label>
           <input
             type="number"
             class="form-control"
@@ -113,7 +113,7 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.bem.estado" for="field_estado">Estado</label>
+          <label class="form-label" for="field_estado" jhiTranslate="tesPatApp.bem.estado">Estado</label>
           <select class="form-control" name="estado" formControlName="estado" id="field_estado" data-cy="estado">
             <option [ngValue]="null">{{ 'tesPatApp.TipoConservacao.null' | translate }}</option>
             @for (tipoConservacao of tipoConservacaoValues; track $index) {
@@ -123,7 +123,7 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.bem.status" for="field_status">Status</label>
+          <label class="form-label" for="field_status" jhiTranslate="tesPatApp.bem.status">Status</label>
           <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
             <option [ngValue]="null">{{ 'tesPatApp.TipoStatus.null' | translate }}</option>
             @for (tipoStatus of tipoStatusValues; track $index) {
@@ -133,7 +133,7 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.bem.observacoes" for="field_observacoes">Observacoes</label>
+          <label class="form-label" for="field_observacoes" jhiTranslate="tesPatApp.bem.observacoes">Observacoes</label>
           <input
             type="text"
             class="form-control"
@@ -145,7 +145,50 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.bem.categoria" for="field_categoria">Categoria</label>
+          <label class="form-label" for="field_imagem" jhiTranslate="tesPatApp.bem.imagem">Imagem</label>
+          <div>
+            @if (editForm.get('imagem')!.value) {
+              <img
+                [src]="'data:' + editForm.get('imagemContentType')!.value + ';base64,' + editForm.get('imagem')!.value"
+                style="max-height: 100px"
+                alt="bem"
+              />
+            }
+            @if (editForm.get('imagem')!.value) {
+              <div class="form-text text-danger clearfix">
+                <span class="pull-start"
+                  >{{ editForm.get('imagemContentType')!.value }}, {{ byteSize(editForm.get('imagem')!.value!) }}</span
+                >
+                <button
+                  type="button"
+                  (click)="clearInputImage('imagem', 'imagemContentType', 'file_imagem')"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_imagem"
+              data-cy="imagem"
+              (change)="setFileData($event, 'imagem', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="imagem" id="field_imagem" data-cy="imagem" formControlName="imagem" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="imagemContentType"
+            id="field_imagemContentType"
+            formControlName="imagemContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_categoria" jhiTranslate="tesPatApp.bem.categoria">Categoria</label>
           <select
             class="form-control"
             id="field_categoria"
@@ -162,7 +205,7 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.bem.fornecedor" for="field_fornecedor">Fornecedor</label>
+          <label class="form-label" for="field_fornecedor" jhiTranslate="tesPatApp.bem.fornecedor">Fornecedor</label>
           <select
             class="form-control"
             id="field_fornecedor"

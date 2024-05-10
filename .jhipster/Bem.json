@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240411222350",
+    "changelogDate": "20240510170659",
     "entityNamePlural": "Bens"
   },
   "applications": ["TESPat"],
@@ -57,6 +57,11 @@
     {
       "fieldName": "observacoes",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "imagem",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
     }
   ],
   "name": "Bem",

@@ -28,6 +28,7 @@
       "estado": "Estado",
       "status": "Status",
       "observacoes": "Observacoes",
+      "imagem": "Imagem",
       "categoria": "Categoria",
       "fornecedor": "Fornecedor"
     }

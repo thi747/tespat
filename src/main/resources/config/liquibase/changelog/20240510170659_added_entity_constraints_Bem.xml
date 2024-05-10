@@ -8,7 +8,7 @@
     <!--
         Added the constraints for entity Bem.
     -->
-    <changeSet id="20240411222350-2" author="jhipster">
+    <changeSet id="20240510170659-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="categoria_id"
                                  baseTableName="bem"

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { RouterTestingHarness, RouterTestingModule } from '@angular/router/testing';
+import { RouterTestingHarness } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { LocalDetailComponent } from './local-detail.component';
@@ -11,7 +11,7 @@ describe('Local Management Detail Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LocalDetailComponent, RouterTestingModule.withRoutes([], { bindToComponentInputs: true })],
+      imports: [LocalDetailComponent],
       providers: [
         provideRouter(
           [
@@ -40,7 +40,7 @@ describe('Local Management Detail Component', () => {
       const instance = await harness.navigateByUrl('/', LocalDetailComponent);
 
       // THEN
-      expect(instance.local).toEqual(expect.objectContaining({ id: 123 }));
+      expect(instance.local()).toEqual(expect.objectContaining({ id: 123 }));
     });
   });
 

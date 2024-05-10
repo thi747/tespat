@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    @if (fornecedor) {
+    @if (fornecedor()) {
       <div>
         <h2 data-cy="fornecedorDetailsHeading"><span jhiTranslate="tesPatApp.fornecedor.detail.title">Fornecedor</span></h2>
 
@@ -13,39 +13,39 @@
         <dl class="row-md jh-entity-details">
           <dt><span jhiTranslate="tesPatApp.fornecedor.id">Id</span></dt>
           <dd>
-            <span>{{ fornecedor.id }}</span>
+            <span>{{ fornecedor()!.id }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.fornecedor.nome">Nome</span></dt>
           <dd>
-            <span>{{ fornecedor.nome }}</span>
+            <span>{{ fornecedor()!.nome }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.fornecedor.cpfOuCnpj">Cpf Ou Cnpj</span></dt>
           <dd>
-            <span>{{ fornecedor.cpfOuCnpj }}</span>
+            <span>{{ fornecedor()!.cpfOuCnpj }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.fornecedor.email">Email</span></dt>
           <dd>
-            <span>{{ fornecedor.email }}</span>
+            <span>{{ fornecedor()!.email }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.fornecedor.descricao">Descricao</span></dt>
           <dd>
-            <span>{{ fornecedor.descricao }}</span>
+            <span>{{ fornecedor()!.descricao }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.fornecedor.telefone">Telefone</span></dt>
           <dd>
-            <span>{{ fornecedor.telefone }}</span>
+            <span>{{ fornecedor()!.telefone }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.fornecedor.endereco">Endereco</span></dt>
           <dd>
-            <span>{{ fornecedor.endereco }}</span>
+            <span>{{ fornecedor()!.endereco }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.fornecedor.municipio">Municipio</span></dt>
           <dd>
-            <span>{{ fornecedor.municipio }}</span>
+            <span>{{ fornecedor()!.municipio }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.fornecedor.uf">Uf</span></dt>
           <dd>
-            <span>{{ fornecedor.uf }}</span>
+            <span>{{ fornecedor()!.uf }}</span>
           </dd>
         </dl>
 
@@ -53,7 +53,7 @@
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
         </button>
 
-        <button type="button" [routerLink]="['/fornecedor', fornecedor.id, 'edit']" class="btn btn-primary">
+        <button type="button" [routerLink]="['/fornecedor', fornecedor()!.id, 'edit']" class="btn btn-primary">
           <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
         </button>
       </div>

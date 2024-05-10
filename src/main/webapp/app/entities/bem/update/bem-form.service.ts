@@ -28,6 +28,8 @@ type BemFormGroupContent = {
   estado: FormControl<IBem['estado']>;
   status: FormControl<IBem['status']>;
   observacoes: FormControl<IBem['observacoes']>;
+  imagem: FormControl<IBem['imagem']>;
+  imagemContentType: FormControl<IBem['imagemContentType']>;
   categoria: FormControl<IBem['categoria']>;
   fornecedor: FormControl<IBem['fornecedor']>;
 };
@@ -63,6 +65,8 @@ export class BemFormService {
       estado: new FormControl(bemRawValue.estado),
       status: new FormControl(bemRawValue.status),
       observacoes: new FormControl(bemRawValue.observacoes),
+      imagem: new FormControl(bemRawValue.imagem),
+      imagemContentType: new FormControl(bemRawValue.imagemContentType),
       categoria: new FormControl(bemRawValue.categoria),
       fornecedor: new FormControl(bemRawValue.fornecedor),
     });

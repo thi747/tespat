@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    @if (local) {
+    @if (local()) {
       <div>
         <h2 data-cy="localDetailsHeading"><span jhiTranslate="tesPatApp.local.detail.title">Local</span></h2>
 
@@ -13,19 +13,19 @@
         <dl class="row-md jh-entity-details">
           <dt><span jhiTranslate="tesPatApp.local.id">Id</span></dt>
           <dd>
-            <span>{{ local.id }}</span>
+            <span>{{ local()!.id }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.local.nome">Nome</span></dt>
           <dd>
-            <span>{{ local.nome }}</span>
+            <span>{{ local()!.nome }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.local.descricao">Descricao</span></dt>
           <dd>
-            <span>{{ local.descricao }}</span>
+            <span>{{ local()!.descricao }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.local.sala">Sala</span></dt>
           <dd>
-            <span>{{ local.sala }}</span>
+            <span>{{ local()!.sala }}</span>
           </dd>
         </dl>
 
@@ -33,7 +33,7 @@
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
         </button>
 
-        <button type="button" [routerLink]="['/local', local.id, 'edit']" class="btn btn-primary">
+        <button type="button" [routerLink]="['/local', local()!.id, 'edit']" class="btn btn-primary">
           <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
         </button>
       </div>

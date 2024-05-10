@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { RouterTestingHarness, RouterTestingModule } from '@angular/router/testing';
+import { RouterTestingHarness } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { CategoriaDetailComponent } from './categoria-detail.component';
@@ -11,7 +11,7 @@ describe('Categoria Management Detail Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CategoriaDetailComponent, RouterTestingModule.withRoutes([], { bindToComponentInputs: true })],
+      imports: [CategoriaDetailComponent],
       providers: [
         provideRouter(
           [
@@ -40,7 +40,7 @@ describe('Categoria Management Detail Component', () => {
       const instance = await harness.navigateByUrl('/', CategoriaDetailComponent);
 
       // THEN
-      expect(instance.categoria).toEqual(expect.objectContaining({ id: 123 }));
+      expect(instance.categoria()).toEqual(expect.objectContaining({ id: 123 }));
     });
   });
 

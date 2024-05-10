@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    @if (movimentacao) {
+    @if (movimentacao()) {
       <div>
         <h2 data-cy="movimentacaoDetailsHeading"><span jhiTranslate="tesPatApp.movimentacao.detail.title">Movimentacao</span></h2>
 
@@ -13,41 +13,43 @@
         <dl class="row-md jh-entity-details">
           <dt><span jhiTranslate="tesPatApp.movimentacao.id">Id</span></dt>
           <dd>
-            <span>{{ movimentacao.id }}</span>
+            <span>{{ movimentacao()!.id }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.movimentacao.data">Data</span></dt>
           <dd>
-            <span>{{ movimentacao.data | formatMediumDate }}</span>
+            <span>{{ movimentacao()!.data | formatMediumDate }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.movimentacao.descricao">Descricao</span></dt>
           <dd>
-            <span>{{ movimentacao.descricao }}</span>
+            <span>{{ movimentacao()!.descricao }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.movimentacao.tipo">Tipo</span></dt>
           <dd>
-            <span jhiTranslate="{{ 'tesPatApp.TipoMovimentacao.' + movimentacao.tipo }}">{{ movimentacao.tipo }}</span>
+            <span [jhiTranslate]="'tesPatApp.TipoMovimentacao.' + (movimentacao()!.tipo ?? 'null')">{{
+              { null: '', ENTRADA: 'ENTRADA', SAIDA: 'SAIDA' }[movimentacao()!.tipo ?? 'null']
+            }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.movimentacao.bem">Bem</span></dt>
           <dd>
-            @if (movimentacao.bem) {
+            @if (movimentacao()!.bem) {
               <div>
-                <a [routerLink]="['/bem', movimentacao.bem.id, 'view']">{{ movimentacao.bem.patrimonio }}</a>
+                <a [routerLink]="['/bem', movimentacao()!.bem?.id, 'view']">{{ movimentacao()!.bem?.patrimonio }}</a>
               </div>
             }
           </dd>
           <dt><span jhiTranslate="tesPatApp.movimentacao.local">Local</span></dt>
           <dd>
-            @if (movimentacao.local) {
+            @if (movimentacao()!.local) {
               <div>
-                <a [routerLink]="['/local', movimentacao.local.id, 'view']">{{ movimentacao.local.nome }}</a>
+                <a [routerLink]="['/local', movimentacao()!.local?.id, 'view']">{{ movimentacao()!.local?.nome }}</a>
               </div>
             }
           </dd>
           <dt><span jhiTranslate="tesPatApp.movimentacao.pessoa">Pessoa</span></dt>
           <dd>
-            @if (movimentacao.pessoa) {
+            @if (movimentacao()!.pessoa) {
               <div>
-                <a [routerLink]="['/pessoa', movimentacao.pessoa.id, 'view']">{{ movimentacao.pessoa.usuario }}</a>
+                <a [routerLink]="['/pessoa', movimentacao()!.pessoa?.id, 'view']">{{ movimentacao()!.pessoa?.usuario }}</a>
               </div>
             }
           </dd>
@@ -57,7 +59,7 @@
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
         </button>
 
-        <button type="button" [routerLink]="['/movimentacao', movimentacao.id, 'edit']" class="btn btn-primary">
+        <button type="button" [routerLink]="['/movimentacao', movimentacao()!.id, 'edit']" class="btn btn-primary">
           <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
         </button>
       </div>

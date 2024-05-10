@@ -56,7 +56,9 @@ public class BemAsserts {
             .satisfies(e -> assertThat(e.getValorAtual()).as("check valorAtual").isEqualTo(actual.getValorAtual()))
             .satisfies(e -> assertThat(e.getEstado()).as("check estado").isEqualTo(actual.getEstado()))
             .satisfies(e -> assertThat(e.getStatus()).as("check status").isEqualTo(actual.getStatus()))
-            .satisfies(e -> assertThat(e.getObservacoes()).as("check observacoes").isEqualTo(actual.getObservacoes()));
+            .satisfies(e -> assertThat(e.getObservacoes()).as("check observacoes").isEqualTo(actual.getObservacoes()))
+            .satisfies(e -> assertThat(e.getImagem()).as("check imagem").isEqualTo(actual.getImagem()))
+            .satisfies(e -> assertThat(e.getImagemContentType()).as("check imagem contenty type").isEqualTo(actual.getImagemContentType()));
     }
 
     /**

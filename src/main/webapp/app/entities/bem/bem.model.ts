@@ -16,6 +16,8 @@ export interface IBem {
   estado?: keyof typeof TipoConservacao | null;
   status?: keyof typeof TipoStatus | null;
   observacoes?: string | null;
+  imagem?: string | null;
+  imagemContentType?: string | null;
   categoria?: Pick<ICategoria, 'id' | 'nome'> | null;
   fornecedor?: Pick<IFornecedor, 'id' | 'nome'> | null;
 }

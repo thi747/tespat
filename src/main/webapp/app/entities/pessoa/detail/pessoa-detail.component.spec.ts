@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { RouterTestingHarness, RouterTestingModule } from '@angular/router/testing';
+import { RouterTestingHarness } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { PessoaDetailComponent } from './pessoa-detail.component';
@@ -11,7 +11,7 @@ describe('Pessoa Management Detail Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PessoaDetailComponent, RouterTestingModule.withRoutes([], { bindToComponentInputs: true })],
+      imports: [PessoaDetailComponent],
       providers: [
         provideRouter(
           [
@@ -40,7 +40,7 @@ describe('Pessoa Management Detail Component', () => {
       const instance = await harness.navigateByUrl('/', PessoaDetailComponent);
 
       // THEN
-      expect(instance.pessoa).toEqual(expect.objectContaining({ id: 123 }));
+      expect(instance.pessoa()).toEqual(expect.objectContaining({ id: 123 }));
     });
   });
 

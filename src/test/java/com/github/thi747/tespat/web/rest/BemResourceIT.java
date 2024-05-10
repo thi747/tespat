@@ -21,6 +21,7 @@ import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
@@ -76,6 +77,11 @@ class BemResourceIT {
     private static final String DEFAULT_OBSERVACOES = "AAAAAAAAAA";
     private static final String UPDATED_OBSERVACOES = "BBBBBBBBBB";
 
+    private static final byte[] DEFAULT_IMAGEM = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_IMAGEM = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_IMAGEM_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_IMAGEM_CONTENT_TYPE = "image/png";
+
     private static final String ENTITY_API_URL = "/api/bens";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -122,7 +128,9 @@ class BemResourceIT {
             .valorAtual(DEFAULT_VALOR_ATUAL)
             .estado(DEFAULT_ESTADO)
             .status(DEFAULT_STATUS)
-            .observacoes(DEFAULT_OBSERVACOES);
+            .observacoes(DEFAULT_OBSERVACOES)
+            .imagem(DEFAULT_IMAGEM)
+            .imagemContentType(DEFAULT_IMAGEM_CONTENT_TYPE);
         return bem;
     }
 
@@ -143,7 +151,9 @@ class BemResourceIT {
             .valorAtual(UPDATED_VALOR_ATUAL)
             .estado(UPDATED_ESTADO)
             .status(UPDATED_STATUS)
-            .observacoes(UPDATED_OBSERVACOES);
+            .observacoes(UPDATED_OBSERVACOES)
+            .imagem(UPDATED_IMAGEM)
+            .imagemContentType(UPDATED_IMAGEM_CONTENT_TYPE);
         return bem;
     }
 
@@ -247,7 +257,9 @@ class BemResourceIT {
             .andExpect(jsonPath("$.[*].valorAtual").value(hasItem(DEFAULT_VALOR_ATUAL.doubleValue())))
             .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].observacoes").value(hasItem(DEFAULT_OBSERVACOES)));
+            .andExpect(jsonPath("$.[*].observacoes").value(hasItem(DEFAULT_OBSERVACOES)))
+            .andExpect(jsonPath("$.[*].imagemContentType").value(hasItem(DEFAULT_IMAGEM_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].imagem").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_IMAGEM))));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -288,7 +300,9 @@ class BemResourceIT {
             .andExpect(jsonPath("$.valorAtual").value(DEFAULT_VALOR_ATUAL.doubleValue()))
             .andExpect(jsonPath("$.estado").value(DEFAULT_ESTADO.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.observacoes").value(DEFAULT_OBSERVACOES));
+            .andExpect(jsonPath("$.observacoes").value(DEFAULT_OBSERVACOES))
+            .andExpect(jsonPath("$.imagemContentType").value(DEFAULT_IMAGEM_CONTENT_TYPE))
+            .andExpect(jsonPath("$.imagem").value(Base64.getEncoder().encodeToString(DEFAULT_IMAGEM)));
     }
 
     @Test
@@ -320,7 +334,9 @@ class BemResourceIT {
             .valorAtual(UPDATED_VALOR_ATUAL)
             .estado(UPDATED_ESTADO)
             .status(UPDATED_STATUS)
-            .observacoes(UPDATED_OBSERVACOES);
+            .observacoes(UPDATED_OBSERVACOES)
+            .imagem(UPDATED_IMAGEM)
+            .imagemContentType(UPDATED_IMAGEM_CONTENT_TYPE);
         BemDTO bemDTO = bemMapper.toDto(updatedBem);
 
         restBemMockMvc
@@ -444,7 +460,9 @@ class BemResourceIT {
             .valorAtual(UPDATED_VALOR_ATUAL)
             .estado(UPDATED_ESTADO)
             .status(UPDATED_STATUS)
-            .observacoes(UPDATED_OBSERVACOES);
+            .observacoes(UPDATED_OBSERVACOES)
+            .imagem(UPDATED_IMAGEM)
+            .imagemContentType(UPDATED_IMAGEM_CONTENT_TYPE);
 
         restBemMockMvc
             .perform(

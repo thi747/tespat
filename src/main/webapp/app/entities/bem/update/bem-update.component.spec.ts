@@ -3,7 +3,6 @@ import { HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of, Subject, from } from 'rxjs';
 
 import { ICategoria } from 'app/entities/categoria/categoria.model';
@@ -27,7 +26,7 @@ describe('Bem Management Update Component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), BemUpdateComponent],
+      imports: [HttpClientTestingModule, BemUpdateComponent],
       providers: [
         FormBuilder,
         {

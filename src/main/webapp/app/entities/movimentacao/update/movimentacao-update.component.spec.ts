@@ -3,7 +3,6 @@ import { HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of, Subject, from } from 'rxjs';
 
 import { IBem } from 'app/entities/bem/bem.model';
@@ -30,7 +29,7 @@ describe('Movimentacao Management Update Component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), MovimentacaoUpdateComponent],
+      imports: [HttpClientTestingModule, MovimentacaoUpdateComponent],
       providers: [
         FormBuilder,
         {
@@ -58,10 +57,10 @@ describe('Movimentacao Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Bem query and add missing value', () => {
       const movimentacao: IMovimentacao = { id: 456 };
-      const bem: IBem = { id: 9281 };
+      const bem: IBem = { id: 27122 };
       movimentacao.bem = bem;
 
-      const bemCollection: IBem[] = [{ id: 28864 }];
+      const bemCollection: IBem[] = [{ id: 8712 }];
       jest.spyOn(bemService, 'query').mockReturnValue(of(new HttpResponse({ body: bemCollection })));
       const additionalBems = [bem];
       const expectedCollection: IBem[] = [...additionalBems, ...bemCollection];
@@ -121,7 +120,7 @@ describe('Movimentacao Management Update Component', () => {
 
     it('Should update editForm', () => {
       const movimentacao: IMovimentacao = { id: 456 };
-      const bem: IBem = { id: 15555 };
+      const bem: IBem = { id: 29135 };
       movimentacao.bem = bem;
       const local: ILocal = { id: 26271 };
       movimentacao.local = local;

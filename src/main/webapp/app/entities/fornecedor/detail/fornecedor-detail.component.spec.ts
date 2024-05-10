@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { RouterTestingHarness, RouterTestingModule } from '@angular/router/testing';
+import { RouterTestingHarness } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { FornecedorDetailComponent } from './fornecedor-detail.component';
@@ -11,7 +11,7 @@ describe('Fornecedor Management Detail Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FornecedorDetailComponent, RouterTestingModule.withRoutes([], { bindToComponentInputs: true })],
+      imports: [FornecedorDetailComponent],
       providers: [
         provideRouter(
           [
@@ -40,7 +40,7 @@ describe('Fornecedor Management Detail Component', () => {
       const instance = await harness.navigateByUrl('/', FornecedorDetailComponent);
 
       // THEN
-      expect(instance.fornecedor).toEqual(expect.objectContaining({ id: 123 }));
+      expect(instance.fornecedor()).toEqual(expect.objectContaining({ id: 123 }));
     });
   });
 

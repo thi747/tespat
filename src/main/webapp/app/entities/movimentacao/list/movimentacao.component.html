@@ -92,7 +92,9 @@
               </td>
               <td>{{ movimentacao.data | formatMediumDate }}</td>
               <td>{{ movimentacao.descricao }}</td>
-              <td jhiTranslate="{{ 'tesPatApp.TipoMovimentacao.' + movimentacao.tipo }}">{{ movimentacao.tipo }}</td>
+              <td [jhiTranslate]="'tesPatApp.TipoMovimentacao.' + (movimentacao.tipo ?? 'null')">
+                {{ { null: '', ENTRADA: 'ENTRADA', SAIDA: 'SAIDA' }[movimentacao.tipo ?? 'null'] }}
+              </td>
               <td>
                 @if (movimentacao.bem) {
                   <div>

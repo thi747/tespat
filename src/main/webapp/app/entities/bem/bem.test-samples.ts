@@ -3,39 +3,43 @@ import dayjs from 'dayjs/esm';
 import { IBem, NewBem } from './bem.model';
 
 export const sampleWithRequiredData: IBem = {
-  id: 22027,
-  patrimonio: 26837,
-  nome: 'formal',
+  id: 26837,
+  patrimonio: 4602,
+  nome: 'judgementally',
 };
 
 export const sampleWithPartialData: IBem = {
-  id: 2208,
-  patrimonio: 9375,
-  nome: 'true unknown adorable',
-  descricao: 'wildly astride',
-  numeroDeSerie: 'which',
-  valorCompra: 5800.12,
-  valorAtual: 8895.34,
-  estado: 'REGULAR',
+  id: 26078,
+  patrimonio: 23123,
+  nome: 'profitable devoted certainly',
+  descricao: 'recorder accentuate deep',
+  dataAquisicao: dayjs('2024-05-10'),
+  valorCompra: 16461.29,
+  valorAtual: 22907.43,
+  observacoes: 'outside',
+  imagem: '../fake-data/blob/hipster.png',
+  imagemContentType: 'unknown',
 };
 
 export const sampleWithFullData: IBem = {
-  id: 22908,
-  patrimonio: 5016,
-  nome: 'psst phew',
-  descricao: 'geez ouch or',
-  numeroDeSerie: 'gosh right',
-  dataAquisicao: dayjs('2024-04-11'),
-  valorCompra: 29345.91,
-  valorAtual: 6440.28,
-  estado: 'REGULAR',
-  status: 'ESTOQUE',
-  observacoes: 'blah',
+  id: 16626,
+  patrimonio: 6712,
+  nome: 'front furiously chasm',
+  descricao: 'circa hen bustling',
+  numeroDeSerie: 'debunk gutter generally',
+  dataAquisicao: dayjs('2024-05-09'),
+  valorCompra: 15554.88,
+  valorAtual: 728.86,
+  estado: 'INSERVIVEL',
+  status: 'MANUTENCAO',
+  observacoes: 'round',
+  imagem: '../fake-data/blob/hipster.png',
+  imagemContentType: 'unknown',
 };
 
 export const sampleWithNewData: NewBem = {
-  patrimonio: 6224,
-  nome: 'mechanically',
+  patrimonio: 28266,
+  nome: 'forenenst eager shovel',
   id: null,
 };
 

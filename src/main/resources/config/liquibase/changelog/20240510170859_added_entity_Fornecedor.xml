@@ -7,27 +7,27 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!--
-        Added the entity Pessoa.
+        Added the entity Fornecedor.
     -->
-    <changeSet id="20240411222850-1" author="jhipster">
-        <createTable tableName="pessoa">
+    <changeSet id="20240510170859-1" author="jhipster">
+        <createTable tableName="fornecedor">
             <column name="id" type="bigint" autoIncrement="true" startWith="1500">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="usuario" type="varchar(255)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_pessoa__usuario" />
-            </column>
             <column name="nome" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_fornecedor__nome" />
             </column>
-            <column name="cpf" type="varchar(255)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_pessoa__cpf" />
+            <column name="cpf_ou_cnpj" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_fornecedor__cpf_ou_cnpj" />
             </column>
             <column name="email" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="ativo" type="boolean">
-                <constraints nullable="false" />
+            <column name="descricao" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="telefone" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
             <column name="endereco" type="varchar(255)">
                 <constraints nullable="true" />
@@ -52,18 +52,18 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20240411222850-1-data" author="jhipster" context="faker">
+    <changeSet id="20240510170859-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/pessoa.csv"
+                  file="config/liquibase/fake-data/fornecedor.csv"
                   separator=";"
-                  tableName="pessoa"
+                  tableName="fornecedor"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="usuario" type="string"/>
             <column name="nome" type="string"/>
-            <column name="cpf" type="string"/>
+            <column name="cpf_ou_cnpj" type="string"/>
             <column name="email" type="string"/>
-            <column name="ativo" type="boolean"/>
+            <column name="descricao" type="string"/>
+            <column name="telefone" type="string"/>
             <column name="endereco" type="string"/>
             <column name="municipio" type="string"/>
             <column name="uf" type="string"/>

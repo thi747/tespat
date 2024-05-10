@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { RouterTestingHarness, RouterTestingModule } from '@angular/router/testing';
+import { RouterTestingHarness } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { MovimentacaoDetailComponent } from './movimentacao-detail.component';
@@ -11,7 +11,7 @@ describe('Movimentacao Management Detail Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MovimentacaoDetailComponent, RouterTestingModule.withRoutes([], { bindToComponentInputs: true })],
+      imports: [MovimentacaoDetailComponent],
       providers: [
         provideRouter(
           [
@@ -40,7 +40,7 @@ describe('Movimentacao Management Detail Component', () => {
       const instance = await harness.navigateByUrl('/', MovimentacaoDetailComponent);
 
       // THEN
-      expect(instance.movimentacao).toEqual(expect.objectContaining({ id: 123 }));
+      expect(instance.movimentacao()).toEqual(expect.objectContaining({ id: 123 }));
     });
   });
 

@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    @if (bem) {
+    @if (bem()) {
       <div>
         <h2 data-cy="bemDetailsHeading"><span jhiTranslate="tesPatApp.bem.detail.title">Bem</span></h2>
 
@@ -13,61 +13,76 @@
         <dl class="row-md jh-entity-details">
           <dt><span jhiTranslate="tesPatApp.bem.id">Id</span></dt>
           <dd>
-            <span>{{ bem.id }}</span>
+            <span>{{ bem()!.id }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.bem.patrimonio">Patrimonio</span></dt>
           <dd>
-            <span>{{ bem.patrimonio }}</span>
+            <span>{{ bem()!.patrimonio }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.bem.nome">Nome</span></dt>
           <dd>
-            <span>{{ bem.nome }}</span>
+            <span>{{ bem()!.nome }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.bem.descricao">Descricao</span></dt>
           <dd>
-            <span>{{ bem.descricao }}</span>
+            <span>{{ bem()!.descricao }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.bem.numeroDeSerie">Numero De Serie</span></dt>
           <dd>
-            <span>{{ bem.numeroDeSerie }}</span>
+            <span>{{ bem()!.numeroDeSerie }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.bem.dataAquisicao">Data Aquisicao</span></dt>
           <dd>
-            <span>{{ bem.dataAquisicao | formatMediumDate }}</span>
+            <span>{{ bem()!.dataAquisicao | formatMediumDate }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.bem.valorCompra">Valor Compra</span></dt>
           <dd>
-            <span>{{ bem.valorCompra }}</span>
+            <span>{{ bem()!.valorCompra }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.bem.valorAtual">Valor Atual</span></dt>
           <dd>
-            <span>{{ bem.valorAtual }}</span>
+            <span>{{ bem()!.valorAtual }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.bem.estado">Estado</span></dt>
           <dd>
-            <span jhiTranslate="{{ 'tesPatApp.TipoConservacao.' + bem.estado }}">{{ bem.estado }}</span>
+            <span [jhiTranslate]="'tesPatApp.TipoConservacao.' + (bem()!.estado ?? 'null')">{{
+              { null: '', NOVO: 'NOVO', BOM: 'BOM', REGULAR: 'REGULAR', RUIM: 'RUIM', INSERVIVEL: 'INSERVIVEL' }[bem()!.estado ?? 'null']
+            }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.bem.status">Status</span></dt>
           <dd>
-            <span jhiTranslate="{{ 'tesPatApp.TipoStatus.' + bem.status }}">{{ bem.status }}</span>
+            <span [jhiTranslate]="'tesPatApp.TipoStatus.' + (bem()!.status ?? 'null')">{{
+              { null: '', USO: 'USO', ESTOQUE: 'ESTOQUE', MANUTENCAO: 'MANUTENCAO' }[bem()!.status ?? 'null']
+            }}</span>
           </dd>
           <dt><span jhiTranslate="tesPatApp.bem.observacoes">Observacoes</span></dt>
           <dd>
-            <span>{{ bem.observacoes }}</span>
+            <span>{{ bem()!.observacoes }}</span>
+          </dd>
+          <dt><span jhiTranslate="tesPatApp.bem.imagem">Imagem</span></dt>
+          <dd>
+            @if (bem()!.imagem) {
+              <div>
+                <a (click)="openFile(bem()!.imagem ?? '', bem()!.imagemContentType)">
+                  <img [src]="'data:' + bem()!.imagemContentType + ';base64,' + bem()!.imagem" style="max-width: 100%" alt="bem" />
+                </a>
+                {{ bem()!.imagemContentType }}, {{ byteSize(bem()!.imagem ?? '') }}
+              </div>
+            }
           </dd>
           <dt><span jhiTranslate="tesPatApp.bem.categoria">Categoria</span></dt>
           <dd>
-            @if (bem.categoria) {
+            @if (bem()!.categoria) {
               <div>
-                <a [routerLink]="['/categoria', bem.categoria.id, 'view']">{{ bem.categoria.nome }}</a>
+                <a [routerLink]="['/categoria', bem()!.categoria?.id, 'view']">{{ bem()!.categoria?.nome }}</a>
               </div>
             }
           </dd>
           <dt><span jhiTranslate="tesPatApp.bem.fornecedor">Fornecedor</span></dt>
           <dd>
-            @if (bem.fornecedor) {
+            @if (bem()!.fornecedor) {
               <div>
-                <a [routerLink]="['/fornecedor', bem.fornecedor.id, 'view']">{{ bem.fornecedor.nome }}</a>
+                <a [routerLink]="['/fornecedor', bem()!.fornecedor?.id, 'view']">{{ bem()!.fornecedor?.nome }}</a>
               </div>
             }
           </dd>
@@ -77,7 +92,7 @@
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
         </button>
 
-        <button type="button" [routerLink]="['/bem', bem.id, 'edit']" class="btn btn-primary">
+        <button type="button" [routerLink]="['/bem', bem()!.id, 'edit']" class="btn btn-primary">
           <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
         </button>
       </div>

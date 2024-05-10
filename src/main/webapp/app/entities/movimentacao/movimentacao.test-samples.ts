@@ -15,7 +15,7 @@ export const sampleWithPartialData: IMovimentacao = {
 
 export const sampleWithFullData: IMovimentacao = {
   id: 11335,
-  data: dayjs('2024-04-11'),
+  data: dayjs('2024-05-10'),
   descricao: 'into dangerous amongst',
   tipo: 'SAIDA',
 };

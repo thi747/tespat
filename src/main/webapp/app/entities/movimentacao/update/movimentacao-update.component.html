@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2
         id="jhi-movimentacao-heading"
         data-cy="MovimentacaoCreateUpdateHeading"
@@ -14,13 +14,13 @@
 
         @if (editForm.controls.id.value !== null) {
           <div class="mb-3">
-            <label class="form-label" jhiTranslate="tesPatApp.movimentacao.id" for="field_id">Id</label>
+            <label class="form-label" for="field_id" jhiTranslate="tesPatApp.movimentacao.id">Id</label>
             <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
           </div>
         }
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.movimentacao.data" for="field_data">Data</label>
+          <label class="form-label" for="field_data" jhiTranslate="tesPatApp.movimentacao.data">Data</label>
           <div class="input-group">
             <input
               id="field_data"
@@ -37,12 +37,12 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.movimentacao.descricao" for="field_descricao">Descricao</label>
+          <label class="form-label" for="field_descricao" jhiTranslate="tesPatApp.movimentacao.descricao">Descricao</label>
           <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.movimentacao.tipo" for="field_tipo">Tipo</label>
+          <label class="form-label" for="field_tipo" jhiTranslate="tesPatApp.movimentacao.tipo">Tipo</label>
           <select class="form-control" name="tipo" formControlName="tipo" id="field_tipo" data-cy="tipo">
             <option [ngValue]="null">{{ 'tesPatApp.TipoMovimentacao.null' | translate }}</option>
             @for (tipoMovimentacao of tipoMovimentacaoValues; track $index) {
@@ -59,7 +59,7 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.movimentacao.bem" for="field_bem">Bem</label>
+          <label class="form-label" for="field_bem" jhiTranslate="tesPatApp.movimentacao.bem">Bem</label>
           <select class="form-control" id="field_bem" data-cy="bem" name="bem" formControlName="bem" [compareWith]="compareBem">
             @if (!editForm.get('bem')!.value) {
               <option [ngValue]="null" selected></option>
@@ -78,7 +78,7 @@
         }
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.movimentacao.local" for="field_local">Local</label>
+          <label class="form-label" for="field_local" jhiTranslate="tesPatApp.movimentacao.local">Local</label>
           <select class="form-control" id="field_local" data-cy="local" name="local" formControlName="local" [compareWith]="compareLocal">
             @if (!editForm.get('local')!.value) {
               <option [ngValue]="null" selected></option>
@@ -97,7 +97,7 @@
         }
 
         <div class="mb-3">
-          <label class="form-label" jhiTranslate="tesPatApp.movimentacao.pessoa" for="field_pessoa">Pessoa</label>
+          <label class="form-label" for="field_pessoa" jhiTranslate="tesPatApp.movimentacao.pessoa">Pessoa</label>
           <select
             class="form-control"
             id="field_pessoa"

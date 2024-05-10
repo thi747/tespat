@@ -112,6 +112,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="imagem">
+              <div class="d-flex">
+                <span jhiTranslate="tesPatApp.bem.imagem">Imagem</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="categoria.nome">
               <div class="d-flex">
                 <span jhiTranslate="tesPatApp.bem.categoria">Categoria</span>
@@ -140,9 +147,23 @@
               <td>{{ bem.dataAquisicao | formatMediumDate }}</td>
               <td>{{ bem.valorCompra }}</td>
               <td>{{ bem.valorAtual }}</td>
-              <td jhiTranslate="{{ 'tesPatApp.TipoConservacao.' + bem.estado }}">{{ bem.estado }}</td>
-              <td jhiTranslate="{{ 'tesPatApp.TipoStatus.' + bem.status }}">{{ bem.status }}</td>
+              <td [jhiTranslate]="'tesPatApp.TipoConservacao.' + (bem.estado ?? 'null')">
+                {{
+                  { null: '', NOVO: 'NOVO', BOM: 'BOM', REGULAR: 'REGULAR', RUIM: 'RUIM', INSERVIVEL: 'INSERVIVEL' }[bem.estado ?? 'null']
+                }}
+              </td>
+              <td [jhiTranslate]="'tesPatApp.TipoStatus.' + (bem.status ?? 'null')">
+                {{ { null: '', USO: 'USO', ESTOQUE: 'ESTOQUE', MANUTENCAO: 'MANUTENCAO' }[bem.status ?? 'null'] }}
+              </td>
               <td>{{ bem.observacoes }}</td>
+              <td>
+                @if (bem.imagem) {
+                  <a (click)="openFile(bem.imagem, bem.imagemContentType)">
+                    <img [src]="'data:' + bem.imagemContentType + ';base64,' + bem.imagem" style="max-height: 30px" alt="bem" />
+                  </a>
+                  <span>{{ bem.imagemContentType }}, {{ byteSize(bem.imagem) }}</span>
+                }
+              </td>
               <td>
                 @if (bem.categoria) {
                   <div>
